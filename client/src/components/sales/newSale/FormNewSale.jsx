@@ -7,8 +7,13 @@ import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { addProductToSailDetailAction } from "../../../actions/saleActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addProductToSaleDetailAction,
+    readDataNewSaleAction,
+    RegisterOneNewSaleAction,
+} from "../../../actions/saleActions";
+import Card from "../../ui/Card/Card";
 
 const initialStateNewProduct = {
     category: "",
@@ -29,7 +34,16 @@ const FormNewSale = () => {
     const [newProduct, setProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
 
-    const addProductToSailDetail = (newProduct) =>dispatch(addProductToSailDetailAction(newProduct))
+    const addProductToSailDetail = (newProduct) =>
+        dispatch(addProductToSaleDetailAction(newProduct));
+    
+    const readDataNewSale = (DataNewSale) =>
+        dispatch(readDataNewSaleAction(DataNewSale));
+    
+    const RegisterOneNewSale = (sale) =>
+        dispatch(RegisterOneNewSaleAction(sale));
+    
+    const newSale = useSelector(({sales})=>sales.newSale)
 
     useEffect(() => {
         const total = detailSale.reduce(
@@ -40,6 +54,10 @@ const FormNewSale = () => {
     }, [detailSale]);
 
     const handleSale = (e) => {
+        readDataNewSale({
+            ...sale,
+            [e.target.name]: e.target.value,
+        });
         setSale({
             ...sale,
             [e.target.name]: e.target.value,
@@ -69,9 +87,14 @@ const FormNewSale = () => {
         setProduct(initialStateNewProduct);
     };
 
+    const handleSubmit = e => {
+        e.preventDefault()
+        RegisterOneNewSale(newSale);
+    }
+
 
     return (
-        <div className="">
+        <div className="" onSubmit={handleSubmit}>
             <form>
                 <div className="bg-white p-4 shadow rounded-md">
                     <div className="grid grid-cols-6 gap-6">
@@ -114,6 +137,11 @@ const FormNewSale = () => {
                         fullSalePrice={fullSalePrice}
                     />
                 )}
+                <Card>
+                    <div className="bg-slate-700 text-white inline-block py-2 px-4 rounded-md hover:bg-slate-600 cursor-pointer">
+                        <input type="submit" />
+                    </div>
+                </Card>
             </form>
         </div>
     );
