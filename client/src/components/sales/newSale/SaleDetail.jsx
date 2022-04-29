@@ -3,7 +3,12 @@ import Card from "../../ui/Card/Card";
 
 import ItemSailDetail from "./ItemSailDetail";
 
+// Redux
+import { useSelector } from "react-redux";
+
 const SaleDetail = ({ detailSale, fullSalePrice }) => {
+    const sailDetails = useSelector(({ sales }) => sales.salesDetail);
+
     return (
         <Card>
             <div className="relative overflow-x-auto  sm:rounded-lg">
@@ -28,7 +33,7 @@ const SaleDetail = ({ detailSale, fullSalePrice }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {detailSale.map((detail, index) => (
+                        {sailDetails.map((detail, index) => (
                             <ItemSailDetail detail={detail} key={index} />
                         ))}
                     </tbody>

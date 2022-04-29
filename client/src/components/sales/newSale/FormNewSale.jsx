@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
-import Swal from "sweetalert2";
-import {useSelector} from 'react-redux'
+
+// Redux
+import { useDispatch } from "react-redux";
+import { addProductToSailDetailAction } from "../../../actions/saleActions";
 
 const initialStateNewProduct = {
     category: "",
@@ -17,8 +19,7 @@ const initialStateNewProduct = {
 };
 
 const FormNewSale = () => {
-
-    
+    const dispatch = useDispatch();
     const [sale, setSale] = useState({
         date: "2022-04-24",
         documentType: 1,
@@ -26,14 +27,18 @@ const FormNewSale = () => {
     });
     const [detailSale, setDetailSale] = useState([]);
     const [newProduct, setProduct] = useState(initialStateNewProduct);
-    const [fullSalePrice, setFulSalePrice] = useState(0)
+    const [fullSalePrice, setFulSalePrice] = useState(0);
+
+    const addProductToSailDetail = (newProduct) =>dispatch(addProductToSailDetailAction(newProduct))
 
     useEffect(() => {
-        const  total = detailSale.reduce((acc, value )=>acc +value.totalPrice, 0)
+        const total = detailSale.reduce(
+            (acc, value) => acc + value.totalPrice,
+            0
+        );
         setFulSalePrice(total);
     }, [detailSale]);
-    
-    
+
     const handleSale = (e) => {
         setSale({
             ...sale,
@@ -48,30 +53,22 @@ const FormNewSale = () => {
         });
     };
 
-    const addProductToDetail = () => {        
-        const id = uuid()
-        newProduct.id = id
+    const addProductToDetail = () => {
+        const id = uuid();
+        newProduct.id = id;
         newProduct.totalPrice = newProduct.quantity * newProduct.unitPrice;
 
         if (newProduct.category === "") {
             console.error("campos obligatorios vacios");
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Faltan campos obligatorios!",
-                footer: '<a href="">Why do I have this issue?</a>',
-            });
             return;
         }
+        
+        addProductToSailDetail(newProduct);
 
-        validProductNew(newProduct);
         setDetailSale([...detailSale, newProduct]);
         setProduct(initialStateNewProduct);
     };
 
-    const validProductNew = (newProduct) => {
-
-    };
 
     return (
         <div className="">
@@ -102,19 +99,21 @@ const FormNewSale = () => {
                         newProduct={newProduct}
                     />
                 </div>
-                <div className="py-2 flex justify-center">
+                <div className="py-2 flex justify-center ">
                     <button
                         type="button"
-                        className="bg-emerald-500 text-white hover:bg-emerald-300 cursor-pointer rounded-full p-3 block w-12 h-12"
+                        className="bg-emerald-500 text-white hover:bg-emerald-300 cursor-pointer rounded-full p-3 block w-12 h-12 shadow-md"
                         onClick={addProductToDetail}
                     >
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
-                <SaleDetail
-                    detailSale={detailSale}
-                    fullSalePrice={fullSalePrice}
-                />
+                {detailSale.length !== 0 && (
+                    <SaleDetail
+                        detailSale={detailSale}
+                        fullSalePrice={fullSalePrice}
+                    />
+                )}
             </form>
         </div>
     );

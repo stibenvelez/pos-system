@@ -1,0 +1,2 @@
+export const ADD_NEW_PRODUCT_DETAIL = "ADD_NEW_PRODUCT_DETAIL";
+export const ADD_NEW = "ADD_NEW";
