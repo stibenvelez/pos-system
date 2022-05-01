@@ -150,14 +150,14 @@ const FormNewSale = () => {
                     </button>
                 </div>
                 {newSale.detail.length !== 0 && (
-                    <DIV>
+                    <div>
                         <SaleDetail fullSalePrice={fullSalePrice} />
                         <Card className="mt-4">
                             <div className="inline-block px-4 py-2 text-white rounded-md cursor-pointer bg-slate-700 hover:bg-slate-600">
                                 <input type="submit" />
                             </div>
                         </Card>
-                    </DIV>
+                    </div>
                 )}
             </form>
         </div>
