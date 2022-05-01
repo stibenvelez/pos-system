@@ -7,11 +7,18 @@ import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { addProductToSailDetailAction } from "../../../actions/saleActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addProductToSaleDetailAction,
+    readDataNewSaleAction,
+    RegisterOneNewSaleAction,
+} from "../../../actions/saleActions";
+import Card from "../../ui/Card/Card";
+import { toast } from "react-toastify";
 
 const initialStateNewProduct = {
     category: "",
+    product: "",
     productName: "",
     quantity: 1,
     unitPrice: "",
@@ -25,55 +32,87 @@ const FormNewSale = () => {
         documentType: 1,
         document: "",
     });
-    const [detailSale, setDetailSale] = useState([]);
-    const [newProduct, setProduct] = useState(initialStateNewProduct);
+    const [newProduct, setNewProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
+    const [productsFiltered, setproductsFiltered] = useState([]);
 
-    const addProductToSailDetail = (newProduct) =>dispatch(addProductToSailDetailAction(newProduct))
+    const addProductToSailDetail = (newProduct) => {
+        dispatch(addProductToSaleDetailAction(newProduct));
+        setNewProduct(initialStateNewProduct);
+    };
+
+    const readDataNewSale = (DataNewSale) =>
+        dispatch(readDataNewSaleAction(DataNewSale));
+
+    const RegisterOneNewSale = (sale) =>
+        dispatch(RegisterOneNewSaleAction(sale));
+
+    const newSale = useSelector(({ sales }) => sales.newSale);
 
     useEffect(() => {
-        const total = detailSale.reduce(
+        const total = newSale.detail.reduce(
             (acc, value) => acc + value.totalPrice,
             0
         );
         setFulSalePrice(total);
-    }, [detailSale]);
+    }, [newSale.detail]);
 
     const handleSale = (e) => {
-        setSale({
+        readDataNewSale({
             ...sale,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleProduct = (e) => {
-        setProduct({
-            ...newProduct,
-            [e.target.name]: e.target.value,
-        });
+    const findProductName = (idProduct) => {
+        if (idProduct) {
+            const result = productsFiltered.filter(
+                (product) => product.idProduct === parseInt(idProduct)
+            );
+            return result[0].product;
+        }
+        return "";
     };
 
     const addProductToDetail = () => {
         const id = uuid();
         newProduct.id = id;
         newProduct.totalPrice = newProduct.quantity * newProduct.unitPrice;
+        newProduct.productName = findProductName(newProduct.product);
 
-        if (newProduct.category === "") {
-            console.error("campos obligatorios vacios");
+        if (
+            newProduct.category === "" ||
+            newProduct.product === "" ||
+            newProduct.quantity <= 0 ||
+            newProduct.unitPrice <= 0
+        ) {
+            toast.error("Complete los campos obligatorios", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+
             return;
-        }
-        
-        addProductToSailDetail(newProduct);
+        } else {
+            console.log("llega aqui");
 
-        setDetailSale([...detailSale, newProduct]);
-        setProduct(initialStateNewProduct);
+            addProductToSailDetail(newProduct);
+        }
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        RegisterOneNewSale(newSale);
+    };
 
     return (
-        <div className="">
+        <div className="" onSubmit={handleSubmit}>
             <form>
-                <div className="bg-white p-4 shadow rounded-md">
+                <div className="p-4 bg-white rounded-md shadow">
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-2">
                             <label
@@ -87,7 +126,7 @@ const FormNewSale = () => {
                                 type="date"
                                 name="date"
                                 autoComplete="given-name"
-                                className="border border-gray-200 rounded-md px-2 py-1 block "
+                                className="block px-2 py-1 border border-gray-200 rounded-md "
                                 onChange={handleSale}
                                 value={sale.date}
                             />
@@ -95,24 +134,30 @@ const FormNewSale = () => {
                     </div>
                     <ClientData handleSale={handleSale} sale={sale} />
                     <ProductData
-                        handleProduct={handleProduct}
                         newProduct={newProduct}
+                        setNewProduct={setNewProduct}
+                        productsFiltered={productsFiltered}
+                        setproductsFiltered={setproductsFiltered}
                     />
                 </div>
-                <div className="py-2 flex justify-center ">
+                <div className="flex justify-center py-2 ">
                     <button
                         type="button"
-                        className="bg-emerald-500 text-white hover:bg-emerald-300 cursor-pointer rounded-full p-3 block w-12 h-12 shadow-md"
+                        className="block w-12 h-12 p-3 text-white rounded-full shadow-md cursor-pointer bg-emerald-500 hover:bg-emerald-300"
                         onClick={addProductToDetail}
                     >
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
-                {detailSale.length !== 0 && (
-                    <SaleDetail
-                        detailSale={detailSale}
-                        fullSalePrice={fullSalePrice}
-                    />
+                {newSale.detail.length !== 0 && (
+                    <div>
+                        <SaleDetail fullSalePrice={fullSalePrice} />
+                        <Card className="mt-4">
+                            <div className="inline-block px-4 py-2 text-white rounded-md cursor-pointer bg-slate-700 hover:bg-slate-600">
+                                <input type="submit" />
+                            </div>
+                        </Card>
+                    </div>
                 )}
             </form>
         </div>

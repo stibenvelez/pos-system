@@ -1,14 +1,15 @@
-import React from "react";
+import {useEffect} from "react";
 import Card from "../../ui/Card/Card";
 
 import ItemSailDetail from "./ItemSailDetail";
 
 // Redux
 import { useSelector } from "react-redux";
+import formatMoney from "../../../helpers/formatMoney";
 
-const SaleDetail = ({ detailSale, fullSalePrice }) => {
-    const sailDetails = useSelector(({ sales }) => sales.salesDetail);
-
+const SaleDetail = () => {
+    const sailDetails = useSelector(({ sales }) => sales.newSale.detail);
+   
     return (
         <Card>
             <div className="relative overflow-x-auto  sm:rounded-lg">
@@ -41,7 +42,7 @@ const SaleDetail = ({ detailSale, fullSalePrice }) => {
                         <tr className="text-gray-700 border-b">
                             <td className="py-3 px-6 text-xl">Total:</td>
                             <td className="py-3 px-6 text-xl font-semibold">
-                                {fullSalePrice}
+                                {formatMoney.format(sailDetails.reduce((acc,value)=>acc+value.totalPrice, 0))}
                             </td>
                         </tr>
                     </tfoot>
