@@ -1,36 +1,49 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import clienteAxios from "../../../config/axios";
 
-const ProductData = ({ handleProduct, newProduct }) => {
-    const [productCategories, setProductCategories] = useState([])
-    const [productsFiltered, setproductsFiltered] = useState([]);
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+
+const ProductData = ({
+    newProduct,
+    setNewProduct,
+    productsFiltered,
+    setproductsFiltered,
+}) => {
+    const [productCategories, setProductCategories] = useState([]);
+
     const products = useSelector(({ products }) => products.products);
-    
+
     useEffect(() => {
         const getProductCategories = async () => {
-            const res = await clienteAxios('/product-categories')
-            setProductCategories(res.data)
-        }
-        getProductCategories()
-    }, [])
+            const res = await clienteAxios("/product-categories");
+            setProductCategories(res.data);
+        };
+        getProductCategories();
+    }, []);
 
     useEffect(() => {
         const filterPrductByCategorySelected = async () => {
-            const idCategorySelected = parseInt(newProduct.category)
-            const filterByCategory = (product) => {        
-                    
-                    return product.idProductCategory === idCategorySelected;
-
-            }          
+            const idCategorySelected = parseInt(newProduct.category);
+            const filterByCategory = (product) => {
+                return product.idProductCategory === idCategorySelected;
+            };
             const result = await products.filter(filterByCategory);
             setproductsFiltered(result);
         };
         filterPrductByCategorySelected();
-    }, [handleProduct]);
-    
+    }, [newProduct]);
 
-    
+    useEffect(() => {
+        console.log("cambiando categoria...");
+    }, [newProduct]);
+
+    const handleProduct = (e) => {
+        setNewProduct({
+            ...newProduct,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     return (
         <div className="mt-3">
@@ -80,8 +93,8 @@ const ProductData = ({ handleProduct, newProduct }) => {
                         autoComplete="product"
                         className="mt-1 block w-full py-2 px-3 border border-gray-200 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
                         onChange={handleProduct}
-                        value={newProduct.product}
                         disabled={newProduct.category === ""}
+                        value={newProduct.product}
                     >
                         <option hidden value="">
                             --selecionar --

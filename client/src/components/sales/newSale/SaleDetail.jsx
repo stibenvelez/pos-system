@@ -5,6 +5,7 @@ import ItemSailDetail from "./ItemSailDetail";
 
 // Redux
 import { useSelector } from "react-redux";
+import formatMoney from "../../../helpers/formatMoney";
 
 const SaleDetail = () => {
     const sailDetails = useSelector(({ sales }) => sales.newSale.detail);
@@ -41,7 +42,7 @@ const SaleDetail = () => {
                         <tr className="text-gray-700 border-b">
                             <td className="py-3 px-6 text-xl">Total:</td>
                             <td className="py-3 px-6 text-xl font-semibold">
-                                {sailDetails.reduce((acc,value)=>acc+value.totalPrice, 0)}
+                                {formatMoney.format(sailDetails.reduce((acc,value)=>acc+value.totalPrice, 0))}
                             </td>
                         </tr>
                     </tfoot>

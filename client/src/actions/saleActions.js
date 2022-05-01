@@ -1,4 +1,5 @@
 import clienteAxios from "../config/axios";
+import { ToastContainer, toast } from "react-toastify";
 import {
     ADD_NEW_PRODUCT_DETAIL,
     REMOVE_ITEM_PRODUCT_DETAIL,
@@ -25,7 +26,17 @@ const addProductToSaleDetail = (product) => ({
 export const removeItemFromSaleDetailAction = (id) => {
     return (dispatch) => {
         dispatch(removeItemFromSaleDetail(id));
+                        toast.success("Producto eliminado!", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        });
     };
+    
 };
 
 const removeItemFromSaleDetail = (id) => ({
@@ -49,11 +60,10 @@ const readDataNewSale = (product) => ({
 
 // Register one new sale
 export const RegisterOneNewSaleAction = (sale) => {
-    console.log("REGISTER-->", sale);
     return async dispatch => {
         dispatch(registerNewSale())
         const res = await clienteAxios.post('/sales', sale)
-        console.log(res)
+
         try {
             dispatch(registerNewSaleSuccess())
         } catch (error) {
@@ -73,3 +83,4 @@ const registerNewSaleSuccess = ()=>({
 const registerNewSaleError = ()=>({
     type: POST_NEW_SALE_ERROR
 })
+
