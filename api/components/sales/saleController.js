@@ -1,5 +1,4 @@
-
-import { allSales } from "./saleServices.js";
+import { allSales, insertNewSale } from "./saleServices.js";
 
 export const getAllSales = async (req, res) => {
     try {
@@ -11,3 +10,12 @@ export const getAllSales = async (req, res) => {
     }
 };
 
+export const createNewSale = async (req, res) => {
+    try {
+        await insertNewSale(req.body);
+        res.json({ msg: 'Datos almacenados' });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: "Hubo un error"});
+    }
+};

@@ -7,3 +7,34 @@ export const allSales = async () => {
         throw error;
     }
 };
+export const insertNewSale = async ({ dataSale, detail }) => {
+    try {
+        await connection.query("START TRANSACTION");
+        const sqlDataSale = `INSERT INTO 
+            Sales (document) 
+            VALUES(?)`;
+        const [rows] = await connection.query(sqlDataSale, [dataSale.document]);
+
+        const idSale = rows.insertId;
+        const sqlDetailSail = `INSERT INTO 
+            SaleDetail (idSale, idCategorsy, IdProduct, quantity, unitPrice, totalPrice, observations) 
+            VALUES ? `;
+
+        const arrayDetail = detail.map((detail) => [
+            idSale,
+            detail.category,
+            detail.product,
+            detail.quantity,
+            detail.unitPrice,
+            detail.totalPrice,
+            detail.observatiosn,
+        ]);
+
+        await connection.query(sqlDetailSail, [arrayDetail]);
+        const result =await connection.query(`COMMIT`);
+        return result;
+    } catch (error) {
+        await connection.query("ROLLBACK");
+        throw error;
+    }
+};
