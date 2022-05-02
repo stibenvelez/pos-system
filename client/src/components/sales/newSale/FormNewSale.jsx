@@ -48,7 +48,7 @@ const FormNewSale = () => {
         dispatch(RegisterOneNewSaleAction(sale));
 
     const newSale = useSelector(({ sales }) => sales.newSale);
-
+    
     useEffect(() => {
         const total = newSale.detail.reduce(
             (acc, value) => acc + value.totalPrice,
@@ -130,7 +130,7 @@ const FormNewSale = () => {
                             />
                         </div>
                     </div>
-                    <ClientData handleSale={handleSale} sale={sale} />
+                    <ClientData handleSale={handleSale} newSale={newSale} />
                     <ProductData
                         newProduct={newProduct}
                         setNewProduct={setNewProduct}
@@ -151,8 +151,12 @@ const FormNewSale = () => {
                     <div>
                         <SaleDetail fullSalePrice={fullSalePrice} />
                         <Card className="mt-4">
-                            <div className="inline-block px-4 py-2 text-white rounded-md cursor-pointer bg-slate-700 hover:bg-slate-600">
-                                <input type="submit" />
+                            <div className="">
+                                <input
+                                    className="inline-block px-4 py-2 text-white rounded-md cursor-pointer bg-slate-700 hover:bg-slate-600"
+                                    type="submit"
+                                    value="Registrar venta"
+                                />
                             </div>
                         </Card>
                     </div>

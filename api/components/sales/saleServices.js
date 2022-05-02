@@ -17,7 +17,7 @@ export const insertNewSale = async ({ dataSale, detail }) => {
 
         const idSale = rows.insertId;
         const sqlDetailSail = `INSERT INTO 
-            SaleDetail (idSale, idCategorsy, IdProduct, quantity, unitPrice, totalPrice, observations) 
+            SaleDetail (idSale, idCategory, IdProduct, quantity, unitPrice, totalPrice, observations) 
             VALUES ? `;
 
         const arrayDetail = detail.map((detail) => [
