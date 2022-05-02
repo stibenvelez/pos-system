@@ -34,10 +34,6 @@ const ProductData = ({
         filterPrductByCategorySelected();
     }, [newProduct]);
 
-    useEffect(() => {
-        console.log("cambiando categoria...");
-    }, [newProduct]);
-
     const handleProduct = (e) => {
         setNewProduct({
             ...newProduct,
@@ -132,7 +128,7 @@ const ProductData = ({
                         htmlFor="unitPrice"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Precio*
+                        Precio por unidad*
                     </label>
                     <input
                         id="unitPrice"

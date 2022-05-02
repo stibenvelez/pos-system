@@ -7,6 +7,9 @@ import {
     POST_NEW_SALE,
     POST_NEW_SALE_SUCCESS,
     POST_NEW_SALE_ERROR,
+    GET_ALL_SALES,
+    GET_ALL_SALES_SUCCESS,
+    GET_ALL_SALES_ERROR,
 } from "../types/salesTypes";
 
 // add new product to sail detail
@@ -21,29 +24,26 @@ const addProductToSaleDetail = (product) => ({
     payload: product,
 });
 
-
 // remove item from sale detail
 export const removeItemFromSaleDetailAction = (id) => {
     return (dispatch) => {
         dispatch(removeItemFromSaleDetail(id));
-                        toast.success("Producto eliminado!", {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined,
-                        });
+        toast.success("Producto eliminado!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
     };
-    
 };
 
 const removeItemFromSaleDetail = (id) => ({
     type: REMOVE_ITEM_PRODUCT_DETAIL,
     payload: id,
 });
-
 
 // read data new sale
 export const readDataNewSaleAction = (dataSale) => {
@@ -52,35 +52,69 @@ export const readDataNewSaleAction = (dataSale) => {
     };
 };
 
-const readDataNewSale = (product) => ({
+const readDataNewSale = (dataSale) => ({
     type: READ_DATA_NEW_SALE,
-    payload: product,
+    payload: dataSale,
 });
 
+// GET ALL SALES
+export const getAllSalesAction = (sale) => {
+    return async (dispatch) => {
+        dispatch(getAllSales());
+        const sales = await clienteAxios.get("/sales", sale);
+
+        try {
+            dispatch(getAllSalesSuccess(sales.data));
+        } catch (error) {
+            dispatch(getAllSalesError());
+        }
+    };
+};
+
+const getAllSales = () => ({
+    type: GET_ALL_SALES,
+});
+
+const getAllSalesSuccess = (sales) => ({
+    type: GET_ALL_SALES_SUCCESS,
+    payload: sales,
+});
+
+const getAllSalesError = () => ({
+    type: GET_ALL_SALES_ERROR,
+});
 
 // Register one new sale
 export const RegisterOneNewSaleAction = (sale) => {
-    return async dispatch => {
-        dispatch(registerNewSale())
-        const res = await clienteAxios.post('/sales', sale)
-
+    return async (dispatch) => {
+        dispatch(registerNewSale(sale));
+        const ressult = await clienteAxios.post("/sales", sale);
+        console.log(ressult);
+        toast.success(ressult.data.msg, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
         try {
-            dispatch(registerNewSaleSuccess())
+            dispatch(registerNewSaleSuccess());
         } catch (error) {
             dispatch(registerNewSaleError());
         }
-    }
-}
+    };
+};
 
-const registerNewSale = ()=>({
-    type: POST_NEW_SALE
-})
+const registerNewSale = () => ({
+    type: POST_NEW_SALE,
+});
 
-const registerNewSaleSuccess = ()=>({
-    type: POST_NEW_SALE_SUCCESS
-})
+const registerNewSaleSuccess = () => ({
+    type: POST_NEW_SALE_SUCCESS,
+});
 
-const registerNewSaleError = ()=>({
-    type: POST_NEW_SALE_ERROR
-})
-
+const registerNewSaleError = () => ({
+    type: POST_NEW_SALE_ERROR,
+});

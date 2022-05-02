@@ -13,9 +13,9 @@ export const getAllSales = async (req, res) => {
 export const createNewSale = async (req, res) => {
     try {
         await insertNewSale(req.body);
-        res.json({ msg: 'Datos almacenados' });
+        res.json({ msg: '¡Ingreso registrado con exito!' });
     } catch (error) {
         console.log(error);
-        res.status(400).json({ msg: "Hubo un error"});
+        res.status(400).json({ msg: "Hubo un error registrando el ingreso"});
     }
 };
