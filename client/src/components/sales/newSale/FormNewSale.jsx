@@ -98,8 +98,6 @@ const FormNewSale = () => {
 
             return;
         } else {
-            console.log("llega aqui");
-
             addProductToSailDetail(newProduct);
         }
     };

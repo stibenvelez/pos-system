@@ -1,8 +1,8 @@
 import express from "express";
-import {getAllSales} from './saleController.js'
+import {createNewSale, getAllSales} from './saleController.js'
 const router = express.Router();
 
 router.get("/", getAllSales);
-router.post("/", (req, res)=>console.log(req.bodyclear));
+router.post("/", createNewSale);
 
 export default router;
