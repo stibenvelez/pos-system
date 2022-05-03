@@ -10,6 +10,7 @@ import {
     GET_ALL_SALES,
     GET_ALL_SALES_SUCCESS,
     GET_ALL_SALES_ERROR,
+    FILTER_SALES_LIST,
 } from "../types/salesTypes";
 
 // add new product to sail detail
@@ -117,4 +118,17 @@ const registerNewSaleSuccess = () => ({
 
 const registerNewSaleError = () => ({
     type: POST_NEW_SALE_ERROR,
+});
+
+
+// filter Sales list
+export const FilterSalesListAction = filter => {
+    return async dispatch => {
+        dispatch(filterSales(filter));
+    }
+}
+
+const filterSales = (filters) => ({
+    type: FILTER_SALES_LIST,
+    payload: filters,
 });
