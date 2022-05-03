@@ -35,6 +35,9 @@ const SalesList = () => {
                               Documento
                           </th>
                           <th scope="col" className="px-6 py-3">
+                              Total
+                          </th>
+                          <th scope="col" className="px-6 py-3">
                               Fecha
                           </th>
                           <th scope="col" className="px-6 py-3">

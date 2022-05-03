@@ -89,10 +89,10 @@ export const RegisterOneNewSaleAction = (sale) => {
     return async (dispatch) => {
         dispatch(registerNewSale(sale));
         const ressult = await clienteAxios.post("/sales", sale);
-        console.log(ressult);
+        
         toast.success(ressult.data.msg, {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: false,

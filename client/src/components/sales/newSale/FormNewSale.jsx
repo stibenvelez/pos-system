@@ -5,7 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
-
+import { useFormik, validateYupSchema } from "formik";
+ import Card from "../../ui/Card/Card";
+import { toast } from "react-toastify";
+ 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,8 +16,8 @@ import {
     readDataNewSaleAction,
     RegisterOneNewSaleAction,
 } from "../../../actions/saleActions";
-import Card from "../../ui/Card/Card";
-import { toast } from "react-toastify";
+import NewSaleSchema from "./validate";
+
 
 const initialStateNewProduct = {
     category: "",
@@ -48,7 +51,7 @@ const FormNewSale = () => {
         dispatch(RegisterOneNewSaleAction(sale));
 
     const newSale = useSelector(({ sales }) => sales.newSale);
-    
+
     useEffect(() => {
         const total = newSale.detail.reduce(
             (acc, value) => acc + value.totalPrice,
@@ -102,10 +105,14 @@ const FormNewSale = () => {
         }
     };
 
+   
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        RegisterOneNewSale(newSale);
-    };
+
+        //RegisterOneNewSale(newSale);
+
+    }
 
     return (
         <div className="" onSubmit={handleSubmit}>

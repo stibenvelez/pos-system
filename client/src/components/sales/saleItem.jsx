@@ -1,7 +1,9 @@
 import React from 'react'
+import formatDate from '../../helpers/FormatFecha';
+import formatMoney from '../../helpers/formatMoney';
 
 const SaleItem = ({sale}) => {
-    const { id, document, date } = sale;
+    const { id, document, date, totalPrice } = sale;
 
     return (
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -12,11 +14,20 @@ const SaleItem = ({sale}) => {
             >
                 {document}
             </th>
-            <td class="px-6 py-4">{date}</td>
-            <div className="flex gap-3">
-                <button>ver</button>
-                <button>Editar</button>
-                <button>Anular</button>
+            <td class="px-6 py-4 font-semibold">
+                {formatMoney.format(totalPrice)}
+            </td>
+            <td class="px-6 py-4">{formatDate(date)}</td>
+            <div className="flex items-center py-4  ">
+                <button className="bg-gray-400 transition duration-200 ease-in-out hover:bg-gray-600 px-2 py-1 rounded-l text-white items-center">
+                    ver
+                </button>
+                <button className="bg-gray-400 transition duration-200 ease-in-out hover:bg-blue-800 px-2 py-1 text-white items-center">
+                    Editar
+                </button>
+                <button className="bg-gray-400 transition duration-200 ease-in-out hover:bg-red-500 px-2 py-1 rounded-r text-white items-center">
+                    Anular
+                </button>
             </div>
         </tr>
     );

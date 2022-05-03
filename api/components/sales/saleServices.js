@@ -10,10 +10,19 @@ export const allSales = async () => {
 export const insertNewSale = async ({ dataSale, detail }) => {
     try {
         await connection.query("START TRANSACTION");
+        const totalSale = await detail.reduce(
+            (acc, value) => acc + value.totalPrice,
+            0
+        );
+        
         const sqlDataSale = `INSERT INTO 
-            Sales (document) 
-            VALUES(?)`;
-        const [rows] = await connection.query(sqlDataSale, [dataSale.document]);
+            Sales (document, totalPrice) 
+            VALUES(?, ?)`;
+        
+        const [rows] = await connection.query(sqlDataSale, [
+            dataSale.document,
+            totalSale,
+        ]);
 
         const idSale = rows.insertId;
         const sqlDetailSail = `INSERT INTO 
