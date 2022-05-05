@@ -7,14 +7,17 @@ export const allSales = async (filters) => {
         const sql = `
         SELECT * 
         FROM Sales AS s 
-        WHERE
+        WHERE 
         
-        ${dateFrom ? `s.date >= '${dateFrom}'` : ""}
-        ${dateTo ? ` AND s.date <= '${dateTo}'` : ""}
-        ${state ? ` AND s.idStateSale = '${state}'` : ""}
+        
+        ${dateTo === dateFrom ? `s.date LIKE '%${dateFrom}%'` : ""}
+        ${dateTo != dateFrom ? ` s.date >= '${dateFrom}'` : ""}
+        ${dateTo !== dateFrom ? ` AND s.date <= '${dateTo}'` : ""}
+        ${state ? `AND s.idStateSale = '${state}'` : ""}
         
         
         `;
+        console.log(sql);
         return await connection.query(sql);
     } catch (error) {
         throw error;
