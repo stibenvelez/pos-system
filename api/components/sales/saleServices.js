@@ -1,8 +1,21 @@
 import connection from "../../config/db.js";
 
-export const allSales = async () => {
+export const allSales = async (filters) => {
+    const { dateFrom, dateTo, state } = filters;
+    console.log(filters);
     try {
-        return await connection.query("SELECT * FROM Sales");
+        const sql = `
+        SELECT * 
+        FROM Sales AS s 
+        WHERE
+        
+        ${dateFrom ? `s.date >= '${dateFrom}'` : ""}
+        ${dateTo ? ` AND s.date <= '${dateTo}'` : ""}
+        ${state ? ` AND s.idStateSale = '${state}'` : ""}
+        
+        
+        `;
+        return await connection.query(sql);
     } catch (error) {
         throw error;
     }
@@ -14,11 +27,11 @@ export const insertNewSale = async ({ dataSale, detail }) => {
             (acc, value) => acc + value.totalPrice,
             0
         );
-        
+
         const sqlDataSale = `INSERT INTO 
             Sales (document, totalPrice) 
             VALUES(?, ?)`;
-        
+
         const [rows] = await connection.query(sqlDataSale, [
             dataSale.document,
             totalSale,
@@ -40,7 +53,7 @@ export const insertNewSale = async ({ dataSale, detail }) => {
         ]);
 
         await connection.query(sqlDetailSail, [arrayDetail]);
-        const result =await connection.query(`COMMIT`);
+        const result = await connection.query(`COMMIT`);
         return result;
     } catch (error) {
         await connection.query("ROLLBACK");

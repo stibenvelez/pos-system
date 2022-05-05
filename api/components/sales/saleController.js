@@ -1,8 +1,9 @@
 import { allSales, insertNewSale } from "./saleServices.js";
 
 export const getAllSales = async (req, res) => {
+
     try {
-        const [rows] = await allSales();
+        const [rows] = await allSales(req.query);
         res.json(rows);
     } catch (error) {
         console.log(error);

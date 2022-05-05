@@ -58,11 +58,11 @@ const readDataNewSale = (dataSale) => ({
     payload: dataSale,
 });
 
-// GET ALL SALES
-export const getAllSalesAction = (sale) => {
+// GET ALL SALES 
+export const getAllSalesAction = (filters) => {
     return async (dispatch) => {
         dispatch(getAllSales());
-        const sales = await clienteAxios.get("/sales", sale);
+        const sales = await clienteAxios.get(`/sales`,{ params: filters });
 
         try {
             dispatch(getAllSalesSuccess(sales.data));

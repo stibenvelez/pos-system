@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
-import { useFormik, validateYupSchema } from "formik";
+
  import Card from "../../ui/Card/Card";
 import { toast } from "react-toastify";
  
@@ -16,7 +16,7 @@ import {
     readDataNewSaleAction,
     RegisterOneNewSaleAction,
 } from "../../../actions/saleActions";
-import NewSaleSchema from "./validate";
+
 
 
 const initialStateNewProduct = {

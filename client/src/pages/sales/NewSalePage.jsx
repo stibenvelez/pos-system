@@ -4,19 +4,19 @@ import { ToastContainer, toast } from "react-toastify";
 // Axios
 import { useDispatch } from "react-redux";
 import { getAllProductsActions } from "../../actions/productsActions";
+import { object, string, number } from "yup";
 
 const NewSalePage = () => {
-    
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
         const getProducts = () => dispatch(getAllProductsActions());
         getProducts();
     }, []);
 
+
     return (
         <div className="container mx-auto ">
-            <ToastContainer
-            />
+            <ToastContainer />
             <div className="pb-3">
                 <h1 className="text-3xl font-bold text-slate-800">
                     Nueva venta

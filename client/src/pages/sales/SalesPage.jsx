@@ -7,11 +7,12 @@ import FilterOptions from "../../components/sales/FilterOptions";
 
 const SalesPage = () => {
     const dispatch = useDispatch();
+    const filters = useSelector(({ sales }) => sales.filters);
 
     useEffect(() => {
-        const allSales = () => dispatch(getAllSalesAction());
+        const allSales = () => dispatch(getAllSalesAction(filters));
         allSales();
-    }, []);
+    }, [filters]);
 
     return (
         <div className="container mx-auto ">

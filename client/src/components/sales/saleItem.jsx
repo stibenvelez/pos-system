@@ -1,6 +1,7 @@
-import React from 'react'
 import formatDate from '../../helpers/FormatFecha';
 import formatMoney from '../../helpers/formatMoney';
+
+
 
 const SaleItem = ({sale}) => {
     const { id, document, date, totalPrice } = sale;
@@ -17,7 +18,7 @@ const SaleItem = ({sale}) => {
             <td class="px-6 py-4 font-semibold">
                 {formatMoney.format(totalPrice)}
             </td>
-            <td class="px-6 py-4">{formatDate(date)}</td>
+            <td class="px-6 py-4">{date}</td>
             <div className="flex items-center py-4  ">
                 <button className="bg-gray-400 transition duration-200 ease-in-out hover:bg-gray-600 px-2 py-1 rounded-l text-white items-center">
                     ver

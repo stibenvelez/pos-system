@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "sweetalert2": "^11.4.9",
-    "yup": "^0.32.11"
-  }
-}
