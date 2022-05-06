@@ -4,15 +4,22 @@ import clienteAxios from "../../../config/axios";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 
+
 const ProductData = ({
     newProduct,
     setNewProduct,
     productsFiltered,
     setproductsFiltered,
 }) => {
+    const dispatch = useDispatch()
     const [productCategories, setProductCategories] = useState([]);
 
+
+
     const products = useSelector(({ products }) => products.products);
+    const errorsNewProduct = useSelector(
+        ({ sales }) => sales.errorsNewProduct
+    );
 
     useEffect(() => {
         const getProductCategories = async () => {
@@ -39,6 +46,7 @@ const ProductData = ({
             ...newProduct,
             [e.target.name]: e.target.value,
         });
+        
     };
 
     return (
@@ -61,6 +69,8 @@ const ProductData = ({
                         autoComplete="category"
                         className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
+                        onBlur={handleProduct}
+                        onTouchEnd={(e) => console.log(e)}
                         value={newProduct.category}
                     >
                         <option hidden value="">
@@ -75,6 +85,13 @@ const ProductData = ({
                             </option>
                         ))}
                     </select>
+                    {errorsNewProduct.category && newProduct.category == "" && (
+                        <div>
+                            <p className="text-red-600 text-sm p-1">
+                                {errorsNewProduct.category}
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label
@@ -89,6 +106,7 @@ const ProductData = ({
                         autoComplete="product"
                         className="mt-1 block w-full py-2 px-3 border border-gray-200 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
                         onChange={handleProduct}
+                        onBlur={handleProduct}
                         disabled={newProduct.category === ""}
                         value={newProduct.product}
                     >
@@ -105,6 +123,13 @@ const ProductData = ({
                                 </option>
                             ))}
                     </select>
+                    {errorsNewProduct.product && newProduct.product == "" && (
+                        <div>
+                            <p className="text-red-600 text-sm p-1">
+                                {errorsNewProduct.product}
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label
@@ -120,8 +145,17 @@ const ProductData = ({
                         autoComplete="quantity"
                         className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
+                        onBlur={handleProduct}
                         value={newProduct.quantity}
                     />
+                    {}
+                    {errorsNewProduct.quantity && newProduct.quantity == "" && (
+                        <div>
+                            <p className="text-red-600 text-sm p-1">
+                                {errorsNewProduct.quantity}
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label
@@ -136,8 +170,16 @@ const ProductData = ({
                         type="number"
                         className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
+                        onBlur={handleProduct}
                         value={newProduct.unitPrice}
                     />
+                    {errorsNewProduct.unitPrice && newProduct.unitPrice == "" && (
+                        <div>
+                            <p className="text-red-600 text-sm p-1">
+                                {errorsNewProduct.unitPrice}
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-2">

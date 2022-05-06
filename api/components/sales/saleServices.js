@@ -2,24 +2,38 @@ import connection from "../../config/db.js";
 
 export const allSales = async (filters) => {
     const { dateFrom, dateTo, state } = filters;
-    console.log(filters);
+
     try {
         const sql = `
         SELECT * 
         FROM Sales AS s 
-        WHERE
-        
-        ${dateFrom ? `s.date >= '${dateFrom}'` : ""}
-        ${dateTo ? ` AND s.date <= '${dateTo}'` : ""}
-        ${state ? ` AND s.idStateSale = '${state}'` : ""}
+        WHERE 
         
         
+        ${dateTo === dateFrom ? "s.date LIKE '%" + dateFrom + "%'" : ""}
+        ${dateTo != dateFrom ? " s.date >= '" + dateFrom + "'" : ""}
+        ${dateTo !== dateFrom ? "AND s.date <= '" + dateTo + "'" : ""}
+        ${state ? "AND s.idStateSale = '" + state + "'" : ""}
+        
+        ORDER BY s.date DESC 
         `;
+        console.log(sql);
         return await connection.query(sql);
     } catch (error) {
         throw error;
     }
 };
+
+export const SaleById = async (id) => {
+    try {
+        const sql = `SELECT * FROM Sales WHERE id=${id}`;
+        return await connection.query(sql);
+    } catch (error) {
+        console.log(sql);
+        return await connection.query(sql);
+    }
+};
+
 export const insertNewSale = async ({ dataSale, detail }) => {
     try {
         await connection.query("START TRANSACTION");
