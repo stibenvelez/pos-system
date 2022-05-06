@@ -7,24 +7,11 @@ import * as RiIcons from "react-icons/ri";
 
 export const SidebarData = [
     {
-        title: "Overview",
-        path: "#",
+        title: "Home",
+        path: "/",
         icon: null,
         iconClosed: null,
         iconOpened: null,
-
-        subNav: [
-            {
-                title: "Users",
-                path: "/overview/users",
-                icon: null,
-            },
-            {
-                title: "Revenue",
-                path: "/overview/revenue",
-                icon: null,
-            },
-        ],
     },
     {
         title: "Ventas",

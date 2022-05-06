@@ -45,7 +45,7 @@ const SubMenu = ({ item }) => {
 
     return (
         <>
-            <Link className="flex text-white justify-between items-center p-5 text-base hover:bg-slate-700 hover:border-l-4 cursor-pointer" to={item.path} onClick={item.subNav && showSubnav}>
+            <Link className="flex items-center justify-between p-5 text-base text-white cursor-pointer hover:bg-slate-700 hover:border-l-4 hover:pl-4" to={item.path} onClick={item.subNav && showSubnav}>
                 <div>
                     {item.icon}
                     <span className="ml-4">{item.title}</span>
@@ -61,7 +61,7 @@ const SubMenu = ({ item }) => {
             {subnav &&
                 item.subNav.map((item, index) => {
                     return (
-                        <Link className="bg-slate-900 pl-3 flex items-center hover:bg-slate-600 text-white py-3"  to={item.path} key={index}>
+                        <Link className="flex items-center py-3 pl-5 text-white bg-slate-900 hover:bg-slate-600"  to={item.path} key={index}>
                             {item.icon}
                             <span>{item.title}</span>
                         </Link>
