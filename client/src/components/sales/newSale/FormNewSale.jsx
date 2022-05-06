@@ -6,15 +6,18 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
 
+import Card from "../../ui/Card/Card";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
     addProductToSaleDetailAction,
     readDataNewSaleAction,
     RegisterOneNewSaleAction,
+    validateErrorsNewProductAction,
 } from "../../../actions/saleActions";
-import Card from "../../ui/Card/Card";
-import { toast } from "react-toastify";
+import validateAddProduct from "./validateAddProduct";
 
 const initialStateNewProduct = {
     category: "",
@@ -41,6 +44,10 @@ const FormNewSale = () => {
         setNewProduct(initialStateNewProduct);
     };
 
+    const validateErrorsNewProduct = (errors) => {
+        dispatch(validateErrorsNewProductAction(errors));
+    };
+
     const readDataNewSale = (DataNewSale) =>
         dispatch(readDataNewSaleAction(DataNewSale));
 
@@ -48,7 +55,7 @@ const FormNewSale = () => {
         dispatch(RegisterOneNewSaleAction(sale));
 
     const newSale = useSelector(({ sales }) => sales.newSale);
-    
+
     useEffect(() => {
         const total = newSale.detail.reduce(
             (acc, value) => acc + value.totalPrice,
@@ -74,18 +81,15 @@ const FormNewSale = () => {
         return "";
     };
 
-    const addProductToDetail = () => {
+    const addProductToDetail = async () => {
         const id = uuid();
         newProduct.id = id;
         newProduct.totalPrice = newProduct.quantity * newProduct.unitPrice;
         newProduct.productName = findProductName(newProduct.product);
 
-        if (
-            newProduct.category === "" ||
-            newProduct.product === "" ||
-            newProduct.quantity <= 0 ||
-            newProduct.unitPrice <= 0
-        ) {
+        const errors = validateAddProduct(newProduct);
+
+        if (Object.keys(errors).length) {
             toast.error("Complete los campos obligatorios", {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -95,16 +99,17 @@ const FormNewSale = () => {
                 draggable: true,
                 progress: undefined,
             });
-
+            validateErrorsNewProduct(errors);
             return;
-        } else {
-            addProductToSailDetail(newProduct);
         }
+        addProductToSailDetail(newProduct);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         RegisterOneNewSale(newSale);
+
     };
 
     return (

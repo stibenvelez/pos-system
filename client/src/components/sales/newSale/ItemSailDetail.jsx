@@ -6,14 +6,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { removeItemFromSaleDetailAction } from "../../../actions/saleActions";
 
-
 const ItemSailDetail = ({ detail }) => {
     const dispatch = useDispatch();
 
     const handleRemoveItem = (item) => {
-
         dispatch(removeItemFromSaleDetailAction(item.id));
-
     };
 
     return (

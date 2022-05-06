@@ -1,19 +1,55 @@
 import connection from "../../config/db.js";
 
-export const allSales = async () => {
+export const allSales = async (filters) => {
+    const { dateFrom, dateTo, state } = filters;
+
     try {
-        return await connection.query("SELECT * FROM Sales");
+        const sql = `
+        SELECT * 
+        FROM Sales AS s 
+        WHERE 
+        
+        
+        ${dateTo === dateFrom ? "s.date LIKE '%" + dateFrom + "%'" : ""}
+        ${dateTo != dateFrom ? " s.date >= '" + dateFrom + "'" : ""}
+        ${dateTo !== dateFrom ? "AND s.date <= '" + dateTo + "'" : ""}
+        ${state ? "AND s.idStateSale = '" + state + "'" : ""}
+        
+        ORDER BY s.date DESC 
+        `;
+        console.log(sql);
+        return await connection.query(sql);
     } catch (error) {
         throw error;
     }
 };
+
+export const SaleById = async (id) => {
+    try {
+        const sql = `SELECT * FROM Sales WHERE id=${id}`;
+        return await connection.query(sql);
+    } catch (error) {
+        console.log(sql);
+        return await connection.query(sql);
+    }
+};
+
 export const insertNewSale = async ({ dataSale, detail }) => {
     try {
         await connection.query("START TRANSACTION");
+        const totalSale = await detail.reduce(
+            (acc, value) => acc + value.totalPrice,
+            0
+        );
+
         const sqlDataSale = `INSERT INTO 
-            Sales (document) 
-            VALUES(?)`;
-        const [rows] = await connection.query(sqlDataSale, [dataSale.document]);
+            Sales (document, totalPrice) 
+            VALUES(?, ?)`;
+
+        const [rows] = await connection.query(sqlDataSale, [
+            dataSale.document,
+            totalSale,
+        ]);
 
         const idSale = rows.insertId;
         const sqlDetailSail = `INSERT INTO 
@@ -31,7 +67,7 @@ export const insertNewSale = async ({ dataSale, detail }) => {
         ]);
 
         await connection.query(sqlDetailSail, [arrayDetail]);
-        const result =await connection.query(`COMMIT`);
+        const result = await connection.query(`COMMIT`);
         return result;
     } catch (error) {
         await connection.query("ROLLBACK");

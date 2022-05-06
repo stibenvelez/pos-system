@@ -35,7 +35,7 @@ const ClientData = ({ newSale, handleSale }) => {
                             <option value="4">PPE</option>
                         </select>
                         <input
-                            type="number"
+                            type="text"
                             name="document"
                             id="document"
                             autoComplete="given-document"
