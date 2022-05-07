@@ -6,7 +6,6 @@ import * as RiIcons from "react-icons/ri";
 
 
 export const SidebarData = [
-
     {
         title: "Ventas",
         path: "#",
@@ -17,7 +16,7 @@ export const SidebarData = [
         subNav: [
             {
                 title: "Nueva venta",
-                path: "/sales/new-sale" ,
+                path: "/sales/new-sale",
                 icon: null,
                 cName: "sub-nav",
             },
@@ -33,6 +32,24 @@ export const SidebarData = [
         title: "Products",
         path: "#",
         icon: null,
+        icon: null,
+        iconClosed: null,
+        iconOpened: null,
+
+        subNav: [
+            {
+                title: "Administrar Productos",
+                path: "/products",
+                icon: null,
+                cName: "sub-nav",
+            },
+            {
+                title: "Agregar un producto",
+                path: "products/new-product",
+                icon: null,
+                cName: "sub-nav",
+            },
+        ],
     },
     {
         title: "Team",

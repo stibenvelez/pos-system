@@ -61,7 +61,11 @@ const SubMenu = ({ item }) => {
             {subnav &&
                 item.subNav.map((item, index) => {
                     return (
-                        <Link className="flex items-center py-3 pl-5 text-white bg-slate-900 hover:bg-slate-600"  to={item.path} key={index}>
+                        <Link
+                            className="flex items-center p-5 pl-5 text-white bg-slate-900 hover:bg-slate-600"
+                            to={item.path}
+                            key={index}
+                        >
                             {item.icon}
                             <span>{item.title}</span>
                         </Link>

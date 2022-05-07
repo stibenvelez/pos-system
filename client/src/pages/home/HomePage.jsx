@@ -1,9 +1,12 @@
 import React from 'react'
+import Layout from '../../Layout';
 
 const HomePage = () => {
   return (
-    <div>Desd home page</div>
-  )
+      <Layout>
+          <div>Desd home page</div>
+      </Layout>
+  );
 }
 
 export default HomePage

@@ -24,7 +24,7 @@ const Sidebar = () => {
                 </Link>
             </div>
             <nav
-                className={`bg-slate-800 h-screen sm:w-48 w-full  flex justify-center transition-all duration-75 sm:relative sm:left-0 fixed ease-out ${
+                className={`bg-slate-800 h-screen sm:w-56 w-full  flex justify-center transition-all duration-75 sm:relative sm:left-0 fixed ease-out ${
                     sidebar ? "left-0" : "-left-full "
                 }`}
                 sidebar={sidebar}
