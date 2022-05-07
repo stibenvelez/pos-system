@@ -63,6 +63,7 @@ const removeItemFromSaleDetail = (id) => ({
 
 // read data new sale
 export const readDataNewSaleAction = (dataSale) => {
+    console.log(dataSale);
     return (dispatch) => {
         dispatch(readDataNewSale(dataSale));
     };

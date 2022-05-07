@@ -22,8 +22,7 @@ const initialState = {
         dataSale: {
             date: "2022-04-24",
             documentType: 1,
-            document: "1020455645",
-            uniPrice: 0,
+            document: "",
         },
         detail: [],
     },

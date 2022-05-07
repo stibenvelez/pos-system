@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FilterSalesListAction } from "../../actions/saleActions";
 import Card from "../../components/ui/Card/Card";
 
@@ -18,9 +19,14 @@ const FilterOptions = () => {
     };
 
     return (
-        <Card>
-            <div className="flex flex-col md:flex-row gap-4 justify-between flex-wrap ">
-                <div className="flex flex-col justify-start md:flex-row gap-4 flex-wrap">
+        <>
+            <div className="py-3">
+                <Link to="new-sale" className="bg-slate-800 py-2 px-3 text-white rounded-md hover:bg-slate-700">
+                    Registrar Venta
+                </Link>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-6 gap-2">
+                <div className="flex flex-wrap gap-2 lg:col-span-4">
                     <div className=" ">
                         <label htmlform="dateFrom">Fecha desde: </label>
                         <input
@@ -72,7 +78,7 @@ const FilterOptions = () => {
                         </select>
                     </div>
                 </div>
-                <div className="flex justify-start ">
+                <div className=" justify-end lg:col-start-5  lg:col-end-7">
                     <div className="flex align-middle items-center">
                         <label for="simple-search" class="sr-only">
                             Search
@@ -103,7 +109,7 @@ const FilterOptions = () => {
                     </div>
                 </div>
             </div>
-        </Card>
+        </>
     );
 };
 

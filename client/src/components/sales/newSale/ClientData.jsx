@@ -1,8 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 
-const ClientData = ({ newSale, handleSale }) => {
-    
+const ClientData = ({handleSale, errors }) => {
+    const newSale = useSelector(({ sales }) => sales.newSale);
     const { dataSale } = newSale
 
     return (
@@ -19,7 +20,7 @@ const ClientData = ({ newSale, handleSale }) => {
                     >
                         Documento
                     </label>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center">
                         <select
                             id="documentType"
                             type="text"
@@ -27,7 +28,7 @@ const ClientData = ({ newSale, handleSale }) => {
                             autoComplete="given-documentType"
                             className="border-l border-t border-b border-gray-200 bg-gray-100 rounded-l-md px-2 py-1"
                             onChange={handleSale}
-                            value={dataSale.documentType}
+                            value={newSale.dataSale.documentType}
                         >
                             <option value="1">CC</option>
                             <option value="2">NIT</option>
@@ -41,9 +42,9 @@ const ClientData = ({ newSale, handleSale }) => {
                             autoComplete="given-document"
                             className="border border-gray-200 rounded-r-md px-2 py-1"
                             onChange={handleSale}
-                            value={dataSale.document}
+                            value={newSale.dataSale.document}
                         />
-                        <label>
+                        {/* <label className="ml-3">
                             <input
                                 type="checkbox"
                                 value="true"
@@ -51,9 +52,15 @@ const ClientData = ({ newSale, handleSale }) => {
                                 onChange={handleSale}
                             />{" "}
                             Cliente anómino
-                            
-                        </label>
+                        </label> */}
                     </div>
+                    {errors.document && dataSale.document === "" && (
+                        <div>
+                            <p className="text-red-600 text-sm p-1">
+                                {errors.document}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -30,6 +30,13 @@ const Sidebar = () => {
                 sidebar={sidebar}
             >
                 <div className="w-full ">
+                    <div className="w-full flex justify-center py-4">
+                        <Link to="/">
+                            <a className="text-2xl text-white font-bold">
+                                LOGO
+                            </a>
+                        </Link>
+                    </div>
                     <Link
                         className="absolute items-center justify-end text-xl font-bold text-white right-2 top-3 sm:hidden"
                         to="#"

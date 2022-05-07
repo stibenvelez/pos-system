@@ -9,17 +9,13 @@ const ProductData = ({
     newProduct,
     setNewProduct,
     productsFiltered,
-    setproductsFiltered,
+    setproductsFiltered
 }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [productCategories, setProductCategories] = useState([]);
 
-
-
     const products = useSelector(({ products }) => products.products);
-    const errorsNewProduct = useSelector(
-        ({ sales }) => sales.errorsNewProduct
-    );
+    const errorsNewProduct = useSelector(({ sales }) => sales.errorsNewProduct);
 
     useEffect(() => {
         const getProductCategories = async () => {
@@ -46,7 +42,6 @@ const ProductData = ({
             ...newProduct,
             [e.target.name]: e.target.value,
         });
-        
     };
 
     return (
@@ -61,7 +56,7 @@ const ProductData = ({
                         htmlFor="category"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Categoria*
+                        Categoria<span className="text-red-600">*</span>
                     </label>
                     <select
                         id="category"
@@ -98,7 +93,7 @@ const ProductData = ({
                         htmlFor="productName"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Producto*
+                        Producto<span className="text-red-600">*</span>
                     </label>
                     <select
                         id="product"
@@ -136,7 +131,7 @@ const ProductData = ({
                         htmlFor="quantity"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Cantidad*
+                        Cantidad<span className="text-red-600">*</span>
                     </label>
                     <input
                         id="quantity"
@@ -162,7 +157,7 @@ const ProductData = ({
                         htmlFor="unitPrice"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Precio por unidad*
+                        Precio por unidad<span className="text-red-600">*</span>
                     </label>
                     <input
                         id="unitPrice"

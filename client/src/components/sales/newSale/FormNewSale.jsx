@@ -8,7 +8,7 @@ import ProductData from "./ProductData";
 
 import Card from "../../ui/Card/Card";
 import { toast } from "react-toastify";
-import * as yup from "yup";
+
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,7 +17,8 @@ import {
     RegisterOneNewSaleAction,
     validateErrorsNewProductAction,
 } from "../../../actions/saleActions";
-import validateAddProduct from "./validateAddProduct";
+import validateAddProduct from "./utils/validateAddProduct";
+import validateNewSale from "./utils/validateNewSale";
 
 const initialStateNewProduct = {
     category: "",
@@ -38,6 +39,7 @@ const FormNewSale = () => {
     const [newProduct, setNewProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
     const [productsFiltered, setproductsFiltered] = useState([]);
+    const [errors, setErrors] = useState({})
 
     const addProductToSailDetail = (newProduct) => {
         dispatch(addProductToSaleDetailAction(newProduct));
@@ -66,7 +68,7 @@ const FormNewSale = () => {
 
     const handleSale = (e) => {
         readDataNewSale({
-            ...sale,
+            ...newSale.datasale,
             [e.target.name]: e.target.value,
         });
     };
@@ -107,9 +109,23 @@ const FormNewSale = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const errors = validateNewSale(newSale);
+
+        if (Object.keys(errors).length) {
+            setErrors(errors );
+            toast.error("Complete los campos obligatorios", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            return;
+        }
 
         RegisterOneNewSale(newSale);
-
     };
 
     return (
@@ -122,7 +138,7 @@ const FormNewSale = () => {
                                 htmlFor="date"
                                 className="block text-sm font-medium text-gray-700"
                             >
-                                Fecha*
+                                Fecha<span className="text-red-600">*</span>
                             </label>
                             <input
                                 id="date"
@@ -131,11 +147,11 @@ const FormNewSale = () => {
                                 autoComplete="given-name"
                                 className="block px-2 py-1 border border-gray-200 rounded-md "
                                 onChange={handleSale}
-                                value={sale.date}
+                                value={newSale.dataSale.date}
                             />
                         </div>
                     </div>
-                    <ClientData handleSale={handleSale} newSale={newSale} />
+                    <ClientData handleSale={handleSale} errors={errors} />
                     <ProductData
                         newProduct={newProduct}
                         setNewProduct={setNewProduct}
