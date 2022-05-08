@@ -6,7 +6,7 @@ export const allProductCategories = async () => {
         return await connection.execute('SELECT * FROM ProductCategory ');
         
     } catch (error) {
-        console.log(error)
+        throw error
     }
 
 }

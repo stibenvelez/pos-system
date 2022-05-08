@@ -11,6 +11,7 @@ export const getAllSales = async (req, res) => {
 };
 
 export const createNewSale = async (req, res) => {
+    console.log(req.body);
     try {
         await insertNewSale(req.body);
         res.json({ msg: "¡Ingreso registrado con exito!" });

@@ -19,6 +19,7 @@ const ItemSailDetail = ({ detail }) => {
             <td className="py-3 px-6">{detail.quantity}</td>
             <td className="py-3 px-6">{detail.unitPrice}</td>
             <td className="py-3 px-6">{detail.totalPrice}</td>
+            <td className="py-3 px-6">{detail.commissionValue}</td>
             <td className="py-3 px-6">
                 <button
                     type="button"

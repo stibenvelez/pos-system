@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import clienteAxios from "../../config/axios";
 import { useFormik } from "formik";
 import ProductSchema from "./utilities/validateFormProduct";
+import { useNavigate } from "react-router-dom";
 
 const FormNewProduct = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [productCategories, setProductCategories] = useState([]);
     useEffect(() => {
@@ -25,21 +27,20 @@ const FormNewProduct = () => {
             unitCost: "",
             unitPrice: "",
         },
-        validationSchema:ProductSchema,
+        validationSchema: ProductSchema,
         onSubmit: (values) => {
-            console.log('registrando productos');
+
+            console.log("registrando productos");
         },
     });
 
-    console.log(formik.errors);
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
-                <div className="grid lg:grid-cols-6 grid-cols-1 gap-4 ">
-                    <div className="bg-gray-300 w-full  h-60  rounded-md shadow-sm col-span-1"></div>
-                    <div className="p-4 bg-white rounded-md shadow flex flex-col gap-4 lg:col-span-5 col-span-1">
+                <div className="grid grid-cols-1  gap-4 ">
+                    <div className="p-4 bg-white rounded-md shadow flex flex-col gap-4">
                         <div className="flex flex-col gap-4">
-                            <div className="flex flex-wrap lg:flex-row flex-col gap-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                 <div className="">
                                     <label
                                         htmlFor="quantity"
@@ -67,7 +68,7 @@ const FormNewProduct = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="col-span-6 sm:col-span-2">
+                                <div className="">
                                     <label
                                         htmlFor="category"
                                         className="block text-sm font-medium text-gray-700"
@@ -105,7 +106,7 @@ const FormNewProduct = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="col-span-6 sm:col-span-2">
+                                <div className="">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -116,7 +117,7 @@ const FormNewProduct = () => {
                                         id="brand"
                                         name="brand"
                                         type="text"
-                                        placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
+                                        placeholder="Pionneer, Bose, Focal, Kenwood"
                                         autoComplete="quantity"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
@@ -134,8 +135,8 @@ const FormNewProduct = () => {
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap  lg:flex-row  flex-col gap-6">
-                                <div className=" sm:col-span-1">
+                            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                                <div className=" ">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -162,7 +163,7 @@ const FormNewProduct = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="col-span-6 sm:col-span-1">
+                                <div className=" ">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -190,19 +191,19 @@ const FormNewProduct = () => {
                                   </div>
                               )} */}
                                 </div>
-                                <div className="col-span-6 sm:col-span-1">
+                                <div className="col-span-1 ">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
                                     >
-                                        Porcentaje de comisión
+                                        % comisión
                                         <span className="text-red-600">*</span>
                                     </label>
                                     <input
                                         id="commissionPercentage"
                                         name="commissionPercentage"
                                         type="text"
-                                        placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
+                                        placeholder="% 000"
                                         autoComplete="quantity"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
@@ -220,7 +221,7 @@ const FormNewProduct = () => {
                                   </div>
                               )} */}
                                 </div>
-                                <div className="col-span-6 sm:col-span-1">
+                                <div className=" ">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -274,7 +275,10 @@ const FormNewProduct = () => {
                                 type="submit"
                                 value="Agregar"
                             />
-                            <button className="bg-gray-400 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-gray-300">
+                            <button
+                                onClick={() => navigate(-1)}
+                                className="bg-gray-400 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-gray-300"
+                            >
                                 Cancelar
                             </button>
                         </div>

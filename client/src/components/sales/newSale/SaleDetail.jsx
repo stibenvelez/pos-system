@@ -29,6 +29,9 @@ const SaleDetail = () => {
                                 valor total
                             </th>
                             <th scope="col" className="py-3 px-6">
+                                Comision
+                            </th>
+                            <th scope="col" className="py-3 px-6">
                                 acciones
                             </th>
                         </tr>

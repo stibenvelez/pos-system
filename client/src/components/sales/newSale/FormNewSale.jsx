@@ -27,6 +27,7 @@ const initialStateNewProduct = {
     quantity: 1,
     unitPrice: "",
     totalPrice: "",
+    employe: "",
 };
 
 const FormNewSale = () => {
@@ -39,7 +40,7 @@ const FormNewSale = () => {
     const [newProduct, setNewProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
     const [productsFiltered, setproductsFiltered] = useState([]);
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({});
 
     const addProductToSailDetail = (newProduct) => {
         dispatch(addProductToSaleDetailAction(newProduct));
@@ -112,7 +113,7 @@ const FormNewSale = () => {
         const errors = validateNewSale(newSale);
 
         if (Object.keys(errors).length) {
-            setErrors(errors );
+            setErrors(errors);
             toast.error("Complete los campos obligatorios", {
                 position: "bottom-right",
                 autoClose: 5000,

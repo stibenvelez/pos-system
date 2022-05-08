@@ -53,7 +53,18 @@ export const insertNewSale = async ({ dataSale, detail }) => {
 
         const idSale = rows.insertId;
         const sqlDetailSail = `INSERT INTO 
-            SaleDetail (idSale, idCategory, IdProduct, quantity, unitPrice, totalPrice, observations) 
+            SaleDetail (
+                idSale, 
+                idCategory, 
+                IdProduct, 
+                quantity, 
+                unitPrice, 
+                totalPrice,
+                idEmploye,
+                commissionValue,
+                commissionPercentage,
+                observations
+                ) 
             VALUES ? `;
 
         const arrayDetail = detail.map((detail) => [
@@ -63,9 +74,12 @@ export const insertNewSale = async ({ dataSale, detail }) => {
             detail.quantity,
             detail.unitPrice,
             detail.totalPrice,
-            detail.observatiosn,
+            detail.employe,
+            detail.commissionValue,
+            detail.commissionPercentage,
+            detail.observatios,
         ]);
-
+        console.log(arrayDetail);
         await connection.query(sqlDetailSail, [arrayDetail]);
         const result = await connection.query(`COMMIT`);
         return result;

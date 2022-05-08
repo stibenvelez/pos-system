@@ -7,3 +7,11 @@ export const allProducts = async () => {
         throw error;
     }
 };
+
+export const productById = async (id) => {
+    try {
+        return await connection.query(`SELECT * FROM Products WHERE idProduct = ${id}`);
+    } catch (error) {
+        throw error;
+    }
+};
