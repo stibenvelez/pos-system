@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Suspense, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import clienteAxios from "../../config/axios";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import ProductSchema from "./utilities/validateFormProduct";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { addNewProductAction } from "../../actions/productsActions";
+import { useNavigate, useParams } from "react-router-dom";
+import { addNewProductAction, editProductByIdAction } from "../../actions/productsActions";
+import Spinner from "../ui/Spinners/Spinner";
+import Card from "../ui/Card/Card";
 
 const FormNewProduct = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [productCategories, setProductCategories] = useState([]);
+
     useEffect(() => {
         const getProductCategories = async () => {
             const res = await clienteAxios("/product-categories");
@@ -19,27 +21,44 @@ const FormNewProduct = () => {
         getProductCategories();
     }, []);
 
+    const product = useSelector(({ products }) => products.product);
+    const loading = useSelector(({ products }) => products.loading);
+
+    const initialValues = {
+        product: "",
+        brand: "",
+        category: "",
+        commissionPercentage: "",
+        commissionValue: "",
+        unitCost: "",
+        unitPrice: "",
+    };
+
     const formik = useFormik({
-        initialValues: {
-            product: "",
-            brand: "",
-            category: "",
-            commissionPercentage: "",
-            commissionValue: "",
-            unitCost: "",
-            unitPrice: "",
-        },
+        initialValues: product ? product : initialValues,
         validationSchema: ProductSchema,
+        enableReinitialize: true,
         onSubmit: (values) => {
-            dispatch(addNewProductAction(values))
+            actionSubmit(values);
         },
     });
 
+    const actionSubmit = (values) => {
+        if (product) {
+            console.log("editando producto...", values);
+            dispatch(editProductByIdAction(values));
+            return;
+        }
+        console.log("agregando un  producto...", values);
+    };
 
+    if (loading) return (
+        <Card className="flex justify-center h-72 items-center">
+            <Spinner />
+        </Card>
+    );
     return (
-        <div>
-            
-            
+        <Suspense fallback={<Spinner />}>
             <form onSubmit={formik.handleSubmit}>
                 <div className="grid grid-cols-1 gap-4 ">
                     <div className="flex flex-col gap-4 p-4 bg-white rounded-md shadow">
@@ -58,7 +77,7 @@ const FormNewProduct = () => {
                                         name="product"
                                         type="text"
                                         placeholder="Ejemplo: Pasacinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="product"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.product}
@@ -81,12 +100,12 @@ const FormNewProduct = () => {
                                         <span className="text-red-600">*</span>
                                     </label>
                                     <select
-                                        id="category"
-                                        name="category"
-                                        autoComplete="category"
+                                        id="idProductCategory"
+                                        name="idProductCategory"
+                                        autoComplete="idProductCategory"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
-                                        value={formik.values.category}
+                                        value={formik.values.idProductCategory}
                                     >
                                         <option hidden value="">
                                             --selecionar --
@@ -102,10 +121,13 @@ const FormNewProduct = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    {formik.errors.category && (
+                                    {formik.errors.idProductCategory && (
                                         <div>
                                             <p className="p-1 text-sm text-red-600">
-                                                {formik.errors.category}
+                                                {
+                                                    formik.errors
+                                                        .idProductCategory
+                                                }
                                             </p>
                                         </div>
                                     )}
@@ -122,7 +144,7 @@ const FormNewProduct = () => {
                                         name="brand"
                                         type="text"
                                         placeholder="Pionneer, Bose, Focal, Kenwood"
-                                        autoComplete="quantity"
+                                        autoComplete="brand"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.brand}
@@ -153,7 +175,7 @@ const FormNewProduct = () => {
                                         name="unitPrice"
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="unitPrice"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.unitPrice}
@@ -206,7 +228,7 @@ const FormNewProduct = () => {
                                         name="commissionPercentage"
                                         type="text"
                                         placeholder="% 000"
-                                        autoComplete="quantity"
+                                        autoComplete="commissionPercentage"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={
@@ -236,7 +258,7 @@ const FormNewProduct = () => {
                                         name="commissionValue"
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="commissionValue"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.commissionValue}
@@ -287,7 +309,7 @@ const FormNewProduct = () => {
                     </div>
                 </div>
             </form>
-        </div>
+        </Suspense>
     );
 };
 

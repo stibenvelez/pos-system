@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "../Layout";
 import HomePage from "../pages/home/HomePage";
 import NewProductPage from "../pages/products/NewProductPage";
+import EditProductPage from "../pages/products/EditProductPage";
 import ProductsPages from "../pages/products/ProductsPages";
 import NewSalePage from "../pages/sales/NewSalePage";
 import SalePage from "../pages/sales/SalePage";
@@ -20,7 +21,14 @@ const Routers = () => {
                     </Route>
                     <Route path="products">
                         <Route index element={<ProductsPages />} />
-                        <Route path="new-product" element={<NewProductPage />} />
+                        <Route
+                            path="new-product"
+                            element={<NewProductPage />}
+                        />
+                        <Route
+                            path="edit-product/:id"
+                            element={<EditProductPage />}
+                        />
                     </Route>
                 </Route>
             </Routes>

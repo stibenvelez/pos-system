@@ -1,7 +1,19 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getProductByIdAction } from "../../actions/productsActions";
 import FormNewProduct from "../../components/products/FormNewProduct";
 
-const NewProductPage = () => {
+const EditProductPage = () => {
+    const dispatch = useDispatch();
+    const { id } = useParams();
 
+    useEffect(() => {
+        const getProduct = () => {
+            dispatch(getProductByIdAction(id));
+        };
+        getProduct();
+    });
 
     return (
         <div className="container mx-auto">
@@ -18,4 +30,4 @@ const NewProductPage = () => {
     );
 };
 
-export default NewProductPage;
+export default EditProductPage;
