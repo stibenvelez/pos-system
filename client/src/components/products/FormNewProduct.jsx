@@ -4,6 +4,8 @@ import clienteAxios from "../../config/axios";
 import { useFormik } from "formik";
 import ProductSchema from "./utilities/validateFormProduct";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { addNewProductAction } from "../../actions/productsActions";
 
 const FormNewProduct = () => {
     const navigate = useNavigate();
@@ -29,18 +31,20 @@ const FormNewProduct = () => {
         },
         validationSchema: ProductSchema,
         onSubmit: (values) => {
-
-            console.log("registrando productos");
+            dispatch(addNewProductAction(values))
         },
     });
 
+
     return (
         <div>
+            
+            
             <form onSubmit={formik.handleSubmit}>
-                <div className="grid grid-cols-1  gap-4 ">
-                    <div className="p-4 bg-white rounded-md shadow flex flex-col gap-4">
+                <div className="grid grid-cols-1 gap-4 ">
+                    <div className="flex flex-col gap-4 p-4 bg-white rounded-md shadow">
                         <div className="flex flex-col gap-4">
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                                 <div className="">
                                     <label
                                         htmlFor="quantity"
@@ -55,14 +59,14 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="Ejemplo: Pasacinta, Parlante 10 pulgadas, polarizado completo"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.product}
                                     />
 
                                     {formik.errors.product && (
                                         <div>
-                                            <p className="text-red-600 text-sm p-1">
+                                            <p className="p-1 text-sm text-red-600">
                                                 {formik.errors.product}
                                             </p>
                                         </div>
@@ -80,7 +84,7 @@ const FormNewProduct = () => {
                                         id="category"
                                         name="category"
                                         autoComplete="category"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.category}
                                     >
@@ -100,7 +104,7 @@ const FormNewProduct = () => {
                                     </select>
                                     {formik.errors.category && (
                                         <div>
-                                            <p className="text-red-600 text-sm p-1">
+                                            <p className="p-1 text-sm text-red-600">
                                                 {formik.errors.category}
                                             </p>
                                         </div>
@@ -119,7 +123,7 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="Pionneer, Bose, Focal, Kenwood"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.brand}
                                     />
@@ -127,7 +131,7 @@ const FormNewProduct = () => {
                                     {/* {errorsNewProduct.quantity &&
                               newProduct.quantity == "" && (
                                   <div>
-                                      <p className="text-red-600 text-sm p-1">
+                                      <p className="p-1 text-sm text-red-600">
                                           {errorsNewProduct.quantity}
                                       </p>
                                   </div>
@@ -135,8 +139,8 @@ const FormNewProduct = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                                <div className=" ">
+                            <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
+                                <div className="">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -150,26 +154,25 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.unitPrice}
                                     />
 
                                     {formik.errors.unitPrice && (
                                         <div>
-                                            <p className="text-red-600 text-sm p-1">
+                                            <p className="p-1 text-sm text-red-600">
                                                 {formik.errors.unitPrice}
                                             </p>
                                         </div>
                                     )}
                                 </div>
-                                <div className=" ">
+                                <div className="">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
                                     >
                                         Costo unitario
-                                        <span className="text-red-600">*</span>
                                     </label>
                                     <input
                                         id="unitCost"
@@ -177,7 +180,7 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.unitCost}
                                     />
@@ -185,7 +188,7 @@ const FormNewProduct = () => {
                                     {/* {errorsNewProduct.quantity &&
                               newProduct.quantity == "" && (
                                   <div>
-                                      <p className="text-red-600 text-sm p-1">
+                                      <p className="p-1 text-sm text-red-600">
                                           {errorsNewProduct.quantity}
                                       </p>
                                   </div>
@@ -197,7 +200,6 @@ const FormNewProduct = () => {
                                         className="block text-sm font-medium text-gray-700"
                                     >
                                         % comisión
-                                        <span className="text-red-600">*</span>
                                     </label>
                                     <input
                                         id="commissionPercentage"
@@ -205,7 +207,7 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="% 000"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={
                                             formik.values.commissionPercentage
@@ -215,13 +217,13 @@ const FormNewProduct = () => {
                                     {/* {errorsNewProduct.quantity &&
                               newProduct.quantity == "" && (
                                   <div>
-                                      <p className="text-red-600 text-sm p-1">
+                                      <p className="p-1 text-sm text-red-600">
                                           {errorsNewProduct.quantity}
                                       </p>
                                   </div>
                               )} */}
                                 </div>
-                                <div className=" ">
+                                <div className="">
                                     <label
                                         htmlFor="quantity"
                                         className="block text-sm font-medium text-gray-700"
@@ -235,7 +237,7 @@ const FormNewProduct = () => {
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
                                         autoComplete="quantity"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.commissionValue}
                                     />
@@ -243,7 +245,7 @@ const FormNewProduct = () => {
                                     {/* {errorsNewProduct.quantity &&
                               newProduct.quantity == "" && (
                                   <div>
-                                      <p className="text-red-600 text-sm p-1">
+                                      <p className="p-1 text-sm text-red-600">
                                           {errorsNewProduct.quantity}
                                       </p>
                                   </div>
@@ -262,7 +264,7 @@ const FormNewProduct = () => {
                                         id="observations"
                                         name="observations"
                                         autoComplete="observations"
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.observations}
                                     />
@@ -271,13 +273,13 @@ const FormNewProduct = () => {
                         </div>
                         <div className="flex gap-2">
                             <input
-                                className="bg-slate-800 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-slate-700"
+                                className="px-4 py-2 text-white rounded-md cursor-pointer bg-slate-800 hover:bg-slate-700"
                                 type="submit"
                                 value="Agregar"
                             />
                             <button
                                 onClick={() => navigate(-1)}
-                                className="bg-gray-400 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-gray-300"
+                                className="px-4 py-2 text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-300"
                             >
                                 Cancelar
                             </button>
