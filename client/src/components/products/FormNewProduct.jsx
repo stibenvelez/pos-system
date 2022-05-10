@@ -45,11 +45,11 @@ const FormNewProduct = () => {
 
     const actionSubmit = (values) => {
         if (product) {
-            console.log("editando producto...", values);
+           
             dispatch(editProductByIdAction(values));
             return;
         }
-        console.log("agregando un  producto...", values);
+        dispatch(addNewProductAction(values))
     };
 
     if (loading) return (
@@ -150,14 +150,14 @@ const FormNewProduct = () => {
                                         value={formik.values.brand}
                                     />
 
-                                    {/* {errorsNewProduct.quantity &&
-                              newProduct.quantity == "" && (
-                                  <div>
-                                      <p className="p-1 text-sm text-red-600">
-                                          {errorsNewProduct.quantity}
-                                      </p>
-                                  </div>
-                              )} */}
+                                    {formik.errors.brand &&
+                                        formik.values.brand == "" && (
+                                            <div>
+                                                <p className="p-1 text-sm text-red-600">
+                                                    {formik.errors.brand}
+                                                </p>
+                                            </div>
+                                        )}
                                 </div>
                             </div>
 

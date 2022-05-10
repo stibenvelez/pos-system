@@ -20,7 +20,7 @@ export const productById = async (id) => {
 
 export const insertProduct = async ({
     product,
-    category,
+    idProductCategory,
     unitPrice,
     unitCost,
     commissionPercentage,
@@ -41,7 +41,7 @@ export const insertProduct = async ({
         VALUES 
         (
             '${product}',
-            ${category}, 
+            ${idProductCategory}, 
             ${unitPrice},
             ${unitCost},
             ${commissionPercentage},

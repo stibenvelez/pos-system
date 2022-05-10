@@ -7,13 +7,14 @@ import ProductsPages from "../pages/products/ProductsPages";
 import NewSalePage from "../pages/sales/NewSalePage";
 import SalePage from "../pages/sales/SalePage";
 import SalesPage from "../pages/sales/SalesPage";
+import DashboardPage from "../pages/dashboard/DashboardPage";
 
 const Routers = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<HomePage />} />
+                    <Route index element={<DashboardPage />} />
                     <Route path="sales">
                         <Route index element={<SalesPage />} />
                         <Route path="new-sale" element={<NewSalePage />} />

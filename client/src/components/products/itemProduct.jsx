@@ -34,9 +34,12 @@ const ItemProduct = ({ productData }) => {
                 >
                     ver
                 </Link>
-                <button className="items-center px-2 py-1 text-white transition duration-200 ease-in-out bg-gray-400 hover:bg-blue-800">
+                <Link
+                    to={`edit-product/${idProduct}`}
+                    className="items-center px-2 py-1 text-white transition duration-200 ease-in-out bg-gray-400 hover:bg-blue-800"
+                >
                     Editar
-                </button>
+                </Link>
                 <button className="items-center px-2 py-1 text-white transition duration-200 ease-in-out bg-gray-400 rounded-r hover:bg-red-500">
                     Anular
                 </button>
