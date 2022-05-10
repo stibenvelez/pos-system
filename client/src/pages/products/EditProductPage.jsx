@@ -9,11 +9,10 @@ const EditProductPage = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        const getProduct = () => {
-            dispatch(getProductByIdAction(id));
-        };
-        getProduct();
-    });
+        
+        const getProduct = () => dispatch(getProductByIdAction(id));
+       id && getProduct();
+    }, []);
 
     return (
         <div className="container mx-auto">

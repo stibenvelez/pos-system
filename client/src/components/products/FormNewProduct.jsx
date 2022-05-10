@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import clienteAxios from "../../config/axios";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import ProductSchema from "./utilities/validateFormProduct";
 import { useNavigate, useParams } from "react-router-dom";
 import { addNewProductAction, editProductByIdAction } from "../../actions/productsActions";
@@ -11,6 +11,7 @@ import Card from "../ui/Card/Card";
 const FormNewProduct = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { id } = useParams();
     const [productCategories, setProductCategories] = useState([]);
 
     useEffect(() => {
@@ -21,29 +22,33 @@ const FormNewProduct = () => {
         getProductCategories();
     }, []);
 
+
     const product = useSelector(({ products }) => products.product);
     const loading = useSelector(({ products }) => products.loading);
 
     const initialValues = {
         product: "",
         brand: "",
-        category: "",
-        commissionPercentage: "",
-        commissionValue: "",
-        unitCost: "",
-        unitPrice: "",
+        idProductCategory: "",
+        commissionPercentage: 0,
+        commissionValue: 0,
+        unitCost: 0,
+        unitPrice: 0,
+        observations:""
     };
 
     const formik = useFormik({
-        initialValues: product ? product : initialValues,
+        initialValues: product && id ? product : initialValues,
         validationSchema: ProductSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
+            console.log("enviando", values);
             actionSubmit(values);
         },
     });
-
+console.log(formik.errors)
     const actionSubmit = (values) => {
+        
         if (product) {
            
             dispatch(editProductByIdAction(values));
@@ -57,8 +62,10 @@ const FormNewProduct = () => {
             <Spinner />
         </Card>
     );
+
+
     return (
-        <Suspense fallback={<Spinner />}>
+        <>
             <form onSubmit={formik.handleSubmit}>
                 <div className="grid grid-cols-1 gap-4 ">
                     <div className="flex flex-col gap-4 p-4 bg-white rounded-md shadow">
@@ -191,7 +198,7 @@ const FormNewProduct = () => {
                                 </div>
                                 <div className="">
                                     <label
-                                        htmlFor="quantity"
+                                        htmlFor="unitCost"
                                         className="block text-sm font-medium text-gray-700"
                                     >
                                         Costo unitario
@@ -206,15 +213,13 @@ const FormNewProduct = () => {
                                         onChange={formik.handleChange}
                                         value={formik.values.unitCost}
                                     />
-
-                                    {/* {errorsNewProduct.quantity &&
-                              newProduct.quantity == "" && (
-                                  <div>
-                                      <p className="p-1 text-sm text-red-600">
-                                          {errorsNewProduct.quantity}
-                                      </p>
-                                  </div>
-                              )} */}
+                                    {formik.errors.unitCost && (
+                                        <div>
+                                            <p className="p-1 text-sm text-red-600">
+                                                {formik.values.unitCost}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="col-span-1 ">
                                     <label
@@ -294,22 +299,23 @@ const FormNewProduct = () => {
                             </div>
                         </div>
                         <div className="flex gap-2">
-                            <input
+                            <button
                                 className="px-4 py-2 text-white rounded-md cursor-pointer bg-slate-800 hover:bg-slate-700"
                                 type="submit"
-                                value="Agregar"
-                            />
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="px-4 py-2 text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-300"
                             >
-                                Cancelar
+                                Agregar
                             </button>
+                            <input
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="px-4 py-2 block text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-300"
+                                value="Cancelar"
+                            />
                         </div>
                     </div>
                 </div>
             </form>
-        </Suspense>
+        </>
     );
 };
 

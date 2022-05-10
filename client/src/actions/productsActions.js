@@ -94,7 +94,6 @@ const editProductByIdError = () => ({
     type: EDIT_PRODUCT_ERROR,
 });
 
-
 //ADD NEW PRODUCT
 export const addNewProductAction = (product) => {
     return async (dispatch) => {

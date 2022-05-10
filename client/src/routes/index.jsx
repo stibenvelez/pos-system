@@ -8,6 +8,7 @@ import NewSalePage from "../pages/sales/NewSalePage";
 import SalePage from "../pages/sales/SalePage";
 import SalesPage from "../pages/sales/SalesPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
+import EmployesPage from "../pages/employees/EmployesPage";
 
 const Routers = () => {
     return (
@@ -30,6 +31,9 @@ const Routers = () => {
                             path="edit-product/:id"
                             element={<EditProductPage />}
                         />
+                    </Route>
+                    <Route path="employees">
+                        <Route index element={<EmployesPage />} />
                     </Route>
                 </Route>
             </Routes>

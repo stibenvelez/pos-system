@@ -10,11 +10,13 @@ const DashboardPage = () => {
                   Principales indicadores de su empresa
               </p>
           </div>
-          <div className="grid grid-cols-12 h-screen gap-4">
-              <div className="col-span-10">
+          <div className="grid lg:grid-cols-12 grid-cols-1 gap-4">
+              <div className="lg:col-span-10">
                   <IndicatorsCards />
               </div>
-              <div className="bg-gray-200 h-full col-span-2 shadow rounded-md"></div>
+              <div className="bg-gray-100 lg:col-span-2 shadow rounded-md p-4">
+                  <h3>Registros</h3>
+              </div>
           </div>
       </div>
   );

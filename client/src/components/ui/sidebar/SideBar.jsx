@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -6,7 +5,6 @@ import { SidebarData } from "./SidebarData ";
 import SubMenu from "./SubMenu";
 
 import { useState } from "react";
-
 
 const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
@@ -27,14 +25,11 @@ const Sidebar = () => {
                 className={`bg-slate-800 h-screen sm:w-56 w-full  flex justify-center transition-all duration-75 sm:relative sm:left-0 fixed ease-out ${
                     sidebar ? "left-0" : "-left-full "
                 }`}
-                sidebar={sidebar}
             >
                 <div className="w-full ">
                     <div className="w-full flex justify-center py-4">
-                        <Link to="/">
-                            <a className="text-2xl text-white font-bold">
-                                LOGO
-                            </a>
+                        <Link to="/" className="text-2xl text-white font-bold">
+                            LOGO
                         </Link>
                     </div>
                     <Link

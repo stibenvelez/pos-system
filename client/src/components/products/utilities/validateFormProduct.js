@@ -5,8 +5,6 @@ const ProductSchema = Yup.object().shape({
     idProductCategory: Yup.string().required("Seleccione una categoria"),
     commissionPercentage: Yup.string(),
     commissionValue: Yup.string(),
-    unitCost: Yup.string(),
-    unitPrice: Yup.string(),
 });
 
 export default ProductSchema;

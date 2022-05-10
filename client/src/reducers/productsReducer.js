@@ -48,7 +48,7 @@ const productsReducers = (state = initialState, action) => {
         case EDIT_PRODUCT_SUCCESS:
             return {
                 ...state,
-                loading: false,
+                loading: false
             };
         case GET_PRODUCT_SUCCESS:
             return {
