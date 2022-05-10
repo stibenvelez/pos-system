@@ -20,22 +20,13 @@ export const productById = async (id) => {
 
 export const insertProduct = async ({
     product,
-    category,
+    idProductCategory,
     unitPrice,
     unitCost,
     commissionPercentage,
     commissionValue,
     brand,
 }) => {
-   console.log(
-       product,
-       category,
-       unitPrice,
-       unitCost,
-       commissionPercentage,
-       commissionValue,
-       brand
-   );
     try {
         return await connection.query(
             `INSERT INTO Products
@@ -50,12 +41,41 @@ export const insertProduct = async ({
         VALUES 
         (
             '${product}',
-            ${category}, 
+            ${idProductCategory}, 
             ${unitPrice},
             ${unitCost},
             ${commissionPercentage},
             '${brand}')`
         );
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const editProduct = async ({
+    idProduct,
+    product,
+    idProductCategory,
+    unitPrice,
+    unitCost,
+    commissionPercentage,
+    commissionValue,
+    brand,
+    observations,
+}) => {
+    const sql = `UPDATE Products 
+                    SET product='${product}',
+                    idProductCategory =${idProductCategory},
+                    unitPrice=${unitPrice},
+                    unitCost=${unitCost},
+                    commissionPercentage=${commissionPercentage},
+                    commissionValue=${commissionValue},
+                    brand='${brand}',
+                    observations='${observations}'
+                    
+                WHERE idProduct = ${idProduct}`;
+    try {
+        return await connection.query(sql);
     } catch (error) {
         throw error;
     }

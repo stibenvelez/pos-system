@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Suspense, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import clienteAxios from "../../config/axios";
 import { useFormik } from "formik";
 import ProductSchema from "./utilities/validateFormProduct";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { addNewProductAction } from "../../actions/productsActions";
+import { useNavigate, useParams } from "react-router-dom";
+import { addNewProductAction, editProductByIdAction } from "../../actions/productsActions";
+import Spinner from "../ui/Spinners/Spinner";
+import Card from "../ui/Card/Card";
 
 const FormNewProduct = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { id } = useParams();
     const [productCategories, setProductCategories] = useState([]);
+
     useEffect(() => {
         const getProductCategories = async () => {
             const res = await clienteAxios("/product-categories");
@@ -19,27 +22,50 @@ const FormNewProduct = () => {
         getProductCategories();
     }, []);
 
+
+    const product = useSelector(({ products }) => products.product);
+    const loading = useSelector(({ products }) => products.loading);
+
+    const initialValues = {
+        product: "",
+        brand: "",
+        idProductCategory: "",
+        commissionPercentage: 0,
+        commissionValue: 0,
+        unitCost: 0,
+        unitPrice: 0,
+        observations:""
+    };
+
     const formik = useFormik({
-        initialValues: {
-            product: "",
-            brand: "",
-            category: "",
-            commissionPercentage: "",
-            commissionValue: "",
-            unitCost: "",
-            unitPrice: "",
-        },
+        initialValues: product && id ? product : initialValues,
         validationSchema: ProductSchema,
+        enableReinitialize: true,
         onSubmit: (values) => {
-            dispatch(addNewProductAction(values))
+            console.log("enviando", values);
+            actionSubmit(values);
         },
     });
+console.log(formik.errors)
+    const actionSubmit = (values) => {
+        
+        if (product) {
+           
+            dispatch(editProductByIdAction(values));
+            return;
+        }
+        dispatch(addNewProductAction(values))
+    };
+
+    if (loading) return (
+        <Card className="flex justify-center h-72 items-center">
+            <Spinner />
+        </Card>
+    );
 
 
     return (
-        <div>
-            
-            
+        <>
             <form onSubmit={formik.handleSubmit}>
                 <div className="grid grid-cols-1 gap-4 ">
                     <div className="flex flex-col gap-4 p-4 bg-white rounded-md shadow">
@@ -58,7 +84,7 @@ const FormNewProduct = () => {
                                         name="product"
                                         type="text"
                                         placeholder="Ejemplo: Pasacinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="product"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.product}
@@ -81,12 +107,12 @@ const FormNewProduct = () => {
                                         <span className="text-red-600">*</span>
                                     </label>
                                     <select
-                                        id="category"
-                                        name="category"
-                                        autoComplete="category"
+                                        id="idProductCategory"
+                                        name="idProductCategory"
+                                        autoComplete="idProductCategory"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
-                                        value={formik.values.category}
+                                        value={formik.values.idProductCategory}
                                     >
                                         <option hidden value="">
                                             --selecionar --
@@ -102,10 +128,13 @@ const FormNewProduct = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    {formik.errors.category && (
+                                    {formik.errors.idProductCategory && (
                                         <div>
                                             <p className="p-1 text-sm text-red-600">
-                                                {formik.errors.category}
+                                                {
+                                                    formik.errors
+                                                        .idProductCategory
+                                                }
                                             </p>
                                         </div>
                                     )}
@@ -122,20 +151,20 @@ const FormNewProduct = () => {
                                         name="brand"
                                         type="text"
                                         placeholder="Pionneer, Bose, Focal, Kenwood"
-                                        autoComplete="quantity"
+                                        autoComplete="brand"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.brand}
                                     />
 
-                                    {/* {errorsNewProduct.quantity &&
-                              newProduct.quantity == "" && (
-                                  <div>
-                                      <p className="p-1 text-sm text-red-600">
-                                          {errorsNewProduct.quantity}
-                                      </p>
-                                  </div>
-                              )} */}
+                                    {formik.errors.brand &&
+                                        formik.values.brand == "" && (
+                                            <div>
+                                                <p className="p-1 text-sm text-red-600">
+                                                    {formik.errors.brand}
+                                                </p>
+                                            </div>
+                                        )}
                                 </div>
                             </div>
 
@@ -153,7 +182,7 @@ const FormNewProduct = () => {
                                         name="unitPrice"
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="unitPrice"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.unitPrice}
@@ -169,7 +198,7 @@ const FormNewProduct = () => {
                                 </div>
                                 <div className="">
                                     <label
-                                        htmlFor="quantity"
+                                        htmlFor="unitCost"
                                         className="block text-sm font-medium text-gray-700"
                                     >
                                         Costo unitario
@@ -184,15 +213,13 @@ const FormNewProduct = () => {
                                         onChange={formik.handleChange}
                                         value={formik.values.unitCost}
                                     />
-
-                                    {/* {errorsNewProduct.quantity &&
-                              newProduct.quantity == "" && (
-                                  <div>
-                                      <p className="p-1 text-sm text-red-600">
-                                          {errorsNewProduct.quantity}
-                                      </p>
-                                  </div>
-                              )} */}
+                                    {formik.errors.unitCost && (
+                                        <div>
+                                            <p className="p-1 text-sm text-red-600">
+                                                {formik.values.unitCost}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="col-span-1 ">
                                     <label
@@ -206,7 +233,7 @@ const FormNewProduct = () => {
                                         name="commissionPercentage"
                                         type="text"
                                         placeholder="% 000"
-                                        autoComplete="quantity"
+                                        autoComplete="commissionPercentage"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={
@@ -236,7 +263,7 @@ const FormNewProduct = () => {
                                         name="commissionValue"
                                         type="text"
                                         placeholder="Ejemplo: Pasasinta, Parlante 10 pulgadas, polarizado completo"
-                                        autoComplete="quantity"
+                                        autoComplete="commissionValue"
                                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         onChange={formik.handleChange}
                                         value={formik.values.commissionValue}
@@ -272,22 +299,23 @@ const FormNewProduct = () => {
                             </div>
                         </div>
                         <div className="flex gap-2">
-                            <input
+                            <button
                                 className="px-4 py-2 text-white rounded-md cursor-pointer bg-slate-800 hover:bg-slate-700"
                                 type="submit"
-                                value="Agregar"
-                            />
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="px-4 py-2 text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-300"
                             >
-                                Cancelar
+                                Agregar
                             </button>
+                            <input
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="px-4 py-2 block text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-300"
+                                value="Cancelar"
+                            />
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
+        </>
     );
 };
 

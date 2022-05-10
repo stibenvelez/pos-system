@@ -52,9 +52,24 @@ export const SidebarData = [
         ],
     },
     {
-        title: "Team",
+        title: "Empleados",
         path: "#",
         icon: null,
+        iconClosed: null,
+        iconOpened: null,
+
+        subNav: [
+            {
+                title: "Empleados",
+                path: "/employees",
+                icon: null,
+            },
+            {
+                title: "Agregar emploado",
+                path: "#",
+                icon: null,
+            },
+        ],
     },
     {
         title: "Messages",
