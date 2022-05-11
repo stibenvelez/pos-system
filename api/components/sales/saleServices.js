@@ -24,6 +24,7 @@ export const allSales = async (filters) => {
     }
 };
 
+
 export const SaleById = async (id) => {
     try {
         const sql = `SELECT * FROM Sales WHERE id=${id}`;

@@ -26,6 +26,12 @@ export const SidebarData = [
                 icon: null,
                 cName: "sub-nav",
             },
+            {
+                title: "Detalle de ventas",
+                path: "/sales/SalesDetailsPage",
+                icon: null,
+                cName: "sub-nav",
+            },
         ],
     },
     {

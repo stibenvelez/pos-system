@@ -21,7 +21,6 @@ const ProductData = ({
     const productRef = useRef(null);
 
     const productId = productRef.current?.value;
-    console.log(productId);
     useEffect(() => {
         if (productId) {
             const getProductById = async () => {

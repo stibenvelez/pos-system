@@ -1,6 +1,11 @@
 import express from "express";
-import {createNewSale, getAllSales, getSaleById} from './saleController.js'
 const router = express.Router();
+import {
+    createNewSale,
+    getAllSales,
+    getSaleById
+} from "./saleController.js";
+
 
 router.get("/", getAllSales);
 router.get("/:id", getSaleById);

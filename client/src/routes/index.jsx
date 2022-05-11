@@ -9,6 +9,7 @@ import SalePage from "../pages/sales/SalePage";
 import SalesPage from "../pages/sales/SalesPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import EmployesPage from "../pages/employees/EmployesPage";
+import SalesDetailsPage from "../pages/sales/SalesDetailsPage";
 
 const Routers = () => {
     return (
@@ -20,6 +21,10 @@ const Routers = () => {
                         <Route index element={<SalesPage />} />
                         <Route path="new-sale" element={<NewSalePage />} />
                         <Route path=":id" element={<SalePage />} />
+                        <Route
+                            path="SalesDetailsPage"
+                            element={<SalesDetailsPage />}
+                        />
                     </Route>
                     <Route path="products">
                         <Route index element={<ProductsPages />} />

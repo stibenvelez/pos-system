@@ -9,6 +9,7 @@ const ItemProduct = ({ productData }) => {
         idProductCategory,
         unitPrice,
         unitCost,
+        category,
         commissionPercentage,
         commissionValue,
         idState
@@ -23,7 +24,7 @@ const ItemProduct = ({ productData }) => {
             >
                 {product}
             </th>
-            <td className="px-6 py-4 font-semibold">{idProductCategory}</td>
+            <td className="px-6 py-4 font-semibold">{category}</td>
             <td className="px-6 py-4">{unitCost}</td>
             <td className="px-6 py-4">{unitPrice}</td>
             <td>

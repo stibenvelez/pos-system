@@ -2,7 +2,12 @@ import connection from "../../config/db.js";
 
 export const allProducts = async () => {
     try {
-        return await connection.query("SELECT * FROM Products");
+        const sql = `
+        SELECT * 
+        FROM Products AS p
+        LEFT JOIN ProductCategory AS pc ON p.idProductCategory = pc.idProductCategory 
+        `;
+        return await connection.query(sql);
     } catch (error) {
         throw error;
     }
