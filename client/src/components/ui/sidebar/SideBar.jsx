@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData ";
 import SubMenu from "./SubMenu";
 
+
 import { useState } from "react";
 
 const Sidebar = () => {
@@ -14,7 +15,7 @@ const Sidebar = () => {
     return (
         <div className="relative z-50">
             <div
-                className="absolute flex items-center justify-center w-12 h-12 rounded-md bg-slate-800 hover:bg-slate-700 button-3 -right-14  sm:hidden"
+                className="absolute flex items-center justify-center w-12 h-12 rounded-md bg-slate-800 hover:bg-slate-700 button-3 -right-14 sm:hidden"
                 onClick={showSidebar}
             >
                 <Link className="text-white" to="#">
@@ -27,9 +28,17 @@ const Sidebar = () => {
                 }`}
             >
                 <div className="w-full ">
-                    <div className="w-full flex justify-center py-4">
-                        <Link to="/" className="text-2xl text-white font-bold">
-                            LOGO
+                    <div className="flex justify-center w-full py-4">
+                        <Link to="/" className="text-2xl font-bold text-white">
+                            <div className="w-28 md:w-40">
+                                <img
+                                    src={`${
+                                        import.meta.env.BASE_URL
+                                    }img/app/logo-white.svg`}
+                                    className="fill-red-500"
+                                    alt="React Logo"
+                                />
+                            </div>
                         </Link>
                     </div>
                     <Link

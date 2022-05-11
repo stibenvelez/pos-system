@@ -10,12 +10,16 @@ import SalesPage from "../pages/sales/SalesPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import EmployesPage from "../pages/employees/EmployesPage";
 import SalesDetailsPage from "../pages/sales/SalesDetailsPage";
+import LoginPage from "../pages/login/LoginPage";
+import NotFountPage from "../pages/notFountPage/NotFountPage";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 const Routers = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
+                    <Route path="login" element={<LoginPage />} />
                     <Route index element={<DashboardPage />} />
                     <Route path="sales">
                         <Route index element={<SalesPage />} />
@@ -40,6 +44,10 @@ const Routers = () => {
                     <Route path="employees">
                         <Route index element={<EmployesPage />} />
                     </Route>
+                    <Route path="profile">
+                        <Route path=":id" index element={<ProfilePage />} />
+                    </Route>
+                    <Route path="*" element={<NotFountPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

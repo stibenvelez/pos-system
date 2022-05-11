@@ -6,6 +6,7 @@ import Spinner from "../../ui/Spinners/Spinner";
 import ItemSaleDetail from "./ItemSaleDetail";
 import formatData from '../../../helpers/FormatFecha'
 
+
 const SaleComponent = () => {
     const sale = useSelector(({ sales }) => sales.sale);
     const salesDetails = useSelector(
@@ -17,7 +18,7 @@ const SaleComponent = () => {
     if (loading)
         return (
             <Card>
-                <div className="container mx-auto max-w-4xl flex w-full justify-center items-center py-20">
+                <div className="container flex items-center justify-center w-full max-w-4xl py-20 mx-auto">
                     <Spinner />
                 </div>
             </Card>
@@ -25,11 +26,14 @@ const SaleComponent = () => {
 
     return (
         <Card>
-            <div>
+            <div className="p-3">
                 <div>
-                    <h3 className="text-2xl font-semibold">Nº {id}</h3>
+
+                    <h3 className="text-2xl font-semibold uppercase">
+                        Venta Nº {id}
+                    </h3>
                 </div>
-                <div className="flex items-end py-2 gap-3">
+                <div className="flex items-end gap-3 py-2">
                     <div>
                         <p>Documento: {sale.document}</p>
                     </div>
@@ -38,7 +42,7 @@ const SaleComponent = () => {
                     </div>
                 </div>
                 <div>
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-md overflow-hidden">
+                    <table className="w-full overflow-hidden text-sm text-left text-gray-500 rounded-md dark:text-gray-400">
                         <thead className="text-xs text-gray-800 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
@@ -70,7 +74,7 @@ const SaleComponent = () => {
                             ))}
                         </tbody>
                     </table>
-                    <div className="flex items-end gap-3 text-gray-800 py-4">
+                    <div className="flex items-end gap-3 py-4 text-gray-800">
                         Valor total:{" "}
                         <p className="text-2xl font-bold">
                             {formatMoney.format(sale.totalPrice)}

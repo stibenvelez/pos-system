@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const SubMenu = ({ item }) => {
     const [subnav, setSubnav] = useState(false);
@@ -8,13 +8,14 @@ const SubMenu = ({ item }) => {
 
     return (
         <>
-            <Link
-                className="flex items-center justify-between p-5 text-base text-white cursor-pointer hover:bg-slate-700 hover:border-l-4 hover:pl-4 "
+            <NavLink
+                className={` flex items-center justify-between p-5 text-base text-white cursor-pointer hover:bg-rose-700 hover:border-l-4 hover:pl-4`}
                 to={item.path}
                 onClick={item.subNav && showSubnav}
             >
                 <div>
                     {item.icon}
+                    <ion-icon name="wallet-outline"></ion-icon>
                     <span className="ml-4">{item.title}</span>
                 </div>
                 <div>
@@ -24,7 +25,7 @@ const SubMenu = ({ item }) => {
                         ? item.iconClosed
                         : null}
                 </div>
-            </Link>
+            </NavLink>
             {subnav &&
                 item.subNav.map((item, index) => {
                     return (
