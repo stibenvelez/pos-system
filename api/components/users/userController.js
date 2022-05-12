@@ -36,20 +36,23 @@ export const auth = async (req, res) => {
     /// exist user
     const [User] = await FindUser(user);
 
-    if (!User.length) {
+    if (User.length===0) {
         const error = new Error("El usuario no existe");
         res.status(404).json({ msg: error.message });
+        return
     }
     // comfirmed user
     if (!User[0].confirm) {
         const error = new Error("Tu cuenta no ha sido confirmada");
         res.status(403).json({ msg: error.message });
+        return
     }
 
     // valid password
     if (!await validatePassword(user, password)) {
         const error = new Error("El password es incorrecto");
         res.status(403).json({ msg: error.message });
+        return
     }
 
     res.json({

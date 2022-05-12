@@ -16,21 +16,19 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { AuthAction } from "../actions/authAction";
+import AuthLayout from "../components/layouts/AuthLayout";
+import PrivateRoute from "../components/layouts/PrivateRoute";
 
 const Routers = () => {
-
-    const dispatch = useDispatch()
-    
-    useEffect(() => {
-        const auth = () => dispatch(AuthAction());
-        auth();
-    }, []);
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route path="login" element={<LoginPage />} />
+                <Route path="/" element={<AuthLayout />}>
+                    <Route index element={<LoginPage />} />
+                </Route>
+                
+                <Route path="/dashboard/" element={<PrivateRoute />}>
                     <Route index element={<DashboardPage />} />
                     <Route path="sales">
                         <Route index element={<SalesPage />} />

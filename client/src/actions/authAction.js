@@ -1,29 +1,36 @@
-import { AUTH, AUTH_SUCCES, AUTH_ERROR } from "../types/authTypes";
+import {
+    AUTH,
+    AUTH_SUCCES,
+    AUTH_ERROR,
+    LOGIN,
+    LOGIN_SUCCES,
+    LOGIN_ERROR,
+} from "../types/authTypes";
+import clienteAxios from "../config/axios";
+import { useNavigate } from "react-router-dom";
 
-export const AuthAction = (user) => {
-    const token = localStorage.getItem("token");
-    console.log(token);
+export const AuthAction = () => {
     
-    if (!token) {
-        console.log('no hay token')
-        return;
-    }
-
     return async (dispatch) => {
         dispatch(authtentication());
-
         try {
+            const token = localStorage.getItem("token");
+        
+            if (!token) {
+                console.log("no hay token");
+                
+            }
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    AAuthorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             };
             const { data } = await clienteAxios.get("/users/profile", config);
-            console.log("--->", data);
-            authtenticationSuccess(user);
+            dispatch(authtenticationSuccess(data));
+            //navigate('/dashboard')
         } catch (error) {
-            authtenticationError();
+            dispatch(authtenticationError(error));
         }
     };
 };
@@ -31,6 +38,7 @@ export const AuthAction = (user) => {
 const authtentication = () => ({
     type: AUTH,
 });
+
 const authtenticationSuccess = (user) => ({
     type: AUTH_SUCCES,
     payload: user,
@@ -38,3 +46,18 @@ const authtenticationSuccess = (user) => ({
 const authtenticationError = () => ({
     type: AUTH_ERROR,
 });
+
+export const loginAction = (user) => {
+    return async (dispatch) => {
+        dispatch({ type: LOGIN });
+        try {
+            const { data } = await clienteAxios.post("/users/login", user);
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            dispatch({ type: LOGIN_SUCCES, payload: user });
+        } catch (error) {
+            console.log(error.response.data.msg);
+            dispatch({ type: LOGIN_ERROR, payload: error });
+        }
+    };
+};

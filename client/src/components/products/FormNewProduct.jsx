@@ -46,7 +46,7 @@ const FormNewProduct = () => {
             actionSubmit(values);
         },
     });
-console.log(formik.errors)
+
     const actionSubmit = (values) => {
         
         if (product) {

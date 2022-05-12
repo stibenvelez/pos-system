@@ -11,19 +11,19 @@ export const SidebarData = [
         subNav: [
             {
                 title: "Nueva venta",
-                path: "/sales/new-sale",
+                path: "sales/new-sale",
                 icon: null,
                 cName: "sub-nav",
             },
             {
                 title: "Lista de Ventas",
-                path: "/sales",
+                path: "sales",
                 icon: null,
                 cName: "sub-nav",
             },
             {
                 title: "Detalle de ventas",
-                path: "/sales/SalesDetailsPage",
+                path: "sales/SalesDetailsPage",
                 icon: null,
                 cName: "sub-nav",
             },
@@ -40,7 +40,7 @@ export const SidebarData = [
         subNav: [
             {
                 title: "Administrar Productos",
-                path: "/products",
+                path: "products",
                 icon: null,
                 cName: "sub-nav",
             },
@@ -62,7 +62,7 @@ export const SidebarData = [
         subNav: [
             {
                 title: "Empleados",
-                path: "/employees",
+                path: "employees",
                 icon: null,
             },
             {
