@@ -8,7 +8,6 @@ export const getAllEmployees = async (req, res) => {
     }
 };
 export const getEmployeById = async (req, res) => {
-    console.log(req.params.id);
     try {
         const [rows] = await employeById(req.params.id);
         res.json(rows);

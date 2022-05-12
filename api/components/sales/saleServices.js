@@ -17,7 +17,7 @@ export const allSales = async (filters) => {
         
         ORDER BY s.date DESC 
         `;
-        console.log(sql);
+
         return await connection.query(sql);
     } catch (error) {
         throw error;
@@ -29,7 +29,6 @@ export const SaleById = async (id) => {
         const sql = `SELECT * FROM Sales WHERE id=${id}`;
         return await connection.query(sql);
     } catch (error) {
-        console.log(sql);
         return await connection.query(sql);
     }
 };
@@ -81,7 +80,7 @@ export const insertNewSale = async ({ dataSale, detail }) => {
             detail.commissionPercentage,
             detail.observatios,
         ]);
-        console.log(arrayDetail);
+
         await connection.query(sqlDetailSail, [arrayDetail]);
         const result = await connection.query(`COMMIT`);
         return result;

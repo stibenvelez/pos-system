@@ -20,6 +20,11 @@
         "jsonwebtoken": "^8.5.1",
         "mysql2": "^2.3.3",
         "promise-mysql": "^5.1.0",
+        "socket.io": "^4.5.0",
         "typeorm": "^0.3.6"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.6",
+        "utf-8-validate": "^5.0.9"
     }
 }

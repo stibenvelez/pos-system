@@ -84,7 +84,6 @@ export const forgetPassword = async (req, res) => {
 
 
 export const getUser = async (req, res) => {
-    console.log(req);
     const { user } = req
     res.json(user)
 };
