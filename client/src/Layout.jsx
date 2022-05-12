@@ -3,10 +3,11 @@ import Navbar from "./components/ui/Navbar";
 import SideBar from "./components/ui/sidebar/SideBar";
 
 const Layout = () => {
+    
     return (
-        <div className="bg-gray-50 flex w-full h-screen">
+        <div className="flex w-full h-screen bg-gray-50">
             <SideBar />
-            <div className="h-full overflow-y-auto w-full">
+            <div className="w-full h-full overflow-y-auto">
                 <Navbar/>
                 <div className="p-4">
                     <Outlet />

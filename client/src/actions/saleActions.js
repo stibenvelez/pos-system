@@ -3,7 +3,6 @@ import { ToastContainer, toast } from "react-toastify";
 import {
     ADD_NEW_PRODUCT_DETAIL,
     REMOVE_ITEM_PRODUCT_DETAIL,
-    READ_DATA_NEW_SALE,
     POST_NEW_SALE,
     POST_NEW_SALE_SUCCESS,
     POST_NEW_SALE_ERROR,
@@ -28,6 +27,7 @@ const addProductToSaleDetail = (product) => ({
     type: ADD_NEW_PRODUCT_DETAIL,
     payload: product,
 });
+
 
 export const validateErrorsNewProductAction = (errors) => {
     return (dispatch) => {
@@ -61,18 +61,6 @@ const removeItemFromSaleDetail = (id) => ({
     payload: id,
 });
 
-// read data new sale
-export const readDataNewSaleAction = (dataSale) => {
-    console.log(dataSale);
-    return (dispatch) => {
-        dispatch(readDataNewSale(dataSale));
-    };
-};
-
-const readDataNewSale = (dataSale) => ({
-    type: READ_DATA_NEW_SALE,
-    payload: dataSale,
-});
 
 // GET ALL SALES
 export const getAllSalesAction = (filters) => {

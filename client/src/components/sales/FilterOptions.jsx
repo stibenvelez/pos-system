@@ -7,7 +7,6 @@ import Card from "../../components/ui/Card/Card";
 const FilterOptions = () => {
     const dispatch = useDispatch();
     const filters = useSelector(({ sales }) => sales.filters);
-    console.log(filters);
 
     const handleChange = (e) => {
         dispatch(
@@ -21,16 +20,16 @@ const FilterOptions = () => {
     return (
         <>
             <div className="py-3">
-                <Link to="new-sale" className="bg-slate-800 py-2 px-3 text-white rounded-md hover:bg-slate-700">
+                <Link to="new-sale" className="px-3 py-2 text-white rounded-md bg-slate-800 hover:bg-slate-700">
                     Registrar Venta
                 </Link>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-2">
+            <div className="grid grid-cols-1 gap-2 lg:grid-cols-6">
                 <div className="flex flex-wrap gap-2 lg:col-span-4">
-                    <div className=" ">
+                    <div className="">
                         <label htmlform="dateFrom">Fecha desde: </label>
                         <input
-                            className="border py-2 px-2 rounded bg-gray-50"
+                            className="px-2 py-2 border rounded bg-gray-50"
                             type="date"
                             id="dateFrom"
                             name="dateFrom"
@@ -41,7 +40,7 @@ const FilterOptions = () => {
                     <div>
                         <label htmlform="dateTo">Fecha hasta: </label>
                         <input
-                            className="border py-2 px-2 rounded bg-gray-50"
+                            className="px-2 py-2 border rounded bg-gray-50"
                             type="date"
                             id="dateTo"
                             name="dateTo"
@@ -52,7 +51,7 @@ const FilterOptions = () => {
                     <div>
                         <label htmlform="category">Categoria: </label>
                         <select
-                            className="border py-2 px-2 rounded bg-gray-50"
+                            className="px-2 py-2 border rounded bg-gray-50"
                             name="category"
                             id="category"
                             onChange={handleChange}
@@ -67,7 +66,7 @@ const FilterOptions = () => {
                     <div>
                         <label htmlform="state">Estado: </label>
                         <select
-                            className="border py-2 px-2 rounded bg-gray-50"
+                            className="px-2 py-2 border rounded bg-gray-50"
                             id="state"
                             name="state"
                             onChange={handleChange}
@@ -78,13 +77,13 @@ const FilterOptions = () => {
                         </select>
                     </div>
                 </div>
-                <div className=" justify-end lg:col-start-5  lg:col-end-7">
-                    <div className="flex align-middle items-center">
+                <div className="justify-end lg:col-start-5 lg:col-end-7">
+                    <div className="flex items-center align-middle">
                         <label htmlFor="simple-search" className="sr-only">
                             Search
                         </label>
                         <div className="relative w-full">
-                            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg
                                     className="w-5 h-5 text-gray-500 dark:text-gray-400"
                                     fill="currentColor"
@@ -92,7 +91,7 @@ const FilterOptions = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path
-                                        fill-rule="evenodd"
+                                        fillRule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                         clipRule="evenodd"
                                     ></path>

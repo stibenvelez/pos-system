@@ -13,8 +13,19 @@ import SalesDetailsPage from "../pages/sales/SalesDetailsPage";
 import LoginPage from "../pages/login/LoginPage";
 import NotFountPage from "../pages/notFountPage/NotFountPage";
 import ProfilePage from "../pages/profile/ProfilePage";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { AuthAction } from "../actions/authAction";
 
 const Routers = () => {
+
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        const auth = () => dispatch(AuthAction());
+        auth();
+    }, []);
+
     return (
         <BrowserRouter>
             <Routes>

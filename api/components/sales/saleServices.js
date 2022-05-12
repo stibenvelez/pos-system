@@ -24,7 +24,6 @@ export const allSales = async (filters) => {
     }
 };
 
-
 export const SaleById = async (id) => {
     try {
         const sql = `SELECT * FROM Sales WHERE id=${id}`;
@@ -44,12 +43,14 @@ export const insertNewSale = async ({ dataSale, detail }) => {
         );
 
         const sqlDataSale = `INSERT INTO 
-            Sales (document, totalPrice) 
-            VALUES(?, ?)`;
+            Sales (idDocumentType,document, totalSale, idPaymentMethod) 
+            VALUES(?,?,?,?)`;
 
         const [rows] = await connection.query(sqlDataSale, [
+            dataSale.documentType,
             dataSale.document,
-            totalSale,
+            dataSale.totalSale,
+            dataSale.payMethod,
         ]);
 
         const idSale = rows.insertId;

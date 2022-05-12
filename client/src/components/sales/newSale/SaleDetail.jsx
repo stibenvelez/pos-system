@@ -8,30 +8,30 @@ import { useSelector } from "react-redux";
 import formatMoney from "../../../helpers/formatMoney";
 
 const SaleDetail = () => {
-    const sailDetails = useSelector(({ sales }) => sales.newSale.detail);
+    const sailDetails = useSelector(({ sales }) => sales.detail);
    
     return (
         <Card>
-            <div className="relative overflow-x-auto  sm:rounded-lg">
+            <div className="relative overflow-x-auto sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="bg-gray-50">
-                        <tr className="capitalize  text-gray-800">
-                            <th scope="col" className="py-3 px-6">
+                        <tr className="text-gray-800 capitalize">
+                            <th scope="col" className="px-6 py-3">
                                 Producto
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="px-6 py-3">
                                 cantidad
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="px-6 py-3">
                                 valor unit
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="px-6 py-3">
                                 valor total
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="px-6 py-3">
                                 Comision
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="px-6 py-3">
                                 acciones
                             </th>
                         </tr>
@@ -43,8 +43,8 @@ const SaleDetail = () => {
                     </tbody>
                     <tfoot>
                         <tr className="text-gray-700 border-b">
-                            <td className="py-3 px-6 text-xl">Total:</td>
-                            <td className="py-3 px-6 text-xl font-semibold">
+                            <td className="px-6 py-3 text-xl">Total:</td>
+                            <td className="px-6 py-3 text-xl font-semibold">
                                 {formatMoney.format(sailDetails.reduce((acc,value)=>acc+value.totalPrice, 0))}
                             </td>
                         </tr>

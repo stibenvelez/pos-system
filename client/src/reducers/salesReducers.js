@@ -1,7 +1,6 @@
 import {
     ADD_NEW_PRODUCT_DETAIL,
     REMOVE_ITEM_PRODUCT_DETAIL,
-    READ_DATA_NEW_SALE,
     GET_ALL_SALES_SUCCESS,
     GET_ALL_SALES,
     POST_NEW_SALE,
@@ -16,16 +15,10 @@ import {
 
 const initialState = {
     sales: [],
-    sale:{},
+    sale: {},
     producttoremove: {},
-    newSale: {
-        dataSale: {
-            date: "2022-04-24",
-            documentType: 1,
-            document: "",
-        },
-        detail: [],
-    },
+detail: [],
+
     loading: true,
     filters: {
         category: "",
@@ -33,7 +26,7 @@ const initialState = {
         dateTo: "2022-05-31",
         state: "1",
     },
-    errorsNewProduct:{}
+    errorsNewProduct: {},
 };
 
 const salesReducers = (state = initialState, action) => {
@@ -74,25 +67,27 @@ const salesReducers = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                error:false
             };
         case POST_NEW_SALE_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                newSale:initialState.newSale
+                detail: [],
+                error:false
             };
         case POST_NEW_SALE_ERROR:
             return {
                 ...state,
                 loading: false,
+                error:true
             };
         case ADD_NEW_PRODUCT_DETAIL:
             return {
                 ...state,
-                newSale: {
-                    dataSale: { ...state.newSale.dataSale },
-                    detail: [...state.newSale.detail, action.payload],
-                },
+
+                detail: [...state.detail, action.payload],
+
                 errorsNewProduct: false,
             };
         case ADD_NEW_PRODUCT_ERROR:
@@ -103,20 +98,11 @@ const salesReducers = (state = initialState, action) => {
         case REMOVE_ITEM_PRODUCT_DETAIL:
             return {
                 ...state,
-                newSale: {
-                    dataSale: { ...state.newSale.dataSale },
-                    detail: [...state.newSale.detail].filter(
+               
+                    detail: [...state.detail].filter(
                         (item) => item.id != action.payload
                     ),
-                },
-            };
-        case READ_DATA_NEW_SALE:
-            return {
-                ...state,
-                newSale: {
-                    dataSale: action.payload,
-                    detail: [...state.newSale.detail],
-                },
+               
             };
         case FILTER_SALES_LIST:
             return {

@@ -10,7 +10,6 @@ const ProductData = ({
     productsFiltered,
     setproductsFiltered,
 }) => {
-    const dispatch = useDispatch();
     const [productCategories, setProductCategories] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [productSeleted, setProductSeleted] = useState(null);
@@ -21,6 +20,7 @@ const ProductData = ({
     const productRef = useRef(null);
 
     const productId = productRef.current?.value;
+
     useEffect(() => {
         if (productId) {
             const getProductById = async () => {
@@ -30,7 +30,6 @@ const ProductData = ({
             getProductById();
         }
     }, [productId]);
-    console.log(productSeleted);
 
     useEffect(() => {
         const getProductCategories = async () => {
@@ -61,21 +60,24 @@ const ProductData = ({
     }, [newProduct]);
 
     const handleProduct = (e) => {
+        let commissionPercentage = productSeleted?.commissionPercentage | 0;
+
         setNewProduct({
             ...newProduct,
             [e.target.name]: e.target.value,
             commissionValue:
-                ((newProduct.unitPrice * productSeleted?.commissionPercentage) /
-                    100) *
+                ((newProduct.unitPrice * commissionPercentage) / 100) *
                 newProduct.quantity,
-            commissionPercentage: productSeleted?.commissionPercentage
+            commissionPercentage: productSeleted?.commissionPercentage,
         });
     };
 
+    
+
     return (
-        <div className="mt-3">
-            <h3 className="text-gray-700 my-2  font-semibold">
-                Datos del producto
+        <div className="">
+            <h3 className="mb-4 text-xl font-semibold text-gray-700">
+                Datos del producto:
             </h3>
 
             <div className="grid grid-cols-6 gap-6">
@@ -90,7 +92,7 @@ const ProductData = ({
                         id="category"
                         name="category"
                         autoComplete="category"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         onBlur={handleProduct}
                         value={newProduct.category}
@@ -109,7 +111,7 @@ const ProductData = ({
                     </select>
                     {errorsNewProduct.category && newProduct.category == "" && (
                         <div>
-                            <p className="text-red-600 text-sm p-1">
+                            <p className="p-1 text-sm text-red-600">
                                 {errorsNewProduct.category}
                             </p>
                         </div>
@@ -126,7 +128,7 @@ const ProductData = ({
                         id="product"
                         name="product"
                         autoComplete="product"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
+                        className="block w-full px-3 py-2 mt-1 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
                         onChange={handleProduct}
                         onBlur={handleProduct}
                         disabled={newProduct.category === ""}
@@ -148,7 +150,7 @@ const ProductData = ({
                     </select>
                     {errorsNewProduct.product && newProduct.product == "" && (
                         <div>
-                            <p className="text-red-600 text-sm p-1">
+                            <p className="p-1 text-sm text-red-600">
                                 {errorsNewProduct.product}
                             </p>
                         </div>
@@ -166,14 +168,14 @@ const ProductData = ({
                         name="quantity"
                         type="number"
                         autoComplete="quantity"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         onBlur={handleProduct}
                         value={newProduct.quantity}
                     />
                     {errorsNewProduct.quantity && newProduct.quantity == "" && (
                         <div>
-                            <p className="text-red-600 text-sm p-1">
+                            <p className="p-1 text-sm text-red-600">
                                 {errorsNewProduct.quantity}
                             </p>
                         </div>
@@ -190,14 +192,14 @@ const ProductData = ({
                         id="unitPrice"
                         name="unitPrice"
                         type="number"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         onBlur={handleProduct}
                         value={newProduct.unitPrice}
                     />
                     {errorsNewProduct.unitPrice && newProduct.unitPrice == "" && (
                         <div>
-                            <p className="text-red-600 text-sm p-1">
+                            <p className="p-1 text-sm text-red-600">
                                 {errorsNewProduct.unitPrice}
                             </p>
                         </div>
@@ -215,7 +217,7 @@ const ProductData = ({
                         id="employe"
                         name="employe"
                         autoComplete="product"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
+                        className="block w-full px-3 py-2 mt-1 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:opacity-50 disabled:bg-gray-200"
                         onChange={handleProduct}
                         value={newProduct.employe}
                     >
@@ -232,7 +234,7 @@ const ProductData = ({
                     </select>
                     {errorsNewProduct.employe && newProduct.employe === "" && (
                         <div>
-                            <p className="text-red-600 text-sm p-1">
+                            <p className="p-1 text-sm text-red-600">
                                 {errorsNewProduct.employe}
                             </p>
                         </div>
@@ -251,7 +253,7 @@ const ProductData = ({
                         type="text"
                         placeholder="ABC000"
                         autoComplete="licensePlate"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         value={newProduct.licensePlate}
                     />
@@ -269,7 +271,7 @@ const ProductData = ({
                         type="text"
                         placeholder="ABC000"
                         autoComplete="licensePlate"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         value={newProduct.commissionValue}
                     />
@@ -286,7 +288,7 @@ const ProductData = ({
                         id="observations"
                         name="observations"
                         autoComplete="observations"
-                        className="mt-1 block w-full py-2 px-3 border border-gray-200bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         value={newProduct.observations}
                     />

@@ -1,5 +1,5 @@
 const validateNewSale = ({ dataSale, detail }) => {
-    console.log(detail.length);
+
     const errors = {};
     if (dataSale.date === "") {
         errors.date = "Ingrese una fecha";
@@ -9,6 +9,9 @@ const validateNewSale = ({ dataSale, detail }) => {
     }
     if (detail.length === 0) {
         errors.document = "Debe agregar al menos un producto";
+    }
+    if (dataSale.payMethod === "") {
+        errors.payMethod = "Seleccione un metodo de pago";
     }
 
     return errors;

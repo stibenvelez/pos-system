@@ -4,4 +4,6 @@ const formatDate = (date) => {
     return result
 };
 
+
+
 export default formatDate;
