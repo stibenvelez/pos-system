@@ -52,8 +52,29 @@ export const SidebarData = [
             },
         ],
     },
+
     {
-        title: "Empleados",
+        title: "Reportes",
+        path: "#",
+        icon: null,
+        iconClosed: null,
+        iconOpened: null,
+
+        subNav: [
+            {
+                title: "Reporte de ventas",
+                path: "reports/sales-report",
+                icon: null,
+            },
+            {
+                title: "Agregar emploado",
+                path: "#",
+                icon: null,
+            },
+        ],
+    },
+    {
+        title: "Config",
         path: "#",
         icon: null,
         iconClosed: null,
@@ -66,36 +87,10 @@ export const SidebarData = [
                 icon: null,
             },
             {
-                title: "Agregar emploado",
+                title: "Usuarios",
                 path: "#",
                 icon: null,
             },
         ],
-    },
-    {
-        title: "Messages",
-        path: "#",
-        icon: null,
-
-        iconClosed: null,
-        iconOpened: null,
-
-        subNav: [
-            {
-                title: "Message 1",
-                path: "#",
-                icon: null,
-            },
-            {
-                title: "Message 2",
-                path: "#",
-                icon: null,
-            },
-        ],
-    },
-    {
-        title: "Support",
-        path: "#",
-        icon: null,
     },
 ];

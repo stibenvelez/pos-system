@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 
 const SubMenu = ({ item }) => {
     const [subnav, setSubnav] = useState(false);
@@ -15,15 +16,20 @@ const SubMenu = ({ item }) => {
             >
                 <div>
                     {item.icon}
-                    <ion-icon name="wallet-outline"></ion-icon>
                     <span className="ml-4">{item.title}</span>
                 </div>
                 <div>
-                    {item.subNav && subnav
-                        ? item.iconOpened
-                        : item.subNav
-                        ? item.iconClosed
-                        : null}
+                    {item.subNav && subnav ? (
+                        <ChevronUpIcon
+                            className="-mr-1 ml-2 h-5 w-5"
+                            aria-hidden="true"
+                        />
+                    ) : item.subNav ? (
+                        <ChevronDownIcon
+                            className="-mr-1 ml-2 h-5 w-5"
+                            aria-hidden="true"
+                        />
+                    ) : null}
                 </div>
             </NavLink>
             {subnav &&
@@ -34,8 +40,7 @@ const SubMenu = ({ item }) => {
                             to={item.path}
                             key={index}
                         >
-                            {item.icon}
-                            <span>{item.title}</span>
+                            {item.icon} <span>{item.title}</span>
                         </Link>
                     );
                 })}

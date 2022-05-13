@@ -77,7 +77,7 @@ const SaleComponent = () => {
                     <div className="flex items-end gap-3 py-4 text-gray-800">
                         Valor total:{" "}
                         <p className="text-2xl font-bold">
-                            {formatMoney.format(sale.totalPrice)}
+                            {formatMoney.format(sale.totalSale)}
                         </p>
                     </div>
                 </div>

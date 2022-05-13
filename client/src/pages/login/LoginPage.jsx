@@ -2,7 +2,9 @@ import React from "react";
 import styled from "@emotion/styled";
 import FormLogin from "../../components/auth/FormLogin";
 import img from "./auto.jpg";
-import useAuth from '../../hooks/useAuth'
+import useAuth from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Background = styled.div`
     width: 100%;
@@ -18,15 +20,19 @@ const Background = styled.div`
     background-size: cover;
 `;
 
-
-
 const LoginPage = () => {
+    const navigate = useNavigate();
+    const loading = useSelector(({ auth }) => auth.loading);
+    const auth = useSelector(({ auth }) => auth.auth);
 
-    
+    if (loading) {
+        return;
+    }
+
     return (
         <div>
             <Background className="flex justify-center items-center">
-                <FormLogin/>
+                <FormLogin />
             </Background>
         </div>
     );

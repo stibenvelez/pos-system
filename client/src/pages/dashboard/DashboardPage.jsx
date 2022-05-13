@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import IndicatorsCards from "../../components/dashboard/IndicatorsCards";
+import io from 'socket.io-client'
 
 const DashboardPage = () => {
+
+    useEffect(() => {
+        const socket = io(import.meta.env.VITE_API_URL);
+        socket.emit("prueba", socket);
+    }, [])
+    
   return (
       <div className="container mx-auto">
           <div className="pb-3">

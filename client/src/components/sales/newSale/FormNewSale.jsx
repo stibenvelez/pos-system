@@ -5,20 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
 import ProductData from "./ProductData";
-
 import Card from "../../ui/Card/Card";
 import { toast } from "react-toastify";
-
-// Redux
 import { useDispatch, useSelector } from "react-redux";
+import validateAddProduct from "./utils/validateAddProduct";
+import validateNewSale from "./utils/validateNewSale";
+import { formatDate } from "../../../helpers/FormatDate";
 import {
     addProductToSaleDetailAction,
     RegisterOneNewSaleAction,
     validateErrorsNewProductAction,
 } from "../../../actions/saleActions";
-import validateAddProduct from "./utils/validateAddProduct";
-import validateNewSale from "./utils/validateNewSale";
-import { formatDate } from "../../../helpers/FormatDate";
+import {useNavigate} from 'react-router-dom'
 
 const initialStateNewProduct = {
     category: "",
@@ -43,6 +41,7 @@ const INITIAL_SATATE_SALE = {
 };
 
 const FormNewSale = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [newProduct, setNewProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
@@ -206,6 +205,7 @@ const FormNewSale = () => {
                                         className="inline-block px-4 py-2 text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-500"
                                         type="button"
                                         value="Cancelar"
+                                        onClick={()=>navigate(-1)}
                                     />
                                 </div>
                             </Card>

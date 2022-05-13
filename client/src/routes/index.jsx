@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "../Layout";
-import HomePage from "../pages/home/HomePage";
 import NewProductPage from "../pages/products/NewProductPage";
 import EditProductPage from "../pages/products/EditProductPage";
 import ProductsPages from "../pages/products/ProductsPages";
@@ -13,11 +11,9 @@ import SalesDetailsPage from "../pages/sales/SalesDetailsPage";
 import LoginPage from "../pages/login/LoginPage";
 import NotFountPage from "../pages/notFountPage/NotFountPage";
 import ProfilePage from "../pages/profile/ProfilePage";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { AuthAction } from "../actions/authAction";
 import AuthLayout from "../components/layouts/AuthLayout";
 import PrivateRoute from "../components/layouts/PrivateRoute";
+import SalesReportPage from "../pages/Reports/SalesReportPage";
 
 const Routers = () => {
 
@@ -26,8 +22,9 @@ const Routers = () => {
             <Routes>
                 <Route path="/" element={<AuthLayout />}>
                     <Route index element={<LoginPage />} />
+                    <Route path="*" element={<NotFountPage />} />
                 </Route>
-                
+
                 <Route path="/dashboard/" element={<PrivateRoute />}>
                     <Route index element={<DashboardPage />} />
                     <Route path="sales">
@@ -52,6 +49,13 @@ const Routers = () => {
                     </Route>
                     <Route path="employees">
                         <Route index element={<EmployesPage />} />
+                    </Route>
+                    <Route path="reports">
+                        <Route
+                            path="sales-report"
+                            index
+                            element={<SalesReportPage />}
+                        />
                     </Route>
                     <Route path="profile">
                         <Route path=":id" index element={<ProfilePage />} />

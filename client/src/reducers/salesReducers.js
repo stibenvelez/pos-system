@@ -11,14 +11,15 @@ import {
     GET_SALE_BY_ID,
     GET_SALE_BY_ID_SUCCES,
     GET_SALE_BY_ID_ERROR,
+    GET_ALL_SALES_ERROR,
 } from "../types/salesTypes";
 
 const initialState = {
     sales: [],
     sale: {},
     producttoremove: {},
-detail: [],
-
+    detail: [],
+    error:false,
     loading: true,
     filters: {
         category: "",
@@ -42,45 +43,53 @@ const salesReducers = (state = initialState, action) => {
                 sales: action.payload,
                 loading: false,
             };
-        
+
+        case GET_ALL_SALES_ERROR:
+            return {
+                ...state,
+                sales: [],
+                loading: false,
+                error: action.payload,
+            };
+
         case GET_SALE_BY_ID:
             return {
                 ...state,
-                loading: true
+                loading: true,
             };
-        
+
         case GET_SALE_BY_ID_SUCCES:
             return {
                 ...state,
                 loading: false,
-                sale: action.payload
+                sale: action.payload,
             };
-        
+
         case GET_SALE_BY_ID_ERROR:
             return {
                 ...state,
                 loading: false,
-                error:action.payload
+                error: action.payload,
             };
-        
+
         case POST_NEW_SALE:
             return {
                 ...state,
                 loading: true,
-                error:false
+                error: false,
             };
         case POST_NEW_SALE_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 detail: [],
-                error:false
+                error: false,
             };
         case POST_NEW_SALE_ERROR:
             return {
                 ...state,
                 loading: false,
-                error:true
+                error: true,
             };
         case ADD_NEW_PRODUCT_DETAIL:
             return {
@@ -98,11 +107,10 @@ const salesReducers = (state = initialState, action) => {
         case REMOVE_ITEM_PRODUCT_DETAIL:
             return {
                 ...state,
-               
-                    detail: [...state.detail].filter(
-                        (item) => item.id != action.payload
-                    ),
-               
+
+                detail: [...state.detail].filter(
+                    (item) => item.id != action.payload
+                ),
             };
         case FILTER_SALES_LIST:
             return {

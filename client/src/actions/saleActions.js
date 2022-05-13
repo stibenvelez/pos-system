@@ -71,7 +71,7 @@ export const getAllSalesAction = (filters) => {
             const sales = await clienteAxios.get(`/sales`, { params: filters });
             dispatch(getAllSalesSuccess(sales.data));
         } catch (error) {
-            dispatch(getAllSalesError());
+            dispatch(getAllSalesError(error.response.data.msg));
         }
     };
 };
@@ -85,8 +85,9 @@ const getAllSalesSuccess = (sales) => ({
     payload: sales,
 });
 
-const getAllSalesError = () => ({
+const getAllSalesError = (error) => ({
     type: GET_ALL_SALES_ERROR,
+    payload: error,
 });
 
 //get sale by id

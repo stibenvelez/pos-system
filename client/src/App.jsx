@@ -7,14 +7,12 @@ const App = () => {
 
     const dispatch = useDispatch();
 
-    const loading = useSelector(({auth})=>auth.loading)
-    const auth = useSelector(({auth})=>auth.loading)
-
     useEffect(() => {
         const auth = () => dispatch(AuthAction());
         auth();
+
     }, []);
-    console.log("result", loading, auth);
+
     return (
         <div>
             <Routers />

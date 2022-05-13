@@ -9,7 +9,9 @@ import SaleItem from './saleItem'
 const SalesList = () => {
   
   const sales = useSelector(({sales})=>sales.sales)
-  const loading = useSelector(({ sales }) => sales.loading);
+    const loading = useSelector(({ sales }) => sales.loading);
+    const error = useSelector(({ sales }) => sales.error);
+
 
   if (loading) {
     return (
@@ -24,7 +26,7 @@ const SalesList = () => {
     
     if (sales.length === 0) {
         return (
-            <div className='py-3 p-5 bg-amber-100 shadow-md border border-yellow-200 text-sm text-yellow-800'><p>No se encontraron resultados</p></div>
+            <div className='py-3 p-5 bg-amber-100 shadow-md border border-yellow-200 text-sm text-yellow-800'><p>{error}</p></div>
         )
     }
         return (

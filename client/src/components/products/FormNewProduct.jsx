@@ -42,7 +42,6 @@ const FormNewProduct = () => {
         validationSchema: ProductSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
-            console.log("enviando", values);
             actionSubmit(values);
         },
     });

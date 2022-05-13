@@ -13,7 +13,7 @@ const Sidebar = () => {
     const showSidebar = () => setSidebar(!sidebar);
 
     return (
-        <div className="relative z-50">
+        <div className="relative z-50 overflow-y-clip ">
             <div
                 className="absolute flex items-center justify-center w-12 h-12 rounded-md bg-slate-800 hover:bg-slate-700 button-3 -right-14 sm:hidden"
                 onClick={showSidebar}

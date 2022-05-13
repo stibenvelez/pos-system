@@ -5,20 +5,22 @@ import {
     LOGIN,
     LOGIN_SUCCES,
     LOGIN_ERROR,
+    SIGN_OUT,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR,
 } from "../types/authTypes";
 import clienteAxios from "../config/axios";
 import { useNavigate } from "react-router-dom";
 
 export const AuthAction = () => {
-    
     return async (dispatch) => {
-        dispatch(authtentication());
+        dispatch({
+            type: AUTH,
+        });
         try {
             const token = localStorage.getItem("token");
-        
             if (!token) {
                 console.log("no hay token");
-                
             }
             const config = {
                 headers: {
@@ -27,25 +29,18 @@ export const AuthAction = () => {
                 },
             };
             const { data } = await clienteAxios.get("/users/profile", config);
-            dispatch(authtenticationSuccess(data));
-            //navigate('/dashboard')
+            dispatch({
+                type: AUTH_SUCCES,
+                payload: data,
+            });
         } catch (error) {
-            dispatch(authtenticationError(error));
+            dispatch({
+                type: AUTH_ERROR,
+                payload: error,
+            });
         }
     };
 };
-
-const authtentication = () => ({
-    type: AUTH,
-});
-
-const authtenticationSuccess = (user) => ({
-    type: AUTH_SUCCES,
-    payload: user,
-});
-const authtenticationError = () => ({
-    type: AUTH_ERROR,
-});
 
 export const loginAction = (user) => {
     return async (dispatch) => {
@@ -58,6 +53,18 @@ export const loginAction = (user) => {
         } catch (error) {
             console.log(error.response.data.msg);
             dispatch({ type: LOGIN_ERROR, payload: error });
+        }
+    };
+};
+
+export const singOutAction = () => {
+    return async (dispatch) => {
+        dispatch({ type: SIGN_OUT });
+        try {
+            localStorage.removeItem('token')
+            dispatch({ type: SIGN_OUT_SUCCESS});
+        } catch (error) {
+            dispatch({ type: SIGN_OUT_ERROR });
         }
     };
 };

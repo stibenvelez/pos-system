@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Card from "../ui/Card/Card";
 import { loginAction } from "../../actions/authAction";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const FormLogin = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [signup, setsignup] = useState({ user: "", password: "" });
-    const auth = useSelector(({ auth }) => auth.auth);
 
     const handleChange = (e) => {
         setsignup({
@@ -23,20 +20,12 @@ const FormLogin = () => {
         dispatch(loginAction(signup));
     };
 
-    useEffect(() => {
-        if (auth) {
-            console.log("autenticado ok");
-            navigate("/dashboard");
-        }
-    }, [auth]);
-
     return (
         <Card>
-            {console.log("res---", auth)}
             <div className="min-h-full flex items-center justify-center py-6 px-6 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full">
                     <div>
-                        {/* <div className="w-full flex justify-center">
+                        <div className="w-full flex justify-center">
                             <img
                                 src={`${
                                     import.meta.env.BASE_URL
@@ -44,7 +33,7 @@ const FormLogin = () => {
                                 className="fill-red-500"
                                 alt="React Logo"
                             />
-                        </div> */}
+                        </div> 
                         <h2 className="md:mx-10 text-center text-3xl font-extrabold text-gray-900">
                             Iniciar Sesión
                         </h2>
