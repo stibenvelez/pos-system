@@ -22,19 +22,17 @@ const FormLogin = () => {
 
     return (
         <Card>
-            <div className="min-h-full flex items-center justify-center py-6 px-6 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full">
+            <div className="flex items-center justify-center min-h-full px-6 py-6 sm:px-6 lg:px-8">
+                <div className="w-full max-w-md">
                     <div>
-                        <div className="w-full flex justify-center">
+                        <div className="flex justify-center w-full">
                             <img
-                                src={`${
-                                    import.meta.env.BASE_URL
-                                }img/app/logo.svg`}
+                                src={`/public/assets/img/app/logo.svg`}
                                 className="fill-red-500"
                                 alt="React Logo"
                             />
-                        </div> 
-                        <h2 className="md:mx-10 text-center text-3xl font-extrabold text-gray-900">
+                        </div>
+                        <h2 className="text-3xl font-extrabold text-center text-gray-900 md:mx-10">
                             Iniciar Sesión
                         </h2>
                     </div>
@@ -44,7 +42,7 @@ const FormLogin = () => {
                             name="remember"
                             defaultValue="true"
                         />
-                        <div className="rounded-md shadow-sm -space-y-px">
+                        <div className="-space-y-px rounded-md shadow-sm">
                             <div>
                                 <label htmlFor="user" className="sr-only">
                                     Usuario
@@ -54,7 +52,7 @@ const FormLogin = () => {
                                     name="user"
                                     type="text"
                                     autoComplete="user"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Usuario"
                                     value={signup.user}
                                     onChange={handleChange}
@@ -69,7 +67,7 @@ const FormLogin = () => {
                                     name="password"
                                     type="password"
                                     autoComplete="password"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Password"
                                     value={signup.password}
                                     onChange={handleChange}
@@ -91,11 +89,11 @@ const FormLogin = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                                     <LockClosedIcon
-                                        className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                                        className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
                                         aria-hidden="true"
                                     />
                                 </span>

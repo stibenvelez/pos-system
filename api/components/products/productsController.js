@@ -4,6 +4,7 @@
     productById,
     editProduct,
 } from "./productDAL.js";
+import { editProductByIdService } from "./productServices.js";
 
 export const getAllProducts = async (req, res) => {
     console.log(req.query);
@@ -38,9 +39,10 @@ export const AddnewProduct = async (req, res) => {
     }
 };
 export const editProductById = async (req, res) => {
-    const idProduct = req.body.idProduct;
+
     try {
-        const [product] = await productById(idProduct);
+        const product = await editProductByIdService(req.body);
+
         if (!product.length) {
             res.status(400).json({ msg: "No se encontro el producto" });
             return

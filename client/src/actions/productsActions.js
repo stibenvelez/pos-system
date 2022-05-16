@@ -79,6 +79,7 @@ export const editProductByIdAction = (product) => {
                 product
             );
             dispatch(editProductByIdSuccess(res.data[0]));
+            dispatch(getProductByIdAction(product.idProduct));
         } catch (error) {
             console.log(error);
             dispatch(editProductByIdError());

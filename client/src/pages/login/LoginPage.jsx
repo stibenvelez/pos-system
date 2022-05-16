@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import FormLogin from "../../components/auth/FormLogin";
-import img from "./auto.jpg";
+import img from "/public/assets/img/app/auto.jpg";
 import useAuth from "../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     return (
         <div>
-            <Background className="flex justify-center items-center">
+            <Background className="flex items-center justify-center">
                 <FormLogin />
             </Background>
         </div>

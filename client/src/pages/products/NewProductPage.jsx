@@ -12,7 +12,6 @@ const NewProductPage = () => {
             <Template
                 title={"Nuevo Producto"}
                 description={"Agregue aquí un nuevo producto"}
-                className="container mx-auto"
             >
                 <div>
                     <FormNewProduct />
