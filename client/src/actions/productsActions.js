@@ -9,18 +9,21 @@ import {
     FETCH_PRODUCTS,
     FETCH_PRODUCTS_ERROR,
     FETCH_PRODUCTS_SUCCESS,
+    FILTER_PRODUCTS,
     GET_PRODUCT,
     GET_PRODUCT_ERROR,
     GET_PRODUCT_SUCCESS,
 } from "../types/productsTypes";
 
 // get products
-export const getAllProductsActions = () => {
+export const getAllProductsActions = (filters) => {
     return async (dispatch) => {
         dispatch(getProducts());
 
         try {
-            const res = await clienteAxios.get("/products");
+            const res = await clienteAxios.get("/products", {
+                params: filters,
+            });
             dispatch(getProductsSuccess(res.data));
         } catch (error) {
             console.log(error);
@@ -97,26 +100,31 @@ const editProductByIdError = () => ({
 //ADD NEW PRODUCT
 export const addNewProductAction = (product) => {
     return async (dispatch) => {
-        dispatch(addNewProduct());
+        dispatch({
+            type: ADD_NEW_PRODUCT,
+        });
         try {
             await clienteAxios.post(`/products`, product);
-            dispatch(adNewPrdroductSucces());
+            dispatch({
+                type: ADD_NEW_PRODUCT_SUCCESS,
+                payload: product,
+            });
         } catch (error) {
-            dispatch(adNewPrdroductErrror(error));
+            dispatch({
+                type: ADD_NEW_PRODUCT_ERROR,
+                payload: error,
+            });
         }
     };
 };
 
-const addNewProduct = () => ({
-    type: ADD_NEW_PRODUCT,
-});
 
-const adNewPrdroductSucces = (product) => ({
-    type: ADD_NEW_PRODUCT_SUCCESS,
-    payload: product,
-});
-
-const adNewPrdroductErrror = (error) => ({
-    type: ADD_NEW_PRODUCT_ERROR,
-    payload: error,
-});
+// FILTERS PRODUCT
+export const filterProductsAction = filters => {
+    return async dispatch => {
+        dispatch({
+            type: FILTER_PRODUCTS,
+            payload: filters
+        })
+    }
+}

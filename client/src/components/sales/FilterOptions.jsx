@@ -57,7 +57,7 @@ const FilterOptions = () => {
                             onChange={handleChange}
                             value={filters.category}
                         >
-                            <option vlaue="">-- todas --</option>
+                            <option value="">-- todas --</option>
                             <option value="1">Sonido</option>
                             <option value="2">Lujo</option>
                             <option value="3">Polarizado</option>

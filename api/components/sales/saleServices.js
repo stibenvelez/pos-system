@@ -3,6 +3,7 @@ import connection from "../../config/db.js";
 export const allSales = async (filters) => {
     const { dateFrom, dateTo, state } = filters;
 
+
     try {
         const sql = `
         SELECT * 
@@ -16,6 +17,9 @@ export const allSales = async (filters) => {
         ${state ? "AND s.idStateSale = '" + state + "'" : ""}
         
         ORDER BY s.date DESC 
+
+        limit 10 offset 0
+         
         `;
 
         return await connection.query(sql);
@@ -34,6 +38,7 @@ export const SaleById = async (id) => {
 };
 
 export const insertNewSale = async ({ dataSale, detail }) => {
+    console.log(detail);
     try {
         await connection.query("START TRANSACTION");
         const totalSale = await detail.reduce(

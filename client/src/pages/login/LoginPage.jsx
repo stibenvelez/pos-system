@@ -25,10 +25,6 @@ const LoginPage = () => {
     const loading = useSelector(({ auth }) => auth.loading);
     const auth = useSelector(({ auth }) => auth.auth);
 
-    if (loading) {
-        return;
-    }
-
     return (
         <div>
             <Background className="flex justify-center items-center">

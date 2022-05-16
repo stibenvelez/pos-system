@@ -48,12 +48,14 @@ const FormNewProduct = () => {
 
     const actionSubmit = (values) => {
         
-        if (product) {
-           
+        if (product && product.idProduct) {
+            console.log('editar producto')
             dispatch(editProductByIdAction(values));
             return;
         }
+         console.log("crear producto");
         dispatch(addNewProductAction(values))
+        formik.resetForm()
     };
 
     if (loading) return (
@@ -302,7 +304,7 @@ const FormNewProduct = () => {
                                 className="px-4 py-2 text-white rounded-md cursor-pointer bg-slate-800 hover:bg-slate-700"
                                 type="submit"
                             >
-                                Agregar
+                                {product?"Editar Producto":"agregar"}
                             </button>
                             <input
                                 type="button"

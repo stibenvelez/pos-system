@@ -8,7 +8,8 @@ import {
 const initialState = {
     sales: [],
     loading: true,
-    filters:{}
+    filters:{dateFrom: '2022-05-01',
+dateTo: '2022-05-31'}
 };
 
 const reportsReducer = (state = initialState, action) => {

@@ -13,6 +13,13 @@ const ListReports = () => {
         );
     }
 
+    if (reports.length === 0) {
+        return (
+            <div className="py-3 p-5 bg-amber-100 shadow-md border border-yellow-200 text-sm text-yellow-800">
+                <p>No hay resultados para mostrar</p>
+            </div>
+        );
+    }
     return (
         <>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -27,6 +34,9 @@ const ListReports = () => {
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Valor total
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Trabajador
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Comision

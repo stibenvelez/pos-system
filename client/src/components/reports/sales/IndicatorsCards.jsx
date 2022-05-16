@@ -39,24 +39,27 @@ const IndicatorsCards = () => {
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 text-gray-600">
               <Card className="h-20">
                   <h4 className="">Venta total</h4>
-                  <p className="text-2xl font-bold text-green-700">
+                  <p className="text-2xl font-bold text-green-500">
                       {formatMoney.format(totalSold)}
                   </p>
               </Card>
               <Card className="h-20">
                   <h4 className="">Costo total</h4>
-                  <p className="text-2xl font-bold text-rose-900">
+                  <p className="text-2xl font-bold text-amber-500">
                       {formatMoney.format(totalCost)}
                   </p>
               </Card>
               <Card className="h-20">
-                  <h4 className="">Costo total</h4>
+                  <h4 className="">Comision total</h4>
                   <p className="text-2xl font-bold text-sky-700">
                       {formatMoney.format(totalCommission)}
                   </p>
               </Card>
               <Card className="h-20">
-                  <p>Card 4</p>
+                  <h4 className="">Gastos</h4>
+                  <p className="text-2xl font-bold text-rose-900">
+                      {formatMoney.format(0)}
+                  </p>
               </Card>
           </div>
       </div>

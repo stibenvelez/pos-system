@@ -51,8 +51,8 @@ export const loginAction = (user) => {
             localStorage.setItem("token", data.token);
             dispatch({ type: LOGIN_SUCCES, payload: user });
         } catch (error) {
-            console.log(error.response.data.msg);
-            dispatch({ type: LOGIN_ERROR, payload: error });
+
+            dispatch({ type: LOGIN_ERROR, payload: error.response.data.msg });
         }
     };
 };

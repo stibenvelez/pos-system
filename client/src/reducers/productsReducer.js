@@ -8,6 +8,7 @@ import {
     FETCH_PRODUCTS,
     FETCH_PRODUCTS_ERROR,
     FETCH_PRODUCTS_SUCCESS,
+    FILTER_PRODUCTS,
     GET_PRODUCT,
     GET_PRODUCT_ERROR,
     GET_PRODUCT_SUCCESS,
@@ -15,20 +16,29 @@ import {
 
 const initialState = {
     products: [],
-    product:{},
+    product: {},
     error: null,
     loading: false,
+    filters: {
+        category: "",
+    },
 };
 
 const productsReducers = (state = initialState, action) => {
     switch (action.type) {
         case EDIT_PRODUCT:
         case GET_PRODUCT:
-        case ADD_NEW_PRODUCT:
+
         case FETCH_PRODUCTS:
             return {
                 ...state,
                 loading: true,
+            };
+        case ADD_NEW_PRODUCT:
+            return {
+                ...state,
+                loading: true,
+                product: {},
             };
         case FETCH_PRODUCTS_SUCCESS:
             return {
@@ -48,7 +58,7 @@ const productsReducers = (state = initialState, action) => {
         case EDIT_PRODUCT_SUCCESS:
             return {
                 ...state,
-                loading: false
+                loading: false,
             };
         case GET_PRODUCT_SUCCESS:
             return {
@@ -77,6 +87,11 @@ const productsReducers = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 msg: action.payload,
+            };
+        case FILTER_PRODUCTS:
+            return {
+                ...state,
+                filters: action.payload,
             };
 
         default:

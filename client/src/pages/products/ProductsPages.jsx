@@ -3,33 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsActions } from "../../actions/productsActions";
 import FilterOptions from "../../components/products/FilterOptions";
 import ProductsList from "../../components/products/ProductsList";
-
+import Template from "../../components/ui/Template";
 
 const ProductsPages = () => {
     const dispatch = useDispatch();
-    const filters = useSelector(({ sales }) => sales.filters);
+    const filters = useSelector(({ products }) => products.filters);
 
     useEffect(() => {
-        const getAllProducts = () => dispatch(getAllProductsActions());
+        const getAllProducts = () => dispatch(getAllProductsActions(filters));
         getAllProducts();
-    }, []);
+    }, [filters]);
+
     return (
-        <div>
-            <div className="pb-3">
-                <h1 className="text-3xl font-bold text-slate-800">Productos</h1>
-                <p className="text-gray-800">
-                    Administre aqui los productos de la empresa
-                </p>
-            </div>
+        <Template
+            title={"Productos"}
+            description={"Administre aqui los productos de la empresa"}
+        >
             <div className="flex flex-col gap-4">
                 <div>
                     <FilterOptions />
                 </div>
-                <div>
+
+                <div className="grid grid-cols-1">
                     <ProductsList />
                 </div>
             </div>
-        </div>
+        </Template>
     );
 };
 

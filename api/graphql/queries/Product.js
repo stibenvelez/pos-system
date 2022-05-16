@@ -1,5 +1,5 @@
 import { GraphQLInt, GraphQLList, GraphQLString } from 'graphql'
-import { allProducts } from '../../components/products/productService.js';
+import { allProducts } from '../../components/products/productDAL.js';
 import { ProductType } from "../types/Product.js";
 
 export const GET_ALL_USERS = {

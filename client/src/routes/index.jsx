@@ -14,6 +14,7 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import AuthLayout from "../components/layouts/AuthLayout";
 import PrivateRoute from "../components/layouts/PrivateRoute";
 import SalesReportPage from "../pages/Reports/SalesReportPage";
+import ProductPage from "../pages/products/ProductPage";
 
 const Routers = () => {
 
@@ -42,6 +43,7 @@ const Routers = () => {
                             path="new-product"
                             element={<NewProductPage />}
                         />
+                        <Route path=":id" element={<ProductPage />} />
                         <Route
                             path="edit-product/:id"
                             element={<EditProductPage />}

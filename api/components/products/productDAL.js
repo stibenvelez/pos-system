@@ -1,12 +1,45 @@
 import connection from "../../config/db.js";
 
-export const allProducts = async () => {
+export const allProducts = async ({ category, state }) => {
+    const filterByCategory = () => {
+        if (category) {
+            return `p.idProductCategory LIKE '%${category}%'`;
+        }
+        return `p.idProductCategory LIKE '%%'`;
+    };
+    const filterByState = () => {
+        if (state) {
+            return `AND p.idState LIKE '%${state}%'`;
+        }
+        return `AND p.idState LIKE '%%'`;
+    };
+
     try {
         const sql = `
-        SELECT * 
+        SELECT 
+            p.idProduct,    
+            p.product,
+            p.idProductCategory,
+            p.unitPrice,
+            p.unitCost,
+            p.commissionPercentage,
+            p.commissionValue,
+            p.idState,
+            p.createAt,
+            p.updateAt,
+            p.observations,
+            p.brand,
+            pc.category,
+            p.CreateAt
         FROM Products AS p
-        LEFT JOIN ProductCategory AS pc ON p.idProductCategory = pc.idProductCategory 
+        LEFT JOIN ProductCategory AS pc ON p.idProductCategory = pc.idProductCategory
+        WHERE
+        ${filterByCategory()}
+        ${filterByState()}
+
+        ORDER BY p.idProductCategory
         `;
+        console.log(sql);
         return await connection.query(sql);
     } catch (error) {
         throw error;

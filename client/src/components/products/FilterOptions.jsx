@@ -1,34 +1,43 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FilterSalesListAction } from "../../actions/saleActions";
+import { filterProductsAction } from "../../actions/productsActions";
 import Card from "../../components/ui/Card/Card";
 
 const FilterOptions = () => {
-    const dispatch = useDispatch();
-
-
+    const dispach = useDispatch();
+    const filters = useSelector(({ products }) => products.filters);
+    const handleChange = (e) => {
+        dispach(
+            filterProductsAction({
+                ...filters,
+                [e.target.name]: e.target.value,
+            })
+        );
+    };
 
     return (
-        <>
+        <div>
             <div className="py-3">
-                <Link to="new-product" className="bg-slate-800 py-2 px-3 text-white rounded-md hover:bg-slate-700">
+                <Link
+                    to="new-product"
+                    className="bg-slate-800 py-2 px-3 text-white rounded-md hover:bg-slate-700"
+                >
                     Agregar un producto
                 </Link>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-2">
-                <div className="flex flex-wrap gap-2 lg:col-span-4">
-
+            <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 py-2">
+                <div className="flex flex-wrap gap-4 lg:col-span-4">
                     <div>
                         <label htmlform="category">Categoria: </label>
                         <select
                             className="border py-2 px-2 rounded bg-gray-50"
                             name="category"
                             id="category"
-                            //onChange={handleChange}
+                            onChange={handleChange}
                             //value={filters.category}
                         >
-                            <option vlaue="">-- todas --</option>
+                            <option value="">-- todas --</option>
                             <option value="1">Sonido</option>
                             <option value="2">Lujo</option>
                             <option value="3">Polarizado</option>
@@ -40,7 +49,8 @@ const FilterOptions = () => {
                             className="border py-2 px-2 rounded bg-gray-50"
                             id="state"
                             name="state"
-                            //onChange={handleChange}
+                            onChange={handleChange}
+
                             //value={filters.state}
                         >
                             <option value="1">Activa</option>
@@ -79,7 +89,7 @@ const FilterOptions = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

@@ -4,9 +4,10 @@ export const getAllSales = async (req, res) => {
     try {
         const [rows] = await allSales(req.query);
         res.json(rows);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "hubo un error" });
+    } catch (err) {
+        console.log(err);
+        const error = new Error("hubo un error en la consulta");
+        res.status(404).json({msg: error.message});
     }
 };
 

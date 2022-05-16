@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../ui/Spinners/Spinner";
-import ItemProduct from "./itemProduct";
-
+import ItemProduct from "./ItemProduct";
 
 const ProductsList = () => {
     const products = useSelector(({ products }) => products.products);
@@ -33,9 +32,7 @@ const ProductsList = () => {
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-50 uppercase bg-slate-800 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
-                                id
-                            </th>
+
                             <th scope="col" className="px-6 py-3">
                                 Producto
                             </th>
@@ -47,6 +44,9 @@ const ProductsList = () => {
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Precio de venta
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                % de comision
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Accions

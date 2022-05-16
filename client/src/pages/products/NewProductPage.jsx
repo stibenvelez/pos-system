@@ -1,21 +1,24 @@
 
+import { useSelector } from "react-redux";
 import FormNewProduct from "../../components/products/FormNewProduct";
+import Template from "../../components/ui/Template";
 
 
 const NewProductPage = () => {
+
+    const product = useSelector(({ products }) => products.product);
+    
         return (
-        <div className="container mx-auto">
-            <div className="pb-3">
-                <h1 className="text-3xl font-bold text-slate-800">
-                    Nuevo Producto
-                </h1>
-                <p className="text-gray-800">Agregue aquí un nuevo producto</p>
-            </div>
-            <div>
-                <FormNewProduct />
-            </div>
-        </div>
-    );
+            <Template
+                title={"Nuevo Producto"}
+                description={"Agregue aquí un nuevo producto"}
+                className="container mx-auto"
+            >
+                <div>
+                    <FormNewProduct />
+                </div>
+            </Template>
+        );
 };
 
 export default NewProductPage;

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { getReportrFiltersAction } from "../../actions/reportsActions";
+import clienteAxios from "../../config/axios";
 import Card from "../ui/Card/Card";
 
 const OptionsFilters = () => {
@@ -11,6 +12,7 @@ const OptionsFilters = () => {
         dateFrom: "2022-05-01",
         dateTo: "2022-05-31",
     });
+    const [employees, setEmployees] = useState([])
         
     const handleChange = (e) => {
         setSearchParams({
@@ -26,7 +28,16 @@ const OptionsFilters = () => {
             );
         getFilter();
     }, [searchParams]);
-
+    
+    useEffect(() => {
+        const getEmployees = async () =>{
+            const result = await clienteAxios('/employees')
+            setEmployees(result.data);
+        }
+        
+        getEmployees();
+    }, [searchParams]);
+console.log(employees)
     return (
         <Card className="py-4">
             <div className="flex gap-2">
@@ -61,13 +72,38 @@ const OptionsFilters = () => {
                             className="px-2 py-2 border rounded bg-gray-50"
                             name="category"
                             id="category"
-                            //onChange={handleChange}
-                            //value={filters.category}
+                            onChange={handleChange}
+                            value={
+                                Object.fromEntries([...searchParams]).category
+                            }
                         >
-                            <option vlaue="">-- todas --</option>
+                            <option value="">-- todas --</option>
                             <option value="1">Sonido</option>
                             <option value="2">Lujo</option>
                             <option value="3">Polarizado</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlform="employe">Empleados: </label>
+                        <select
+                            className="px-2 py-2 border rounded bg-gray-50"
+                            name="employe"
+                            id="employe"
+                            onChange={handleChange}
+                            value={
+                                Object.fromEntries([...searchParams]).employe
+                            }
+                        >
+                            <option value="">-- todos --</option>
+                            {employees &&
+                                employees.map((employe) => (
+                                    <option
+                                        key={employe.idEmploye}
+                                        value={employe.idEmploye}
+                                    >
+                                        {employe.name}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </div>

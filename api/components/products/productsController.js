@@ -1,13 +1,14 @@
-import {
+    import {
     allProducts,
     insertProduct,
     productById,
     editProduct,
-} from "./productService.js";
+} from "./productDAL.js";
 
 export const getAllProducts = async (req, res) => {
+    console.log(req.query);
     try {
-        const [rows] = await allProducts();
+        const [rows] = await allProducts(req.query);
         res.json(rows);
     } catch (error) {
         console.log(error)
