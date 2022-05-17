@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLList } from 'graphql'
 import { SaleType } from '../types/Sale.js'
-import {allSales }from '../../components/sales/saleServices.js'
+import {allSales }from '../../components/sales/saleDAL.js'
 
 export const GET_ALL_SALES = {
     type: new GraphQLList(SaleType),

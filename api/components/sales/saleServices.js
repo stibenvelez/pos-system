@@ -1,96 +1,26 @@
-import connection from "../../config/db.js";
+import { insertNewSale } from "./saleDAL.js";
 
-export const allSales = async (filters) => {
-    const { dateFrom, dateTo, state } = filters;
+export const newSaleService = async (data) => {
+    data.dataSale.totalGross = data.detail.reduce(
+        (acc, num) => acc + num.totalPrice,
+        0
+    );
 
+    data.dataSale.totalDiscount = data.detail.reduce(
+        (acc, value) => acc + value.totalDiscount,
+        0
+    );
 
+    data.dataSale.totalNet =
+        data.dataSale.totalGross - data.dataSale.totalDiscount;
+
+    data.dataSale.totalCommissionValue = data.detail.reduce(
+        (acc, value) => acc + value.commissionValue,
+        0
+    );
     try {
-        const sql = `
-        SELECT * 
-        FROM Sales AS s 
-        WHERE 
-        
-        
-        ${dateTo === dateFrom ? "s.date LIKE '%" + dateFrom + "%'" : ""}
-        ${dateTo != dateFrom ? " s.date >= '" + dateFrom + "'" : ""}
-        ${dateTo !== dateFrom ? "AND s.date <= '" + dateTo + "'" : ""}
-        ${state ? "AND s.idStateSale = '" + state + "'" : ""}
-        
-        ORDER BY s.date DESC 
-
-        limit 10 offset 0
-         
-        `;
-
-        return await connection.query(sql);
+        await insertNewSale(data);
     } catch (error) {
-        throw error;
-    }
-};
-
-export const SaleById = async (id) => {
-    try {
-        const sql = `SELECT * FROM Sales WHERE id=${id}`;
-        return await connection.query(sql);
-    } catch (error) {
-        return await connection.query(sql);
-    }
-};
-
-export const insertNewSale = async ({ dataSale, detail }) => {
-    console.log(detail);
-    try {
-        await connection.query("START TRANSACTION");
-        const totalSale = await detail.reduce(
-            (acc, value) => acc + value.totalPrice,
-            0
-        );
-
-        const sqlDataSale = `INSERT INTO 
-            Sales (idDocumentType,document, totalSale, idPaymentMethod) 
-            VALUES(?,?,?,?)`;
-
-        const [rows] = await connection.query(sqlDataSale, [
-            dataSale.documentType,
-            dataSale.document,
-            dataSale.totalSale,
-            dataSale.payMethod,
-        ]);
-
-        const idSale = rows.insertId;
-        const sqlDetailSail = `INSERT INTO 
-            SaleDetail (
-                idSale, 
-                idCategory, 
-                IdProduct, 
-                quantity, 
-                unitPrice, 
-                totalPrice,
-                idEmploye,
-                commissionValue,
-                commissionPercentage,
-                observations
-                ) 
-            VALUES ? `;
-
-        const arrayDetail = detail.map((detail) => [
-            idSale,
-            detail.category,
-            detail.product,
-            detail.quantity,
-            detail.unitPrice,
-            detail.totalPrice,
-            detail.employe,
-            detail.commissionValue,
-            detail.commissionPercentage,
-            detail.observatios,
-        ]);
-
-        await connection.query(sqlDetailSail, [arrayDetail]);
-        const result = await connection.query(`COMMIT`);
-        return result;
-    } catch (error) {
-        await connection.query("ROLLBACK");
         throw error;
     }
 };

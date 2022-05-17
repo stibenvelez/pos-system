@@ -1,6 +1,6 @@
 import connection from "../../config/db.js";
 
-export const allProducts = async ({ category, state }) => {
+export const allProducts = async ({ category, state}) => {
     const filterByCategory = () => {
         if (category) {
             return `p.idProductCategory LIKE '%${category}%'`;
@@ -11,7 +11,7 @@ export const allProducts = async ({ category, state }) => {
         if (state) {
             return `AND p.idState LIKE '%${state}%'`;
         }
-        return `AND p.idState LIKE '%%'`;
+        return `AND p.idState = '1'`;
     };
 
     try {
@@ -30,16 +30,20 @@ export const allProducts = async ({ category, state }) => {
             p.observations,
             p.brand,
             pc.category,
-            p.CreateAt
+            p.CreateAt,
+            s.state
         FROM Products AS p
+
         LEFT JOIN ProductCategory AS pc ON p.idProductCategory = pc.idProductCategory
+        LEFT JOIN States as s ON p.idState = s.idState
+        
         WHERE
         ${filterByCategory()}
         ${filterByState()}
+        
 
         ORDER BY p.idProductCategory
         `;
-        console.log(sql);
         return await connection.query(sql);
     } catch (error) {
         throw error;
@@ -118,3 +122,13 @@ export const editProduct = async ({
         throw error;
     }
 };
+
+export const disableProductById = async ({id, state}) => {
+    const sql = `UPDATE Products SET idState=${state}
+                    WHERE idProduct = ${id}`;
+    try {
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+}

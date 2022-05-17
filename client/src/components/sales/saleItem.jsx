@@ -3,7 +3,7 @@ import {formatDate} from "../../helpers/FormatDate";
 import formatMoney from "../../helpers/formatMoney";
 
 const SaleItem = ({ sale }) => {
-    const { id, document, date, totalSale } = sale;
+    const { id, document, date, totalNet } = sale;
 
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -15,7 +15,7 @@ const SaleItem = ({ sale }) => {
                 {document}
             </td>
             <td className="px-6 py-4 font-semibold">
-                {formatMoney.format(totalSale)}
+                {formatMoney.format(totalNet)}
             </td>
             <td className="px-6 py-4">{formatDate(date)}</td>
             <td className="flex items-center py-4 ">

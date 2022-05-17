@@ -1,5 +1,5 @@
 import clienteAxios from "../config/axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import {
     ADD_NEW_PRODUCT_DETAIL,
     REMOVE_ITEM_PRODUCT_DETAIL,
@@ -15,6 +15,7 @@ import {
     GET_SALE_BY_ID_SUCCES,
     GET_SALE_BY_ID_ERROR,
 } from "../types/salesTypes";
+import Swal from "sweetalert2";
 
 // add new product to sail detail
 export const addProductToSaleDetailAction = (product) => {
@@ -27,7 +28,6 @@ const addProductToSaleDetail = (product) => ({
     type: ADD_NEW_PRODUCT_DETAIL,
     payload: product,
 });
-
 
 export const validateErrorsNewProductAction = (errors) => {
     return (dispatch) => {
@@ -61,12 +61,11 @@ const removeItemFromSaleDetail = (id) => ({
     payload: id,
 });
 
-
 // GET ALL SALES
 export const getAllSalesAction = (filters) => {
     return async (dispatch) => {
         dispatch(getAllSales());
-        
+
         try {
             const sales = await clienteAxios.get(`/sales`, { params: filters });
             dispatch(getAllSalesSuccess(sales.data));
@@ -91,29 +90,29 @@ const getAllSalesError = (error) => ({
 });
 
 //get sale by id
-export const getSaleByIdAction = id => {
-    return async dispatch => {
-        dispatch(getSaleByid())
+export const getSaleByIdAction = (id) => {
+    return async (dispatch) => {
+        dispatch(getSaleByid());
         try {
             const sale = await clienteAxios.get(`/sales/${id}`);
             dispatch(getSaleByidSucces(sale.data));
         } catch (error) {
             dispatch(getSaleByidError(error));
         }
-    }
-}
+    };
+};
 
-const getSaleByid=()=>({
-    type: GET_SALE_BY_ID
+const getSaleByid = () => ({
+    type: GET_SALE_BY_ID,
 });
-const getSaleByidSucces=(sale)=>({
+const getSaleByidSucces = (sale) => ({
     type: GET_SALE_BY_ID_SUCCES,
-    payload: sale
+    payload: sale,
 });
 
-const getSaleByidError=(error)=>({
+const getSaleByidError = (error) => ({
     type: GET_SALE_BY_ID_ERROR,
-    payload: error
+    payload: error,
 });
 
 // Register one new sale
@@ -122,17 +121,15 @@ export const RegisterOneNewSaleAction = (sale) => {
         dispatch(registerNewSale(sale));
 
         try {
-            const ressult = await clienteAxios.post("/sales", sale);
+            await clienteAxios.post("/sales", sale);
 
-            toast.success(ressult.data.msg, {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
+            Swal.fire({
+                title: `Ingreso registrado`,
+                text: "Se registro la venta con exito",
+                icon: "success",
+    
             });
+            
             dispatch(registerNewSaleSuccess());
         } catch (error) {
             dispatch(registerNewSaleError());

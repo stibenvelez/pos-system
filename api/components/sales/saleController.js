@@ -1,4 +1,5 @@
-import { allSales, insertNewSale, SaleById } from "./saleServices.js";
+import { allSales, insertNewSale, SaleById } from "./saleDAL.js";
+import { newSaleService } from "./saleServices.js";
 
 export const getAllSales = async (req, res) => {
     try {
@@ -14,9 +15,8 @@ export const getAllSales = async (req, res) => {
 
 
 export const createNewSale = async (req, res) => {
-
     try {
-        await insertNewSale(req.body);
+        await newSaleService(req.body);
         res.json({ msg: "¡Ingreso registrado con exito!" });
     } catch (error) {
         console.log(error);

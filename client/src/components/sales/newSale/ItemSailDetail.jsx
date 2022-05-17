@@ -15,7 +15,7 @@ const ItemSailDetail = ({ detail }) => {
 
     return (
         <tr className="text-gray-700 border-b hover:bg-gray-50 hover:shadow-md">
-            <td className="py-3 px-6">{detail.productName}</td>
+            <td className="py-3 px-6 capitalize">{detail.productName}</td>
             <td className="py-3 px-6">{detail.quantity}</td>
             <td className="py-3 px-6">{detail.unitPrice}</td>
             <td className="py-3 px-6">{detail.totalPrice}</td>

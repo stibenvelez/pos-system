@@ -18,6 +18,7 @@ const ProductData = ({
     const errorsNewProduct = useSelector(({ sales }) => sales.errorsNewProduct);
 
     const productRef = useRef(null);
+    const quantityRef = useRef(0);
 
     const productId = productRef.current?.value;
 
@@ -61,14 +62,14 @@ const ProductData = ({
 
     const handleProduct = (e) => {
         let commissionPercentage = productSeleted?.commissionPercentage | 0;
-
+        
         setNewProduct({
             ...newProduct,
             [e.target.name]: e.target.value,
             commissionValue:
                 ((newProduct.unitPrice * commissionPercentage) / 100) *
-                newProduct.quantity,
-            commissionPercentage: productSeleted?.commissionPercentage,
+                parseInt(newProduct.quantity),
+            commissionPercentage: productSeleted?.commissionPercentage
         });
     };
 
@@ -144,7 +145,7 @@ const ProductData = ({
                                     key={product.idProduct}
                                     value={product.idProduct}
                                 >
-                                    {product.product} {product.idProduct}
+                                    {product.product}
                                 </option>
                             ))}
                     </select>
@@ -172,6 +173,7 @@ const ProductData = ({
                         onChange={handleProduct}
                         onBlur={handleProduct}
                         value={newProduct.quantity}
+                        ref={quantityRef}
                     />
                     {errorsNewProduct.quantity && newProduct.quantity == "" && (
                         <div>
@@ -208,7 +210,7 @@ const ProductData = ({
 
                 <div className="col-span-6 sm:col-span-2">
                     <label
-                        htmlFor="productName"
+                        htmlFor="employe"
                         className="block text-sm font-medium text-gray-700"
                     >
                         Trabajador
@@ -242,25 +244,7 @@ const ProductData = ({
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label
-                        htmlFor="licensePlate"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Placa
-                    </label>
-                    <input
-                        id="licensePlate"
-                        name="licensePlate"
-                        type="text"
-                        placeholder="ABC000"
-                        autoComplete="licensePlate"
-                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        onChange={handleProduct}
-                        value={newProduct.licensePlate}
-                    />
-                </div>
-                <div className="col-span-6 sm:col-span-2">
-                    <label
-                        htmlFor="licensePlate"
+                        htmlFor="commissionValue"
                         className="block text-sm font-medium text-gray-700"
                     >
                         comision
@@ -274,6 +258,24 @@ const ProductData = ({
                         className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleProduct}
                         value={newProduct.commissionValue}
+                    />
+                </div>
+                <div className="col-span-6 sm:col-span-2">
+                    <label
+                        htmlFor="discount"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Descuento por unidad
+                    </label>
+                    <input
+                        id="UnitDiscount"
+                        name="UnitDiscount"
+                        type="number"
+                        placeholder="ABC000"
+                        autoComplete="UnitDiscount"
+                        className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm border-gray-200bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        onChange={handleProduct}
+                        value={newProduct.UnitDiscount}
                     />
                 </div>
 

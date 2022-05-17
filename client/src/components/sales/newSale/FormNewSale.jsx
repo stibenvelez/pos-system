@@ -28,6 +28,7 @@ const initialStateNewProduct = {
     employe: "",
     commissionValue: 0,
     commissionPercentage: 0,
+    UnitDiscount:0
 };
 
 const INITIAL_SATATE_SALE = {
@@ -63,6 +64,7 @@ const FormNewSale = () => {
 
     const detail = useSelector(({ sales }) => sales.detail);
     const errorSubmit = useSelector(({ sales }) => sales.error);
+    const user = useSelector(({ auth }) => auth.user);
 
     useEffect(() => {
         const total = detail.reduce(
@@ -97,7 +99,8 @@ const FormNewSale = () => {
         newProduct.id = id;
         newProduct.totalPrice = newProduct.quantity * newProduct.unitPrice;
         newProduct.productName = findProductName(newProduct.product);
-
+        newProduct.totalDiscount = newProduct.quantity * newProduct.UnitDiscount;
+        
         const errors = validateAddProduct(newProduct);
 
         if (Object.keys(errors).length) {
@@ -122,6 +125,7 @@ const FormNewSale = () => {
             dataSale: sale.dataSale,
             detail: detail
         };
+       
         const errors = validateNewSale(newSale);
 
         if (Object.keys(errors).length) {
@@ -138,14 +142,9 @@ const FormNewSale = () => {
             return;
         }
 
-        // add totalSale
-        newSale.dataSale.totalSale = newSale.detail.reduce(
-            (acc, num) => acc + num.totalPrice,
-            0
-        );
-        console.log(errors);
-
+        newSale.dataSale.registeredBy = user.idUser;
         RegisterOneNewSale(newSale);
+        /*
         const error = await errorSubmit
         if (error) {
             toast.error("Error de conexion", {
@@ -160,6 +159,7 @@ const FormNewSale = () => {
             return; 
         }
         setSale(INITIAL_SATATE_SALE);
+        */
     };
 
     return (

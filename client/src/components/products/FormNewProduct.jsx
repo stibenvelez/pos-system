@@ -40,7 +40,7 @@ const FormNewProduct = () => {
     };
 
     const formik = useFormik({
-        initialValues: product && id ? product : initialValues,
+        initialValues: id ? product : initialValues,
         validationSchema: ProductSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
@@ -51,6 +51,7 @@ const FormNewProduct = () => {
     const actionSubmit = async (values) => {
         if (product && product.idProduct) {
             console.log("editar producto");
+            formik.resetForm()
             dispatch(editProductByIdAction(values));
             return;
         }

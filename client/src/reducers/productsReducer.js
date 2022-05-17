@@ -2,6 +2,9 @@ import {
     ADD_NEW_PRODUCT,
     ADD_NEW_PRODUCT_ERROR,
     ADD_NEW_PRODUCT_SUCCESS,
+    DISABLE_PRODUCT,
+    DISABLE_PRODUCT_ERROR,
+    DISABLE_PRODUCT_SUCCESS,
     EDIT_PRODUCT,
     EDIT_PRODUCT_ERROR,
     EDIT_PRODUCT_SUCCESS,
@@ -28,11 +31,11 @@ const productsReducers = (state = initialState, action) => {
     switch (action.type) {
         case EDIT_PRODUCT:
         case GET_PRODUCT:
-
         case FETCH_PRODUCTS:
             return {
                 ...state,
                 loading: true,
+                product: {},
             };
         case ADD_NEW_PRODUCT:
             return {
@@ -92,6 +95,25 @@ const productsReducers = (state = initialState, action) => {
             return {
                 ...state,
                 filters: action.payload,
+            };
+        case DISABLE_PRODUCT:
+            return {
+                ...state,
+            }
+        
+        case DISABLE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: state.products.filter(
+                    (product) => product.idProduct !== action.payload
+                ),
+            };
+        case DISABLE_PRODUCT_ERROR:
+            return {
+                ...state,
+                loading: false,
+
             };
 
         default:

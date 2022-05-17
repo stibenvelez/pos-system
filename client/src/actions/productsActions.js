@@ -3,6 +3,9 @@ import {
     ADD_NEW_PRODUCT,
     ADD_NEW_PRODUCT_ERROR,
     ADD_NEW_PRODUCT_SUCCESS,
+    DISABLE_PRODUCT,
+    DISABLE_PRODUCT_ERROR,
+    DISABLE_PRODUCT_SUCCESS,
     EDIT_PRODUCT,
     EDIT_PRODUCT_ERROR,
     EDIT_PRODUCT_SUCCESS,
@@ -14,6 +17,7 @@ import {
     GET_PRODUCT_ERROR,
     GET_PRODUCT_SUCCESS,
 } from "../types/productsTypes";
+
 
 // get products
 export const getAllProductsActions = (filters) => {
@@ -127,5 +131,21 @@ export const filterProductsAction = filters => {
             type: FILTER_PRODUCTS,
             payload: filters
         })
+    }
+}
+
+// DISABLE PRODUCT
+
+export const disableProductAction = id => {
+    return async dispatch => {
+        dispatch({ type: DISABLE_PRODUCT });
+        try {
+            const result = await clienteAxios.put(`/products/disable/${id}`)
+            console.log(result.data);
+            dispatch({ type: DISABLE_PRODUCT_SUCCESS, payload: id }); 
+            //dispatch(getAllProductsActions())
+        } catch (error) {
+             dispatch({ type: DISABLE_PRODUCT_ERROR });
+        }
     }
 }

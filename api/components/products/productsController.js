@@ -4,7 +4,7 @@
     productById,
     editProduct,
 } from "./productDAL.js";
-import { editProductByIdService } from "./productServices.js";
+import { disableProductByIdService, editProductByIdService } from "./productServices.js";
 
 export const getAllProducts = async (req, res) => {
     console.log(req.query);
@@ -55,3 +55,13 @@ export const editProductById = async (req, res) => {
         res.status(400).json({ msg: "hubo un error" });
     }
 };
+
+export const disableProductById = async (req, res) => {
+    try {
+        await disableProductByIdService(req.params.id);
+        res.json({msg:'producto editado'})
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({msg:error})
+    }
+}

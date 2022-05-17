@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect, useState } from "react";
 import Card from "../../ui/Card/Card";
 
 import ItemSailDetail from "./ItemSailDetail";
@@ -9,10 +9,29 @@ import formatMoney from "../../../helpers/formatMoney";
 
 const SaleDetail = () => {
     const sailDetails = useSelector(({ sales }) => sales.detail);
-   
+    const [totalSumary, setTotalSumary] = useState({})
+    useEffect(() => {
+        const totalGross = sailDetails.reduce(
+            (acc, value) => acc + value.totalPrice,
+            0
+        );
+        
+        const totalDiscount = sailDetails.reduce(
+            (acc, value) => acc + value.totalDiscount,
+            0
+        );
+
+        const totalNet = totalGross - totalDiscount;
+        setTotalSumary({
+            totalGross,
+            totalDiscount,
+            totalNet,
+        });
+    }, [sailDetails]);
+
     return (
-        <Card>
-            <div className="relative overflow-x-auto sm:rounded-lg">
+        <>
+            <div className="border bg-white shadow-sm relative overflow-x-auto sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="bg-gray-50">
                         <tr className="text-gray-800 capitalize">
@@ -42,16 +61,33 @@ const SaleDetail = () => {
                         ))}
                     </tbody>
                     <tfoot>
-                        <tr className="text-gray-700 border-b">
-                            <td className="px-6 py-3 text-xl">Total:</td>
-                            <td className="px-6 py-3 text-xl font-semibold">
-                                {formatMoney.format(sailDetails.reduce((acc,value)=>acc+value.totalPrice, 0))}
+                        <tr className="text-gray-700 bg-slate-50">
+                            <td className="px-6 py-2 text-md">Total bruto:</td>
+                            <td className="px-6 py-2 text-md">
+                                {formatMoney.format(totalSumary.totalGross)}
                             </td>
+                            <td colSpan={4}></td>
+                        </tr>
+                        <tr className="text-gray-700  bg-slate-50 ">
+                            <td className="px-6 py-2 text-md">
+                                Total descontado:
+                            </td>
+                            <td className="px-6 py-2 text-md ">
+                                {formatMoney.format(totalSumary.totalDiscount)}
+                            </td>
+                            <td colSpan={4}></td>
+                        </tr>
+                        <tr className="text-gray-700 bg-gray-50">
+                            <td className="px-6 py-2 text-xl">Total Neto:</td>
+                            <td className="px-6 py-2 text-xl font-bold">
+                                {formatMoney.format(totalSumary.totalNet)}
+                            </td>
+                            <td colSpan={4}></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
-        </Card>
+        </>
     );
 };
 
