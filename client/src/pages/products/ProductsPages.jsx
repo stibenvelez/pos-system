@@ -9,11 +9,10 @@ const ProductsPages = () => {
     const dispatch = useDispatch();
     const filters = useSelector(({ products }) => products.filters);
 
-
     useEffect(() => {
-        const getAllProducts = () => dispatch(getAllProductsActions(filters));
-        getAllProducts();
-    }, [filters]);
+        (() => dispatch(getAllProductsActions(filters)))(), [filters];
+    });
+
     return (
         <Template
             title={"Productos"}

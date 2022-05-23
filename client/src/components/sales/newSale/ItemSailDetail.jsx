@@ -15,15 +15,15 @@ const ItemSailDetail = ({ detail }) => {
 
     return (
         <tr className="text-gray-700 border-b hover:bg-gray-50 hover:shadow-md">
-            <td className="py-3 px-6 capitalize">{detail.productName}</td>
-            <td className="py-3 px-6">{detail.quantity}</td>
-            <td className="py-3 px-6">{detail.unitPrice}</td>
-            <td className="py-3 px-6">{detail.totalPrice}</td>
-            <td className="py-3 px-6">{detail.commissionValue}</td>
-            <td className="py-3 px-6">
+            <td className="px-6 py-3 capitalize">{detail.productName}</td>
+            <td className="px-6 py-3">{detail.quantity}</td>
+            <td className="px-6 py-3">{detail.unitPrice}</td>
+            <td className="px-6 py-3">{detail.totalPrice}</td>
+            <td className="px-6 py-3">{detail.commissionValue}</td>
+            <td className="px-6 py-3">
                 <button
                     type="button"
-                    className="p-2 hover:text-red-600 transition transition-duration: 150ms "
+                    className="p-2 transition hover:text-red-600 transition-duration: 150ms "
                     onClick={() => handleRemoveItem(detail)}
                 >
                     <FontAwesomeIcon icon={faTrash} />

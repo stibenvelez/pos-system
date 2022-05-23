@@ -14,6 +14,9 @@ import {
     GET_SALE_BY_ID,
     GET_SALE_BY_ID_SUCCES,
     GET_SALE_BY_ID_ERROR,
+    CANCEL_SALE,
+    CANCEL_SALE_SUCCESS,
+    CANCEL_SALE_ERROR,
 } from "../types/salesTypes";
 import Swal from "sweetalert2";
 
@@ -65,7 +68,6 @@ const removeItemFromSaleDetail = (id) => ({
 export const getAllSalesAction = (filters) => {
     return async (dispatch) => {
         dispatch(getAllSales());
-
         try {
             const sales = await clienteAxios.get(`/sales`, { params: filters });
             dispatch(getAllSalesSuccess(sales.data));
@@ -125,7 +127,7 @@ export const RegisterOneNewSaleAction = (sale) => {
 
             Swal.fire({
                 title: `Ingreso registrado`,
-                text: "Se registro la venta con exito",
+                text: "Se registró la venta con exito",
                 icon: "success",
     
             });
@@ -160,3 +162,18 @@ const filterSales = (filters) => ({
     type: FILTER_SALES_LIST,
     payload: filters,
 });
+
+// CANCEL SALE
+export const cancelSaleByIdAction = sale => {
+    return async dispatch => {
+        dispatch({ type: CANCEL_SALE })
+        try {
+            await clienteAxios.put("sales/cancel-sale", sale);
+            Swal.fire("ingreso anulado!", "Se anulo el ingreso con exito", "success");
+            dispatch({ type: CANCEL_SALE_SUCCESS, payload: sale.id });
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: CANCEL_SALE_ERROR});
+        }
+    }
+}

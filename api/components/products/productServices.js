@@ -13,7 +13,6 @@ export const disableProductByIdService = async (id) => {
 
     const [rows] = await productById(id);
     const currentState = rows[0].idState
-    console.log(currentState);
     const newState = {
         id,
         state: currentState===1?2:1,

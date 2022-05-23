@@ -7,7 +7,6 @@
 import { disableProductByIdService, editProductByIdService } from "./productServices.js";
 
 export const getAllProducts = async (req, res) => {
-    console.log(req.query);
     try {
         const [rows] = await allProducts(req.query);
         res.json(rows);

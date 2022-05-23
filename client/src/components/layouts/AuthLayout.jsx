@@ -6,12 +6,9 @@ const AuthLayout = () => {
 
     const loading = useSelector(({ auth }) => auth.loading);
     const auth = useSelector(({ auth }) => auth.auth);
-       
-    if (loading) {
-        return;
-    }
-    
-    return <>{!auth?<Outlet />:<Navigate to="/dashboard"/>}</>
+
+           
+    return <>{auth ? <Navigate to="/dashboard" /> : <Outlet />}</>;
 };
 
 export default AuthLayout;

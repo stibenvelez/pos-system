@@ -50,6 +50,7 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 auth: true,
                 user: action.payload,
+                error:false
             };
         case LOGIN_ERROR:
             return {
@@ -71,6 +72,7 @@ const authReducer = (state = initialState, action) => {
                 auth: false,
                 user: {},
                 loading: false,
+                error:false
             };
         default:
             return state;

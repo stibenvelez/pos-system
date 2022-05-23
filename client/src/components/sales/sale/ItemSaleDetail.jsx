@@ -3,7 +3,9 @@ import React from 'react'
 const ItemSaleDetail = ({ saleDetail }) => {
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th className="px-6 py-4">{saleDetail.product}</th>
+            <th scope="row"  className="px-6 py-4">
+                {saleDetail.product}
+            </th>
             <td scope="row" className="px-6 py-4text-gray-900">
                 {saleDetail.quantity}
             </td>

@@ -10,8 +10,7 @@ const SalesPage = () => {
     const filters = useSelector(({ sales }) => sales.filters);
 
     useEffect(() => {
-        const allSales = () => dispatch(getAllSalesAction(filters));
-        allSales();
+        (()=>dispatch(getAllSalesAction(filters)))()
     }, [filters]);
 
     return (

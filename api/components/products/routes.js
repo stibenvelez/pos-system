@@ -14,5 +14,6 @@ router.post("/", AddnewProduct);
 router.put("/:id", editProductById);
 router.put("/disable/:id", disableProductById);
 
+
 export default router;
 

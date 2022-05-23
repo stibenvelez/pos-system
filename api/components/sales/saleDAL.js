@@ -1,28 +1,38 @@
 import connection from "../../config/db.js";
 
 export const allSales = async (filters) => {
-    const { dateFrom, dateTo, state } = filters;
+    const { dateFrom="2022-05-01", dateTo="2022-05-31", state } = filters;
+    const filterByDate = () => {
+        if (dateFrom === dateTo) {
+           dateFrom
+               ? `s.date like '%${dateFrom}%'`
+               : `s.date > '%"2022-05-01"%'`;
+        }
+
+        if (dateFrom && dateTo) {
+            const from = dateFrom ? `s.date >= '${dateFrom}'` : "";
+            const to = dateTo ? `AND s.date <= '${dateTo}'` : "";
+
+            return from + " " + to;
+        }
+    };
 
     try {
         const sql = `
         SELECT * 
         FROM Sales AS s 
         WHERE 
-        
-        
-        ${dateTo === dateFrom ? "s.date LIKE '%" + dateFrom + "%'" : ""}
-        ${dateTo != dateFrom ? " s.date >= '" + dateFrom + "'" : ""}
-        ${dateTo !== dateFrom ? "AND s.date <= '" + dateTo + "'" : ""}
+    
+        ${filterByDate()}
         ${state ? "AND s.idStateSale = '" + state + "'" : ""}
         
-        ORDER BY s.date DESC 
-
-        limit 10 offset 0
-         
+        ORDER BY s.registeredAt DESC 
+  
         `;
-
-        return await connection.query(sql);
+        const [rows] = await connection.query(sql);
+        return rows;
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };
@@ -37,7 +47,6 @@ export const SaleById = async (id) => {
 };
 
 export const insertNewSale = async ({ dataSale, detail }) => {
-
     try {
         await connection.query("START TRANSACTION");
         const sqlDataSale = `INSERT INTO 
@@ -101,5 +110,14 @@ export const insertNewSale = async ({ dataSale, detail }) => {
     } catch (error) {
         await connection.query("ROLLBACK");
         throw error;
+    }
+};
+
+export const cancelSaleById = async ({ id, idStateSale }) => {
+    try {
+        const sql = `UPDATE Sales SET idStateSale=${idStateSale} WHERE id=${id}`;
+        return await connection.query(sql);
+    } catch (error) {
+        return await connection.query(sql);
     }
 };

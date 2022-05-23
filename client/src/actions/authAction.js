@@ -10,7 +10,6 @@ import {
     SIGN_OUT_ERROR,
 } from "../types/authTypes";
 import clienteAxios from "../config/axios";
-import { useNavigate } from "react-router-dom";
 
 export const AuthAction = () => {
     return async (dispatch) => {
@@ -28,15 +27,16 @@ export const AuthAction = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const { data } = await clienteAxios.get("/users/profile", config);
+            const result = await clienteAxios.get("/users/profile", config);
+
             dispatch({
                 type: AUTH_SUCCES,
-                payload: data,
+                payload: result.data,
             });
         } catch (error) {
+            
             dispatch({
-                type: AUTH_ERROR,
-                payload: error,
+                type: AUTH_ERROR
             });
         }
     };

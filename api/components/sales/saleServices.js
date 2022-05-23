@@ -1,26 +1,45 @@
-import { insertNewSale } from "./saleDAL.js";
+import { allSales, cancelSaleById, insertNewSale } from "./saleDAL.js";
+
+export const getAllSalesServices = async (query) => {
+    try {
+        const rows = await allSales(query);
+        if (rows.length === 0) {
+            throw new Error("No se encontraron resultado para mostrar");
+        }
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const newSaleService = async (data) => {
-    data.dataSale.totalGross = data.detail.reduce(
-        (acc, num) => acc + num.totalPrice,
-        0
-    );
-
-    data.dataSale.totalDiscount = data.detail.reduce(
-        (acc, value) => acc + value.totalDiscount,
-        0
-    );
-
-    data.dataSale.totalNet =
-        data.dataSale.totalGross - data.dataSale.totalDiscount;
-
-    data.dataSale.totalCommissionValue = data.detail.reduce(
-        (acc, value) => acc + value.commissionValue,
-        0
-    );
     try {
+        const sumTotalGross = (acc, num) => acc + num.totalPrice;
+        data.dataSale.totalGross = data.detail.reduce(sumTotalGross, 0);
+
+        const sumTotalDiscount = (acc, value) => acc + value.totalDiscount;
+        data.dataSale.totalDiscount = data.detail.reduce(sumTotalDiscount, 0);
+
+        data.dataSale.totalNet =
+            data.dataSale.totalGross - data.dataSale.totalDiscount;
+
+        data.dataSale.totalCommissionValue = data.detail.reduce(
+            (acc, value) => acc + value.commissionValue,
+            0
+        );
+
         await insertNewSale(data);
     } catch (error) {
         throw error;
     }
+};
+
+export const cancelSaleByIdService = async (sale) => {
+    const newState = {
+        id: sale.id,
+        idStateSale: 2,
+    };
+    cancelSaleById(newState);
+    const result = await sale;
+    return result;
 };

@@ -2,13 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import FormLogin from "../../components/auth/FormLogin";
 import img from "/public/assets/img/app/auto.jpg";
-import useAuth from "../../hooks/useAuth";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const Background = styled.div`
-    width: 100%;
-    min-height: 100vh;
     background: linear-gradient(
             90deg,
             rgba(27, 27, 27, 0.8) 0%,
@@ -21,13 +16,10 @@ const Background = styled.div`
 `;
 
 const LoginPage = () => {
-    const navigate = useNavigate();
-    const loading = useSelector(({ auth }) => auth.loading);
-    const auth = useSelector(({ auth }) => auth.auth);
 
     return (
         <div>
-            <Background className="flex items-center justify-center">
+            <Background className="flex items-center justify-center w-full min-h-screen bg-slate-900">
                 <FormLogin />
             </Background>
         </div>

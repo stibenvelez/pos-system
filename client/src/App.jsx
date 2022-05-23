@@ -5,13 +5,10 @@ import Routers from "./routes";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 const App = () => {
-
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const auth = () => dispatch(AuthAction());
-        auth();
-
+        (() => dispatch(AuthAction()))();
     }, []);
 
     return (

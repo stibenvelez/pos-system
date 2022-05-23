@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Card from "../ui/Card/Card";
 import { loginAction } from "../../actions/authAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const FormLogin = () => {
     const dispatch = useDispatch();
     const [signup, setsignup] = useState({ user: "", password: "" });
-
+    const error = useSelector(({ auth }) => auth.error);
     const handleChange = (e) => {
         setsignup({
             ...signup,
             [e.target.name]: e.target.value,
         });
     };
-
+const loading = useSelector(({ auth }) => auth.loading);
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginAction(signup));
@@ -36,45 +36,52 @@ const FormLogin = () => {
                             Iniciar Sesión
                         </h2>
                     </div>
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         <input
                             type="hidden"
                             name="remember"
                             defaultValue="true"
                         />
-                        <div className="-space-y-px rounded-md shadow-sm">
-                            <div>
-                                <label htmlFor="user" className="sr-only">
-                                    Usuario
-                                </label>
-                                <input
-                                    id="user"
-                                    name="user"
-                                    type="text"
-                                    autoComplete="user"
-                                    className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Usuario"
-                                    value={signup.user}
-                                    onChange={handleChange}
-                                />
+                        <div>
+                            <div className="-space-y-px rounded-md shadow-sm">
+                                <div>
+                                    <label htmlFor="user" className="sr-only">
+                                        Usuario
+                                    </label>
+                                    <input
+                                        id="user"
+                                        name="user"
+                                        type="text"
+                                        autoComplete="user"
+                                        className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                        placeholder="Usuario"
+                                        value={signup.user}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        htmlFor="password"
+                                        className="sr-only"
+                                    >
+                                        Password
+                                    </label>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        autoComplete="password"
+                                        className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                        placeholder="Password"
+                                        value={signup.password}
+                                        onChange={handleChange}
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="password"
-                                    className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Password"
-                                    value={signup.password}
-                                    onChange={handleChange}
-                                />
+                            <div className="pt-2">
+                                <p className="text-sm text-red-600">{error}</p>
                             </div>
                         </div>
-
                         <div className="flex items-center justify-between">
                             <div className="text-sm">
                                 <a
@@ -97,7 +104,7 @@ const FormLogin = () => {
                                         aria-hidden="true"
                                     />
                                 </span>
-                                Sign in
+                                {loading ? 'Cargando...' : 'Sign in'}
                             </button>
                         </div>
                     </form>

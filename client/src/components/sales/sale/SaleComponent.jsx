@@ -4,8 +4,7 @@ import formatMoney from "../../../helpers/formatMoney";
 import Card from "../../ui/Card/Card";
 import Spinner from "../../ui/Spinners/Spinner";
 import ItemSaleDetail from "./ItemSaleDetail";
-import formatData from '../../../helpers/FormatFecha'
-
+import formatData from "../../../helpers/FormatFecha";
 
 const SaleComponent = () => {
     const sale = useSelector(({ sales }) => sales.sale);
@@ -14,11 +13,11 @@ const SaleComponent = () => {
     );
     const loading = useSelector(({ sales }) => sales.loading);
     const { id } = sale;
-    
+
     if (loading)
         return (
             <Card>
-                <div className="container flex items-center justify-center w-full max-w-4xl py-20 mx-auto">
+                <div className="container flex items-center justify-center w-full max-w-4xl py-40 mx-auto">
                     <Spinner />
                 </div>
             </Card>
@@ -26,42 +25,52 @@ const SaleComponent = () => {
 
     return (
         <Card>
-            <div className="p-3">
-                <div>
+            <div className="flex gap-4 flex-col p-3">
+                <div className="border rounded-md flex gap-4 p-2">
+                    <div>
+                        <img
+                            src={`/public/assets/img/app/logo.svg`}
+                            className="fill-red-500 w-40"
+                            alt="React Logo"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <div>
+                            <h3 className="text-2xl font-semibold uppercase">
+                                COD. Nº {id}
+                            </h3>
+                        </div>
 
-                    <h3 className="text-2xl font-semibold uppercase">
-                        Venta Nº {id}
-                    </h3>
-                </div>
-                <div className="flex items-end gap-3 py-2">
-                    <div>
-                        <p>Documento: {sale.document}</p>
-                    </div>
-                    <div>
-                        <p>fecha: {formatData(sale.date)}</p>
+                        <div>
+                            <p>Documento: {sale.document}</p>
+                        </div>
+                        <div>
+                            <p>fecha: {formatData(sale.date)}</p>
+                        </div>
                     </div>
                 </div>
+
                 <div>
                     <table className="w-full overflow-hidden text-sm text-left text-gray-500 rounded-md dark:text-gray-400">
                         <thead className="text-xs text-gray-800 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    product
+                                    Product
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    quantity
+                                    Cant.
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    unitPrice
+                                    Precio unit.
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    totalPrice
+                                    Precio total
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    brand
+                                    Marca
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    name
+                                    Trabajador
                                 </th>
                             </tr>
                         </thead>
@@ -74,12 +83,26 @@ const SaleComponent = () => {
                             ))}
                         </tbody>
                     </table>
-                    <div className="flex items-end gap-3 py-4 text-gray-800">
-                        Valor total:{" "}
-                        <p className="text-2xl font-bold">
-                            {formatMoney.format(sale.totalSale)}
-                        </p>
-                    </div>
+                    <section className="py-3 flex items-end flex-col">
+                        <div className="flex items-end gap-3 py-1 text-gray-800">
+                            <span className="text-sm"> Valor Descontado: </span>
+                            <p className="text-lg">
+                                {formatMoney.format(sale.totalGross)}
+                            </p>
+                        </div>
+                        <div className="flex items-end gap-3 py-1 text-gray-800">
+                            <span className="text-sm"> Valor Descontado: </span>
+                            <p className="text-base">
+                                {formatMoney.format(sale.totalDiscount)}
+                            </p>
+                        </div>
+                        <div className="flex items-end gap-3 py-1 text-gray-800">
+                            <span className="text-lg"> Valor total: </span>
+                            <p className="text-2xl font-bold">
+                                {formatMoney.format(sale.totalNet)}
+                            </p>
+                        </div>
+                    </section>
                 </div>
             </div>
         </Card>

@@ -10,9 +10,8 @@ const EditProductPage = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        
         const getProduct = () => dispatch(getProductByIdAction(id));
-       id && getProduct();
+        id && getProduct();
     }, []);
 
     return (

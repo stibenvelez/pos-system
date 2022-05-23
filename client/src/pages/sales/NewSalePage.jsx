@@ -9,10 +9,8 @@ import { object, string, number } from "yup";
 const NewSalePage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        const getProducts = () => dispatch(getAllProductsActions());
-        getProducts();
+        (() => dispatch(getAllProductsActions()))();
     }, []);
-
 
     return (
         <div className="container mx-auto ">

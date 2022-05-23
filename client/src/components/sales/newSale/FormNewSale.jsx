@@ -21,14 +21,10 @@ import {useNavigate} from 'react-router-dom'
 const initialStateNewProduct = {
     category: "",
     product: "",
-    productName: "",
     quantity: 1,
-    unitPrice: "",
-    totalPrice: "",
-    employe: "",
-    commissionValue: 0,
-    commissionPercentage: 0,
-    UnitDiscount:0
+    unitPrice: 0,
+    unitDiscount: 0,
+    employe:""
 };
 
 const INITIAL_SATATE_SALE = {
@@ -49,7 +45,8 @@ const FormNewSale = () => {
     const [productsFiltered, setproductsFiltered] = useState([]);
     const [errors, setErrors] = useState({});
     const [sale, setSale] = useState(INITIAL_SATATE_SALE);
-
+    const [productSeleted, setProductSeleted] = useState(null);
+    
     const addProductToSailDetail = (newProduct) => {
         dispatch(addProductToSaleDetailAction(newProduct));
         setNewProduct(initialStateNewProduct);
@@ -65,7 +62,8 @@ const FormNewSale = () => {
     const detail = useSelector(({ sales }) => sales.detail);
     const errorSubmit = useSelector(({ sales }) => sales.error);
     const user = useSelector(({ auth }) => auth.user);
-
+    const products = useSelector(({ products }) => products.products);
+    
     useEffect(() => {
         const total = detail.reduce(
             (acc, value) => acc + value.totalPrice,
@@ -86,7 +84,7 @@ const FormNewSale = () => {
 
     const findProductName = (idProduct) => {
         if (idProduct) {
-            const result = productsFiltered.filter(
+            const result = products.filter(
                 (product) => product.idProduct === parseInt(idProduct)
             );
             return result[0].product;
@@ -97,12 +95,14 @@ const FormNewSale = () => {
     const addProductToDetail = async () => {
         const id = uuid();
         newProduct.id = id;
-        newProduct.totalPrice = newProduct.quantity * newProduct.unitPrice;
+        newProduct.totalDiscount = parseInt(newProduct.quantity) * newProduct.unitDiscount;
+        newProduct.totalPrice = newProduct.quantity * productSeleted.unitPrice;
         newProduct.productName = findProductName(newProduct.product);
-        newProduct.totalDiscount = newProduct.quantity * newProduct.UnitDiscount;
-        
-        const errors = validateAddProduct(newProduct);
+        newProduct.commissionValue =
+            (newProduct.totalPrice * productSeleted.commissionPercentage) / 100;
+        newProduct.commissionPercentage = productSeleted.commissionPercentage;
 
+        const errors = validateAddProduct(newProduct);
         if (Object.keys(errors).length) {
             toast.error("Complete los campos obligatorios", {
                 position: "bottom-right",
@@ -117,6 +117,7 @@ const FormNewSale = () => {
             return;
         }
         addProductToSailDetail(newProduct);
+        
     };
 
     const handleSubmit = async (e) => {
@@ -177,11 +178,10 @@ const FormNewSale = () => {
                         <ProductData
                             newProduct={newProduct}
                             setNewProduct={setNewProduct}
-                            productsFiltered={productsFiltered}
-                            setproductsFiltered={setproductsFiltered}
+                            productSeleted={productSeleted} setProductSeleted={setProductSeleted}
                         />
                     </div>
-                    <div className="flex justify-center ">
+                    <div className="flex flex-col items-center ">
                         <button
                             type="button"
                             className="block w-12 h-12 p-3 text-white rounded-full shadow-md cursor-pointer bg-emerald-500 hover:bg-emerald-300"
@@ -189,6 +189,12 @@ const FormNewSale = () => {
                         >
                             <FontAwesomeIcon icon={faPlus} />
                         </button>
+                        <input
+                            className="inline-block px-4 py-2 font-medium text-gray-500 transition duration-200 ease-in-out rounded-md cursor-pointer hover:text-blue-700"
+                            type="button"
+                            value="Cancelar"
+                            onClick={() => navigate(-1)}
+                        />
                     </div>
                     {detail.length !== 0 && (
                         <div>
@@ -205,7 +211,7 @@ const FormNewSale = () => {
                                         className="inline-block px-4 py-2 text-white bg-gray-400 rounded-md cursor-pointer hover:bg-gray-500"
                                         type="button"
                                         value="Cancelar"
-                                        onClick={()=>navigate(-1)}
+                                        onClick={() => navigate(-1)}
                                     />
                                 </div>
                             </Card>

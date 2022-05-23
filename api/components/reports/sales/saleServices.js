@@ -13,12 +13,13 @@ export const getSalesReportService = async (params) => {
         (acc, item) => acc + item.unitCost * item.quantity,
         0
     );
+    const amountOfSales = rows.length
 
     const result = {
         totalCost,
         totalSold,
         totalCommission,
-        count: rows.length,
+        count: amountOfSales,
         results: rows,
     };
     return result;

@@ -11,7 +11,7 @@ const PrivateRoute = () => {
 
     if (loading) return;
 
-    if (!auth) {
+    if (!auth && !loading) {
         navigate("/");
     }
 

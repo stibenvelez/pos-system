@@ -9,13 +9,13 @@ import formatMoney from "../../../helpers/formatMoney";
 
 const SaleDetail = () => {
     const sailDetails = useSelector(({ sales }) => sales.detail);
-    const [totalSumary, setTotalSumary] = useState({})
+    const [totalSumary, setTotalSumary] = useState({});
     useEffect(() => {
         const totalGross = sailDetails.reduce(
             (acc, value) => acc + value.totalPrice,
             0
         );
-        
+
         const totalDiscount = sailDetails.reduce(
             (acc, value) => acc + value.totalDiscount,
             0
@@ -31,7 +31,7 @@ const SaleDetail = () => {
 
     return (
         <>
-            <div className="border bg-white shadow-sm relative overflow-x-auto sm:rounded-lg">
+            <div className="relative overflow-x-auto bg-white border shadow-sm sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="bg-gray-50">
                         <tr className="text-gray-800 capitalize">
@@ -68,7 +68,7 @@ const SaleDetail = () => {
                             </td>
                             <td colSpan={4}></td>
                         </tr>
-                        <tr className="text-gray-700  bg-slate-50 ">
+                        <tr className="text-gray-700 bg-slate-50 ">
                             <td className="px-6 py-2 text-md">
                                 Total descontado:
                             </td>
