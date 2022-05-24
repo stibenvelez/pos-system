@@ -330,7 +330,7 @@ const FormNewProduct = () => {
                                 <div>
                                     <label
                                         className="block mb-2 font-medium text-gray-900 dark:text-gray-300"
-                                        for="user_avatar"
+                                        htmlFor="user_avatar"
                                     >
                                         Subir una imagen
                                     </label>

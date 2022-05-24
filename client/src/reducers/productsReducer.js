@@ -40,8 +40,7 @@ const productsReducers = (state = initialState, action) => {
         case ADD_NEW_PRODUCT:
             return {
                 ...state,
-                loading: true,
-                product: {},
+                loading: true
             };
         case FETCH_PRODUCTS_SUCCESS:
             return {

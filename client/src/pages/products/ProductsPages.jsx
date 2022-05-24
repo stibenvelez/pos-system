@@ -4,6 +4,9 @@ import { getAllProductsActions } from "../../actions/productsActions";
 import FilterOptions from "../../components/products/FilterOptions";
 import ProductsList from "../../components/products/ProductsList";
 import Template from "../../components/ui/Template";
+import io from 'socket.io-client'
+
+let socket;
 
 const ProductsPages = () => {
     const dispatch = useDispatch();
@@ -12,6 +15,19 @@ const ProductsPages = () => {
     useEffect(() => {
         (() => dispatch(getAllProductsActions(filters)))(), [filters];
     });
+
+    useEffect(() => {
+        socket = io(import.meta.env.VITE_BACKEND_URL)
+        socket.emit("products");
+    }, [])
+    
+    
+    useEffect(() => {
+        socket.on("productDisabled", () => {
+            console.log('generando nuevos productos');
+        });
+    })
+    
 
     return (
         <Template

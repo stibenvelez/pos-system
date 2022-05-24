@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 
 // Redux
 import { useDispatch } from "react-redux";
 import { removeItemFromSaleDetailAction } from "../../../actions/saleActions";
+import Modal from "../../ui/Modal";
+import FormEditItemDetailSale from "./FormEditItemDetailSale";
 
 const ItemSailDetail = ({ detail }) => {
+    const [modalOpen, setModalOpen] = useState(false)
     const dispatch = useDispatch();
 
     const handleRemoveItem = (item) => {
@@ -28,7 +31,17 @@ const ItemSailDetail = ({ detail }) => {
                 >
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
+                <button
+                    type="button"
+                    className="p-2 transition hover:text-blue-600 transition-duration: 150ms "
+                    onClick={() => setModalOpen(true)}
+                >
+                    <FontAwesomeIcon icon={faPencil} />
+                </button>
             </td>
+            <Modal modalOpen={modalOpen} onCancel={() => setModalOpen(false)}>
+                <FormEditItemDetailSale product={detail} />
+            </Modal>
         </tr>
     );
 };
