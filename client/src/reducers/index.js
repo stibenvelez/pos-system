@@ -5,6 +5,7 @@ import salesDetailsReducers from "./salesDetailsReducers";
 import authReducer from "./authReducer";
 import reportsReducer from "./reportsReducer";
 import productsCategoriesReducers from "./productCategory.reducer";
+import employesReducers from "./employees.reducer";
 
 
 export default combineReducers({
@@ -14,5 +15,5 @@ export default combineReducers({
     salesDetails: salesDetailsReducers,
     auth: authReducer,
     reports: reportsReducer,
-    
+    employees: employesReducers,
 });

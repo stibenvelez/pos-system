@@ -15,6 +15,10 @@ const ItemSailDetail = ({ detail }) => {
     const handleRemoveItem = (item) => {
         dispatch(removeItemFromSaleDetailAction(item.id));
     };
+    
+    const onClose = () => {
+        setModalOpen(false);
+    };
 
     return (
         <tr className="text-gray-700 border-b hover:bg-gray-50 hover:shadow-md">
@@ -40,7 +44,7 @@ const ItemSailDetail = ({ detail }) => {
                 </button>
             </td>
             <Modal modalOpen={modalOpen} onCancel={() => setModalOpen(false)}>
-                <FormEditItemDetailSale product={detail} />
+                <FormEditItemDetailSale product={detail} onClose={onClose}/>
             </Modal>
         </tr>
     );

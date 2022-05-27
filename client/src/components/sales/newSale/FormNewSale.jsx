@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataSale from "./DataSale";
-import { v4 as uuid } from "uuid";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SaleDetail from "./SaleDetail";
@@ -8,7 +8,7 @@ import ProductData from "./ProductData";
 import Card from "../../ui/Card/Card";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import validateAddProduct from "./utils/validateAddProduct";
+
 import validateNewSale from "./utils/validateNewSale";
 import { formatDate } from "../../../helpers/FormatDate";
 import {
@@ -16,7 +16,9 @@ import {
     RegisterOneNewSaleAction,
     validateErrorsNewProductAction,
 } from "../../../actions/saleActions";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import addProductToDetail from "./utils/addProductToDetail";
+import validateAddProduct from "./utils/validateAddProduct";
 
 const initialStateNewProduct = {
     category: "",
@@ -24,7 +26,7 @@ const initialStateNewProduct = {
     quantity: 1,
     unitPrice: 0,
     unitDiscount: 0,
-    employe:""
+    employe: "",
 };
 
 const INITIAL_SATATE_SALE = {
@@ -38,7 +40,7 @@ const INITIAL_SATATE_SALE = {
 };
 
 const FormNewSale = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [newProduct, setNewProduct] = useState(initialStateNewProduct);
     const [fullSalePrice, setFulSalePrice] = useState(0);
@@ -46,16 +48,12 @@ const FormNewSale = () => {
     const [errors, setErrors] = useState({});
     const [sale, setSale] = useState(INITIAL_SATATE_SALE);
     const [productSeleted, setProductSeleted] = useState(null);
-    
+
     const addProductToSailDetail = (newProduct) => {
         dispatch(addProductToSaleDetailAction(newProduct));
         setNewProduct(initialStateNewProduct);
     };
-
-    const validateErrorsNewProduct = (errors) => {
-        dispatch(validateErrorsNewProductAction(errors));
-    };
-
+    
     const RegisterOneNewSale = (sale) =>
         dispatch(RegisterOneNewSaleAction(sale));
 
@@ -63,12 +61,9 @@ const FormNewSale = () => {
     const errorSubmit = useSelector(({ sales }) => sales.error);
     const user = useSelector(({ auth }) => auth.user);
     const products = useSelector(({ products }) => products.products);
-    
+
     useEffect(() => {
-        const total = detail.reduce(
-            (acc, value) => acc + value.totalPrice,
-            0
-        );
+        const total = detail.reduce((acc, value) => acc + value.totalPrice, 0);
         setFulSalePrice(total);
     }, [detail]);
 
@@ -82,51 +77,19 @@ const FormNewSale = () => {
         });
     };
 
-    const findProductName = (idProduct) => {
-        if (idProduct) {
-            const result = products.filter(
-                (product) => product.idProduct === parseInt(idProduct)
-            );
-            return result[0].product;
-        }
-        return "";
-    };
-
-    const addProductToDetail = async () => {
-        const id = uuid();
-        newProduct.id = id;
-        newProduct.totalDiscount = parseInt(newProduct.quantity) * newProduct.unitDiscount;
-        newProduct.totalPrice = newProduct.quantity * productSeleted.unitPrice;
-        newProduct.productName = findProductName(newProduct.product);
-        newProduct.commissionValue =
-            (newProduct.totalPrice * productSeleted.commissionPercentage) / 100;
-        newProduct.commissionPercentage = productSeleted.commissionPercentage;
-
-        const errors = validateAddProduct(newProduct);
-        if (Object.keys(errors).length) {
-            toast.error("Complete los campos obligatorios", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-            validateErrorsNewProduct(errors);
-            return;
-        }
-        addProductToSailDetail(newProduct);
-        
+    const handleAddProductToDetail = async (dataProduct) => {
+        const { result, errors } = await addProductToDetail(dataProduct);
+        dispatch(validateErrorsNewProductAction(errors));
+        if (!errors) {addProductToSailDetail(result)};
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newSale = {
             dataSale: sale.dataSale,
-            detail: detail
+            detail: detail,
         };
-       
+
         const errors = validateNewSale(newSale);
 
         if (Object.keys(errors).length) {
@@ -178,14 +141,15 @@ const FormNewSale = () => {
                         <ProductData
                             newProduct={newProduct}
                             setNewProduct={setNewProduct}
-                            productSeleted={productSeleted} setProductSeleted={setProductSeleted}
+                            productSeleted={productSeleted}
+                            setProductSeleted={setProductSeleted}
                         />
                     </div>
                     <div className="flex flex-col items-center ">
                         <button
                             type="button"
                             className="block w-12 h-12 p-3 text-white rounded-full shadow-md cursor-pointer bg-emerald-500 hover:bg-emerald-300"
-                            onClick={addProductToDetail}
+                            onClick={() => handleAddProductToDetail(newProduct)}
                         >
                             <FontAwesomeIcon icon={faPlus} />
                         </button>

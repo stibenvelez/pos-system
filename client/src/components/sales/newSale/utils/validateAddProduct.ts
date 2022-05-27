@@ -1,6 +1,14 @@
-const validateAddProduct = (product) => {
 
-    const errors = {};
+type errosType = {
+    category?: string;
+    product?: string;
+    quantity?: string;
+    commissionPercentage?: string;
+    employe?: string;
+}
+
+const validateAddProduct = (product:any) => {
+    const errors:errosType = {};
     if (product.category === "") {
         errors.category = "Seleccione un producto";
     }
@@ -13,6 +21,11 @@ const validateAddProduct = (product) => {
     if (product.commissionPercentage !== 0 && product.employe === "") {
         errors.employe = "Ingrese el trabajador para la comision";
     }
-    return errors;
+ 
+    if (Object.keys(errors).length) {
+        return errors;
+    }
+    
+    return false;
 };
-export default validateAddProduct
+export default validateAddProduct;

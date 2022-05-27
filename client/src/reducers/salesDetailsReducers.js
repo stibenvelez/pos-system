@@ -4,7 +4,7 @@ import {
     GET_SALES_DETAILS_SUCCESS,
     GET_SALE_DETAIL_BY_ID_SALE,
     GET_SALE_DETAIL_BY_ID_SALE_SUCCESS,
-    GET_SALE_DETAIL_BY_ID_SALE_ERROR
+    GET_SALE_DETAIL_BY_ID_SALE_ERROR,
 } from "../types/salesDetailsTypes";
 
 const initialState = {
@@ -52,6 +52,7 @@ const salesDetailsReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
             };
+        
 
         default:
             return state;

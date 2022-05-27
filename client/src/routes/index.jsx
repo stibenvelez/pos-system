@@ -6,7 +6,7 @@ import NewSalePage from "../pages/sales/NewSalePage";
 import SalePage from "../pages/sales/SalePage";
 import SalesPage from "../pages/sales/SalesPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
-import EmployesPage from "../pages/employees/EmployesPage";
+import EmployeesPage from "../pages/employees/EmployeesPage";
 import SalesDetailsPage from "../pages/sales/SalesDetailsPage";
 import LoginPage from "../pages/login/LoginPage";
 import NotFountPage from "../pages/notFountPage/NotFountPage";
@@ -50,7 +50,7 @@ const Routers = () => {
                         />
                     </Route>
                     <Route path="employees">
-                        <Route index element={<EmployesPage />} />
+                        <Route index element={<EmployeesPage />} />
                     </Route>
                     <Route path="reports">
                         <Route

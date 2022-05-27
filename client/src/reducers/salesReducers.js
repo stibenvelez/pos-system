@@ -14,6 +14,9 @@ import {
     GET_ALL_SALES_ERROR,
     CANCEL_SALE_SUCCESS,
     CANCEL_SALE_ERROR,
+    EDIT_PRODUCT_SALE_DETAIL,
+    EDIT_PRODUCT_SALE_DETAIL_SUCCESS,
+    EDIT_PRODUCT_SALE_DETAIL_ERROR,
 } from "../types/salesTypes";
 
 const initialState = {
@@ -130,7 +133,28 @@ const salesReducers = (state = initialState, action) => {
         case CANCEL_SALE_ERROR:
             return {
                 ...state,
-
+            };
+        case EDIT_PRODUCT_SALE_DETAIL:
+            return {
+                ...state,
+                loading: true,
+            };
+        case EDIT_PRODUCT_SALE_DETAIL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                detail: [
+                    ...state.detail.filter(
+                        (product) => product.id !== action.payload.id
+                    ),
+                    action.payload,
+                ],
+            };
+        case EDIT_PRODUCT_SALE_DETAIL_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: true,
             };
 
         default:

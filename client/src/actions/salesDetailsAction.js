@@ -57,3 +57,5 @@ const getSaleDetailByIdSaleError = (error) => ({
     type: GET_SALE_DETAIL_BY_ID_SALE_ERROR,
     payload: error,
 });
+
+

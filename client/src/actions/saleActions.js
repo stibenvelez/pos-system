@@ -17,6 +17,9 @@ import {
     CANCEL_SALE,
     CANCEL_SALE_SUCCESS,
     CANCEL_SALE_ERROR,
+    EDIT_PRODUCT_SALE_DETAIL,
+    EDIT_PRODUCT_SALE_DETAIL_SUCCESS,
+    EDIT_PRODUCT_SALE_DETAIL_ERROR,
 } from "../types/salesTypes";
 import Swal from "sweetalert2";
 
@@ -177,3 +180,18 @@ export const cancelSaleByIdAction = sale => {
         }
     }
 }
+
+export const editProductSaleDetailAction = (product) => {
+    return (dispatch) => {
+        dispatch({ type: EDIT_PRODUCT_SALE_DETAIL });
+        try {
+            dispatch({
+                type: EDIT_PRODUCT_SALE_DETAIL_SUCCESS,
+                payload: product,
+            });
+        } catch (error) {
+            console.log("----->", error);
+            dispatch({ type: EDIT_PRODUCT_SALE_DETAIL_ERROR });
+        }
+    };
+};
