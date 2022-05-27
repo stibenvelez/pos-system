@@ -10,6 +10,7 @@ import productCategory from '../components/productCategory/routes.js'
 import employeesRoutes from '../components/employes/routes.js'
 import usersRoutes from '../components/users/routes.js'
 import reportsRoutes from '../components/reports/routes.js'
+import egressesRoutes from '../components/egresses/routes.js'
 
 
 routes .use("/sales", salesRoutes);
@@ -19,7 +20,7 @@ routes.use("/product-categories", productCategory);
 routes.use("/employees", employeesRoutes);
 routes.use("/users", usersRoutes);
 routes.use("/reports", reportsRoutes);
-
+routes.use("/egresses", egressesRoutes);
 
 routes.use(
     "/graphql",

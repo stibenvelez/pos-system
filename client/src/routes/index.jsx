@@ -15,6 +15,8 @@ import AuthLayout from "../components/layouts/AuthLayout";
 import PrivateRoute from "../components/layouts/PrivateRoute";
 import SalesReportPage from "../pages/Reports/SalesReportPage";
 import ProductPage from "../pages/products/ProductPage";
+import EgressesPage from "../pages/egresses/EgressesPage";
+import NewEgressPage from "../pages/egresses/NewEgressPage";
 
 const Routers = () => {
 
@@ -36,6 +38,10 @@ const Routers = () => {
                             path="SalesDetailsPage"
                             element={<SalesDetailsPage />}
                         />
+                    </Route>
+                    <Route path="egresses">
+                        <Route index element={<EgressesPage />} />
+                        <Route path="new-egress" element={<NewEgressPage />} />
                     </Route>
                     <Route path="products">
                         <Route index element={<ProductsPages />} />

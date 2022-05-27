@@ -2,7 +2,7 @@
 
 export const SidebarData = [
     {
-        title: "Ventas",
+        title: "Ingresos",
         path: "#",
         icon: null,
         iconClosed: null,
@@ -24,6 +24,34 @@ export const SidebarData = [
             {
                 title: "Detalle de ventas",
                 path: "sales/SalesDetailsPage",
+                icon: null,
+                cName: "sub-nav",
+            },
+        ],
+    },
+    {
+        title: "Egresos",
+        path: "#",
+        icon: null,
+        iconClosed: null,
+        iconOpened: null,
+
+        subNav: [
+            {
+                title: "Nueva egreso",
+                path: "egresses/new-egress",
+                icon: null,
+                cName: "sub-nav",
+            },
+            {
+                title: "Lista de Egresos",
+                path: "sales",
+                icon: null,
+                cName: "sub-nav",
+            },
+            {
+                title: "Detalle de ventas",
+                path: "egresses/SalesDetailsPage",
                 icon: null,
                 cName: "sub-nav",
             },

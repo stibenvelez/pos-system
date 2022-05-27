@@ -6,6 +6,7 @@ import authReducer from "./authReducer";
 import reportsReducer from "./reportsReducer";
 import productsCategoriesReducers from "./productCategory.reducer";
 import employesReducers from "./employees.reducer";
+import egressesReducers from "./egresses.reducers";
 
 
 export default combineReducers({
@@ -16,4 +17,5 @@ export default combineReducers({
     auth: authReducer,
     reports: reportsReducer,
     employees: employesReducers,
+    egresses: egressesReducers
 });
