@@ -2,6 +2,7 @@ import {
     addNewEgressService,
     getAllEgressesService,
     getAllEgressesCategoriesService,
+    getAllEgressesSubCategoriesService,
 } from "./egresses.services.js";
 
 
@@ -16,6 +17,14 @@ export const getAllEgresses = async (req, res) => {
 export const getAllEgressesCategories = async (req, res) => {
     try {
         const result = await getAllEgressesCategoriesService();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ msg: "Error al obtener los egresos" });
+    }
+};
+export const getAllEgressesSubcategories = async (req, res) => {
+    try {
+        const result = await getAllEgressesSubCategoriesService();
         res.json(result);
     } catch (error) {
         res.status(500).json({ msg: "Error al obtener los egresos" });

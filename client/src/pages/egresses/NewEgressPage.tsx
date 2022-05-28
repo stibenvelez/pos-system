@@ -2,13 +2,16 @@ import React, { useEffect } from 'react'
 import FormNewEgress from '../../components/egresses/FormNewEgress';
 import Template from '../../components/ui/Template';
 import {useDispatch} from 'react-redux';
-import { getAllEgressesCategoriesAction } from '../../actions/egresses.action';
+import { getAllEgressesCategoriesAction, getAllEgressesSubCategoriesAction } from '../../actions/egresses.action';
 
 const NewEgressPage = () => {
   const dispatch = useDispatch();
 
   useEffect( () => {
     (() =>  dispatch<any>(getAllEgressesCategoriesAction()))();
+  }, [])
+  useEffect( () => {
+    (() =>  dispatch<any>(getAllEgressesSubCategoriesAction()))();
   }, [])
   
   return (

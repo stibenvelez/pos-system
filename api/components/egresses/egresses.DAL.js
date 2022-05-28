@@ -18,12 +18,22 @@ export const AllEgressesCategories = async () => {
         throw error;
     }
 };
+export const AllEgressesSubcategories = async () => {
+    try {
+        const [result] = await connection.query(
+            "SELECT * FROM EgresseSubcategory"
+        );
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const insertEgress = async (egress) => {
     try {
         const sql = `
             INSERT INTO Egresses (
-                idSupplier,
+                idProvider,
                 egressCategoryId,
                 egressSubCategoryId,
                 value,
@@ -36,15 +46,15 @@ export const insertEgress = async (egress) => {
                 ?,
                 ?,
                 ?
-            )`
+            )`;
         const params = [
-            egress.idSupplier,
-            egress.egressCategoryId,
-            egress.egressSubCategoryId,
+            egress.provider,
+            egress.category,
+            egress.subcategory,
             egress.value,
             egress.date,
-            egress.observations
-        ]
+            egress.observations,
+        ];
         return await connection.query(sql, params)
     } catch (error) {
         console.log(error)
